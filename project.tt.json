@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "wx",
+  "appid": "wx94981ce2dab3ab05",
+  "setting": {
+    "es6": false,
+    "minified": false
+  }
+}
