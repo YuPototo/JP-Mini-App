@@ -1,0 +1,36 @@
+@import "../../styles/variables";
+
+.book-card {
+    display: flex;
+    height: 130px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.book-card-image-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.book-card-image {
+    width: 100px;
+    height: 125px;
+}
+
+.book-title {
+    margin-top: 5px;
+    font-size: $text-xl;
+}
+
+.book-desc {
+    font-size: $text-sm;
+}
+
+.rightPart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space_4;
+}

@@ -17,4 +17,7 @@ export interface Book {
     id: string;
     title: string;
     category: BookCategory;
+    cover: string;
+    desc: string;
+    hidden: boolean;
 }

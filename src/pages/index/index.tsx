@@ -1,7 +1,7 @@
-import { View } from "@tarojs/components";
-import BookList from "../../features/books/BookList";
-import CategoryNav from "../../features/books/Category";
-import "./index.scss";
+import { View } from '@tarojs/components'
+import BookList from '../../features/books/BookList'
+import CategoryNav from '../../features/books/Category'
+import './index.scss'
 
 export default function Index() {
     return (
@@ -9,5 +9,5 @@ export default function Index() {
             <CategoryNav />
             <BookList />
         </View>
-    );
+    )
 }

@@ -96,7 +96,7 @@ export const selectChildrenByLevel =
 
 export const selectBooksByCategory = (state: RootState) => {
     const selectedCategoryKeys = state.bookList.selectedCategoryKeys;
-    const books = state.bookList.books;
+    const books = state.bookList.books.filter((book) => !book.hidden)
 
     const selectedCategoryLength = selectedCategoryKeys.length;
     if (selectedCategoryLength === 0) {

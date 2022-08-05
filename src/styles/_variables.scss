@@ -1,0 +1,17 @@
+@import "./utils/color";
+@import "./utils/fontSize";
+@import "./utils/space";
+
+// 这里放全局变量
+
+// color
+
+$color-primary: $color-green-600;
+$color-secondary: $color-gray-500;
+
+// spacing
+$page-x-padding: 20px;
+$page-top-padding: 10px;
+
+// constants
+$bottom-operation-bar-height: 50px;

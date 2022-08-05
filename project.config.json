@@ -1,15 +1,15 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "wx",
-  "description": "日语轻松考",
-  "appid": "wx94981ce2dab3ab05",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "enhance": false,
-    "compileHotReLoad": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram"
+    "miniprogramRoot": "./dist",
+    "projectname": "wx",
+    "description": "日语轻松考",
+    "appid": "wx94981ce2dab3ab05",
+    "setting": {
+        "urlCheck": true,
+        "es6": false,
+        "enhance": false,
+        "compileHotReLoad": false,
+        "postcss": false,
+        "minified": false
+    },
+    "compileType": "miniprogram"
 }
