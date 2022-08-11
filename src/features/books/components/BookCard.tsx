@@ -1,5 +1,5 @@
 import { View, Image } from '@tarojs/components'
-import type { Book } from './booksTypes'
+import type { Book } from '../booksTypes'
 
 import styles from "./BookCard.module.scss";
 
