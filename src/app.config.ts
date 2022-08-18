@@ -1,5 +1,7 @@
+import { pageList } from "./routes";
+
 export default defineAppConfig({
-    pages: ["pages/index/index", "pages/bookDetail/bookDetail"],
+    pages: pageList,
     window: {
         backgroundTextStyle: "light",
         navigationBarBackgroundColor: "#fff",

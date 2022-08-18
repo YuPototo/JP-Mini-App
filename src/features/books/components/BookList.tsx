@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../store/hooks";
 import BookCard from "./BookCard";
 import { useGetBooksQuery } from "../booksService";
 import { selectBooksByCategory } from "../booksSlice";
+import pageNames from "../../../routes";
 
 export default function BookList() {
     useGetBooksQuery();
@@ -17,7 +18,7 @@ export default function BookList() {
                         key={book.id}
                         onClick={() =>
                             Taro.navigateTo({
-                                url: `/pages/bookDetail/bookDetail?bookId=${book.id}`
+                                url: `${pageNames.bookDetail}?bookId=${book.id}`
                             })
                         }
                     >
