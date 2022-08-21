@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { AppThunk, RootState } from '../../store/store'
 import { selectChapterQuetionSetIds } from './chapterSerivce'
+import { PracticeChapterState } from './practiceChapterTypes'
 
 export enum Result {
     Right,
@@ -8,17 +9,6 @@ export enum Result {
     NoRecord,
 }
 
-export interface QuestionSetResult {
-    questionSetId: string
-    result: Result
-}
-
-export interface PracticeChapterState {
-    chapterId: string | null
-    results: QuestionSetResult[]
-    questionSetIndex: number
-
-}
 
 const initialState: PracticeChapterState = {
     chapterId: null,

@@ -7,20 +7,23 @@ export interface BookListState {
     categories: ICategory[];
     selectedCategoryKeys: CategoryKey[];
     books: IBook[];
-    value: number;
+    currentBookId: string | null
 }
 
 const initialState: BookListState = {
     categories: [],
     selectedCategoryKeys: [],
     books: [],
-    value: 1,
+    currentBookId: null
 };
 
 export const bookListSlice = createSlice({
     name: "bookList",
     initialState,
     reducers: {
+        setCurrentBookId: (state, { payload }: PayloadAction<string>) => {
+            state.currentBookId = payload
+        },
         setCategoryKey: (
             state,
             action: PayloadAction<{ categoryLevel: number; key: string }>
@@ -67,7 +70,7 @@ export const bookListSlice = createSlice({
     },
 });
 
-export const { setCategoryKey } = bookListSlice.actions;
+export const { setCategoryKey, setCurrentBookId } = bookListSlice.actions;
 
 /* selectors */
 

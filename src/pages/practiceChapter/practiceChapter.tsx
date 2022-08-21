@@ -15,6 +15,8 @@ import {
     fillOptionsThunk,
     selectIsDone
 } from "../../features/questionSet/questionSetSlice";
+import Taro from "@tarojs/taro";
+import pageNames from "../../routes";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
@@ -53,6 +55,12 @@ export default function PracticeChapterPage() {
     const questionSets = chapterInfo?.questionSets || [];
 
     const questionSetId = questionSets[questionSetIndex];
+
+    const handleFinishChapter = () => {
+        Taro.navigateTo({
+            url: `${pageNames.chapterResult}?chapterId=${chapterId}`
+        });
+    };
 
     if (isQueryError) {
         return <div>出错了：{JSON.stringify(error)}</div>;
@@ -105,11 +113,7 @@ export default function PracticeChapterPage() {
 
             {showNextBtn(isDone, isQuestionSetError) &&
                 isLastQuestionSet(questionSetIndex, questionSets) && (
-                    <Button
-                    // onClick={handleFinishChapter}
-                    >
-                        完成本章
-                    </Button>
+                    <Button onClick={handleFinishChapter}>完成本章</Button>
                 )}
         </View>
     );

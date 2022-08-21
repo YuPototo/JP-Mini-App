@@ -18,6 +18,16 @@ export default function Index() {
             >
                 To renderer
             </Button>
+
+            <Button
+                onClick={() =>
+                    Taro.navigateTo({
+                        url: pageNames.chapterResult
+                    })
+                }
+            >
+                To xx page
+            </Button>
             <BookList />
         </View>
     );
