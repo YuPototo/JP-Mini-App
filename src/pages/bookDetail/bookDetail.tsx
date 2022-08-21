@@ -3,7 +3,7 @@ import { useRouter } from "@tarojs/taro";
 import { useAppSelector } from "../../store/hooks";
 import { selectBookById } from "../../features/books/booksSlice";
 import BookCard from "../../features/books/components/BookCard";
-import Content from "../../features/content/Content";
+import Content from "../../features/books/components/Content";
 
 export default function BookDetailPage() {
     const router = useRouter();

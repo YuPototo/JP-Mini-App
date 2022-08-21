@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import stringifyRtkQuerryError from "../../../store/storeUtils/stringifyRtkQuerryError";
 import { selectChildrenByLevel, setCategoryKey } from "../booksSlice";
 import { useGetCategoriyesQuery } from "../booksService";
-import type { Category } from "../booksTypes";
+import type { ICategory } from "../booksTypes";
 
 export default function CategoryNav() {
     const { isLoading, error } = useGetCategoriyesQuery();
@@ -29,7 +29,7 @@ export default function CategoryNav() {
 }
 
 interface CategoryListProps {
-    categories: Category[];
+    categories: ICategory[];
     categoryLevel: number;
     selectedCategoryKeys?: string[];
 }

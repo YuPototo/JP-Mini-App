@@ -1,11 +1,11 @@
 import { View, Image } from '@tarojs/components'
-import type { Book } from '../booksTypes'
+import type { IBook } from '../booksTypes'
 
 import styles from "./BookCard.module.scss";
 
 
 interface BookProps {
-    book: Book;
+    book: IBook;
 }
 
 function BookCard({ book }: BookProps) {

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store/store";
-import type { Book, Category, CategoryKey } from "./booksTypes";
+import type { IBook, ICategory, CategoryKey } from "./booksTypes";
 import { booksApi } from "./booksService";
 
 export interface BookListState {
-    categories: Category[];
+    categories: ICategory[];
     selectedCategoryKeys: CategoryKey[];
-    books: Book[];
+    books: IBook[];
     value: number;
 }
 

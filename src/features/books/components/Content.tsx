@@ -1,7 +1,7 @@
 import { View, Text } from "@tarojs/components";
 import { useState } from "react";
-import { useGetBookContentQuery } from "./contentService";
-import { IChapter, ISection } from "./contentTypes";
+import { useGetBookContentQuery } from "../booksService";
+import { IChapter, ISection } from "../booksTypes";
 
 type Props = {
     bookId: string;
@@ -40,12 +40,7 @@ function Section({ section, showChapter = false, onClickTitle }: SectionProps) {
 
     return (
         <View>
-            <View
-                className="cursor-pointer rounded bg-gray-100  py-2 pl-4 hover:bg-green-100"
-                onClick={() => onClickTitle()}
-            >
-                {title}
-            </View>
+            <View onClick={() => onClickTitle()}>{title}</View>
             {showChapter ? (
                 <View className="">
                     {chapters.map(chapter => (
