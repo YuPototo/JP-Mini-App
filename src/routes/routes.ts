@@ -1,7 +1,3 @@
-function removeFirstCharacter(str: string) {
-    return str.substring(1);
-}
-
 const pageNames = {
     homePage: "/pages/index/index",
     bookDetail: "/pages/bookDetail/bookDetail",
@@ -20,4 +16,20 @@ export const pageList = [
     removeFirstCharacter(pageNames.chapterResult)
 ];
 
-export default pageNames;
+const routes = {
+    homePage: () => pageNames.homePage,
+    bookDetail: (bookId: string) => `${pageNames.bookDetail}?bookId=${bookId}`,
+    practiceChapter: (chapterId: string) =>
+        `${pageNames.practiceChapter}?chapterId=${chapterId}`,
+    chapterResult: (chapterId: string) =>
+        `${pageNames.chapterResult}?chapterId=${chapterId}`,
+    practiceReview: (questionSetId: string) =>
+        `${pageNames.practiceReview}?questionSetId=${questionSetId}`,
+    rendererExample: () => pageNames.rendererExample
+};
+
+export default routes;
+
+function removeFirstCharacter(str: string) {
+    return str.substring(1);
+}

@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import { useState } from "react";
 import { useGetBookContentQuery } from "../booksService";
 import { IChapter, ISection } from "../booksTypes";
-import pageNames from "@/routes/pageNames";
+import routes from "@/routes/routes";
 
 type Props = {
     bookId: string;
@@ -63,7 +63,7 @@ type ChapterProps = {
 function Chapter({ chapter }: ChapterProps) {
     const toPractice = () => {
         Taro.navigateTo({
-            url: `${pageNames.practiceChapter}?chapterId=${chapter.id}`
+            url: routes.practiceChapter(chapter.id)
         });
     };
 

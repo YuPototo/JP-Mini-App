@@ -3,7 +3,7 @@ import BookList from "@/features/books/components/BookList";
 import CategoryNav from "@/features/books/components/Category";
 import Taro from "@tarojs/taro";
 import "./index.scss";
-import pageNames from "@/routes/pageNames";
+import routes from "@/routes/routes";
 
 export default function Index() {
     return (
@@ -12,22 +12,13 @@ export default function Index() {
             <Button
                 onClick={() =>
                     Taro.navigateTo({
-                        url: pageNames.rendererExample
+                        url: routes.rendererExample()
                     })
                 }
             >
                 To renderer
             </Button>
 
-            <Button
-                onClick={() =>
-                    Taro.navigateTo({
-                        url: pageNames.chapterResult
-                    })
-                }
-            >
-                To xx page
-            </Button>
             <BookList />
         </View>
     );

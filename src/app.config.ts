@@ -1,4 +1,4 @@
-import { pageList } from "./routes/pageNames";
+import { pageList } from "./routes/routes";
 
 export default defineAppConfig({
     pages: pageList,

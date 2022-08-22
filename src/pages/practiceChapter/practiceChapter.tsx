@@ -16,7 +16,7 @@ import {
     selectIsDone
 } from "@/features/questionSet/questionSetSlice";
 import Taro from "@tarojs/taro";
-import pageNames from "@/routes/pageNames";
+import routes from "@/routes/routes";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
@@ -58,7 +58,7 @@ export default function PracticeChapterPage() {
 
     const handleFinishChapter = () => {
         Taro.redirectTo({
-            url: `${pageNames.chapterResult}?chapterId=${chapterId}`
+            url: routes.chapterResult(chapterId)
         });
     };
 

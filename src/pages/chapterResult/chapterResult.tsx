@@ -9,7 +9,7 @@ import {
 } from "@/features/books/booksService";
 import { useEffect } from "react";
 import ResultBall from "@/features/practiceChapter/ResultBall";
-import pageNames from "@/routes/pageNames";
+import routes from "@/routes/routes";
 
 export default function chapterResult() {
     const router = useRouter();
@@ -33,7 +33,7 @@ export default function chapterResult() {
                     key={index}
                     onClick={() =>
                         navigateTo({
-                            url: `${pageNames.practiceReview}?questionSetId=${result.questionSetId}`
+                            url: routes.practiceReview(result.questionSetId)
                         })
                     }
                 >
@@ -61,11 +61,11 @@ function NextInfo({
         }
     }, [nextInfo.resultType, bookId, dispatch]);
 
-    const toHomePage = () => redirectTo({ url: pageNames.homePage });
+    const toHomePage = () => redirectTo({ url: routes.homePage() });
 
     const toNextChapter = (chapterId: string) =>
         redirectTo({
-            url: `${pageNames.practiceChapter}?chapterId=${chapterId}`
+            url: routes.practiceChapter(chapterId)
         });
 
     if (nextInfo.resultType === NextInfoResultType.NoContent) {
