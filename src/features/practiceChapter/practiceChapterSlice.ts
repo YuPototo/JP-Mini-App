@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { AppThunk, RootState } from '../../store/store'
+import type { AppThunk, RootState } from '@/store/store'
 import { selectChapterQuetionSetIds } from './chapterSerivce'
 import { PracticeChapterState } from './practiceChapterTypes'
 

@@ -1,9 +1,9 @@
 import { View, Button } from "@tarojs/components";
-import BookList from "../../features/books/components/BookList";
-import CategoryNav from "../../features/books/components/Category";
+import BookList from "@/features/books/components/BookList";
+import CategoryNav from "@/features/books/components/Category";
 import Taro from "@tarojs/taro";
 import "./index.scss";
-import pageNames from "../../routes";
+import pageNames from "@/routes/pageNames";
 
 export default function Index() {
     return (

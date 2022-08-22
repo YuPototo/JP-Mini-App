@@ -4,6 +4,7 @@ import { AppThunk, RootState } from "../../store/store";
 import { doneInChapter } from "../practiceChapter/practiceChapterSlice";
 import { questionSetApi } from "./questionSetService";
 import { PracticeMode, QuestionSetState } from "./questionSetTypes";
+import { AppStartListening } from "../../store/listenerMiddleware";
 
 const initialState: QuestionSetState = {
     questionSetId: null,
@@ -169,32 +170,32 @@ export default questionSetSlice.reducer;
 
 /* listenerMiddleware */
 
-// export const addQuestionSetListeners = (startListening: AppStartListening) => {
-//     startListening({
-//         actionCreator: setOptionSelected,
-//         effect: (_, { getState, dispatch }) => {
-//             const state = getState();
-//             const isDone = selectIsDone(state);
-//             if (!isDone) return;
+export const addQuestionSetListeners = (startListening: AppStartListening) => {
+    startListening({
+        actionCreator: setOptionSelected,
+        effect: (_, { getState, dispatch }) => {
+            const state = getState();
+            const isDone = selectIsDone(state);
+            if (!isDone) return;
 
-//             // set result
-//             const isRight = selectIsRight(state);
-//             const questionSetId = selectCurrentQuestionSet(state)?.id;
+            // set result
+            const isRight = selectIsRight(state);
+            const questionSetId = selectCurrentQuestionSet(state)?.id;
 
-//             if (!questionSetId) {
-//                 console.error("questionSetId 为 undefined");
-//                 return;
-//             }
+            if (!questionSetId) {
+                console.error("questionSetId 为 undefined");
+                return;
+            }
 
-//             const practiceMode = state.questionSet.practiceMode;
+            const practiceMode = state.questionSet.practiceMode;
 
-//             switch (practiceMode) {
-//                 case PracticeMode.Chapter:
-//                     dispatch(doneInChapter(questionSetId, isRight));
-//                     break;
-//                 default:
-//                     console.log(`unhandled practice mode: ${practiceMode}`);
-//             }
-//         }
-//     });
-// };
+            switch (practiceMode) {
+                case PracticeMode.Chapter:
+                    dispatch(doneInChapter(questionSetId, isRight));
+                    break;
+                default:
+                    console.log(`unhandled practice mode: ${practiceMode}`);
+            }
+        }
+    });
+};

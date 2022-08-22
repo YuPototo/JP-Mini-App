@@ -10,18 +10,16 @@ type Props = {
 export default function ResultBall({ questionSetResult, index }: Props) {
     const { result } = questionSetResult
 
-    const backgroundColor = 'red'
+    const backgroundColor = {
+        [Result.Right]: '#00b300',
+        [Result.Wrong]: '#b30000',
+        [Result.NoRecord]: '#b3b3b3',
+    }
+
     return (
         <View
-            // className={clsx(
-            //     'm-3 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full',
-            //     {
-            //         'bg-green-300': result === Result.Right,
-            //         'bg-red-300': result === Result.Wrong,
-            //         'bg-gray-300': result === Result.NoRecord,
-            //     }
-            // )}
-            style={{backgroundColor}}
+
+            style={{backgroundColor: backgroundColor[result]}}
         >
             {index + 1}
         </View>

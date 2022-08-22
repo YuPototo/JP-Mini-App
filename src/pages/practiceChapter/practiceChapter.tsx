@@ -1,22 +1,22 @@
 import { Button, View } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
     incQuestionSetIndex,
     setChapterId,
     setQuestionSetIndex
-} from "../../features/practiceChapter/practiceChapterSlice";
-import { useGetChapterQuery } from "../../features/practiceChapter/chapterSerivce";
-import QuestionSetSkeleton from "../../features/questionSet/components/QuestionSetSkeleton";
-import { PracticeMode } from "../../features/questionSet/questionSetTypes";
-import QuestionSet from "../../features/questionSet/components/QuestionSet";
+} from "@/features/practiceChapter/practiceChapterSlice";
+import { useGetChapterQuery } from "@/features/practiceChapter/chapterSerivce";
+import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSkeleton";
+import { PracticeMode } from "@/features/questionSet/questionSetTypes";
+import QuestionSet from "@/features/questionSet/components/QuestionSet";
 import {
     fillOptionsThunk,
     selectIsDone
-} from "../../features/questionSet/questionSetSlice";
+} from "@/features/questionSet/questionSetSlice";
 import Taro from "@tarojs/taro";
-import pageNames from "../../routes";
+import pageNames from "@/routes/pageNames";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
@@ -57,7 +57,7 @@ export default function PracticeChapterPage() {
     const questionSetId = questionSets[questionSetIndex];
 
     const handleFinishChapter = () => {
-        Taro.navigateTo({
+        Taro.redirectTo({
             url: `${pageNames.chapterResult}?chapterId=${chapterId}`
         });
     };

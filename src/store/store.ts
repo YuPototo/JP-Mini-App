@@ -1,10 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { splitApi } from "./query/splitApi";
+import listenerMiddleware from "./listenerMiddleware";
 
-import bookListReducer from "../features/books/booksSlice";
-import practiceChapterReducer from "../features/practiceChapter/practiceChapterSlice";
-import questionSetReducer from "../features/questionSet/questionSetSlice";
+import bookListReducer from "@/features/books/booksSlice";
+import practiceChapterReducer from "@/features/practiceChapter/practiceChapterSlice";
+import questionSetReducer from "@/features/questionSet/questionSetSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
@@ -16,7 +17,9 @@ const rootReducer = combineReducers({
 export const store = configureStore({
     reducer: rootReducer,
     middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(splitApi.middleware)
+        getDefaultMiddleware()
+            .prepend(listenerMiddleware.middleware)
+            .concat(splitApi.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;

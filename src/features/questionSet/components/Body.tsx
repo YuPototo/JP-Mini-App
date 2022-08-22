@@ -1,4 +1,4 @@
-import RichTextRenderer from "../../../utils/renderer";
+import RichTextRenderer from "@/utils/renderer";
 
 export default function Body({ body }: { body?: string }) {
     if (!body) return null;

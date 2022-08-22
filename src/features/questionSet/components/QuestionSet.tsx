@@ -1,6 +1,6 @@
 import { useGetQuestionSetQuery } from "../questionSetService";
 import QuestionSetSkeleton from "./QuestionSetSkeleton";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
     selectIsRight,
     selectIsDone,

@@ -1,10 +1,10 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useAppSelector } from "../../../store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import BookCard from "./BookCard";
 import { useGetBooksQuery } from "../booksService";
 import { selectBooksByCategory } from "../booksSlice";
-import pageNames from "../../../routes";
+import pageNames from "@/routes/pageNames";
 
 export default function BookList() {
     useGetBooksQuery();

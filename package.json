@@ -36,6 +36,7 @@
     "@tarojs/shared": "3.5.1",
     "@tarojs/taro": "3.5.1",
     "@tarojs/taro-h5": "3.5.1",
+    "abortcontroller-polyfill": "^1.7.3",
     "clsx": "^1.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

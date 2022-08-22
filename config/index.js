@@ -1,3 +1,5 @@
+import path from "path";
+
 const config = {
     projectName: "wx",
     date: "2022-7-31",
@@ -40,6 +42,12 @@ const config = {
                 }
             }
         }
+    },
+    alias: {
+        "@/features": path.resolve(__dirname, "..", "src/features"),
+        "@/utils": path.resolve(__dirname, "..", "src/utils"),
+        "@/store": path.resolve(__dirname, "..", "src/store"),
+        "@/routes": path.resolve(__dirname, "..", "src/routes")
     }
 };
 

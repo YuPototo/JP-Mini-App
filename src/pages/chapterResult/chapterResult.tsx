@@ -1,9 +1,10 @@
 import { View, Text } from "@tarojs/components";
-import { useRouter } from "@tarojs/taro";
-import { useAppSelector } from "../../store/hooks";
-import { selectNextInfo } from "../../features/books/booksService";
+import { useRouter, navigateTo } from "@tarojs/taro";
+import { useAppSelector } from "@/store/hooks";
+import { selectNextInfo } from "@/features/books/booksService";
 import { useEffect } from "react";
-import ResultBall from "../../features/practiceChapter/ResultBall";
+import ResultBall from "@/features/practiceChapter/ResultBall";
+import pageNames from "@/routes/pageNames";
 
 export default function chapterResult() {
     const router = useRouter();
@@ -23,7 +24,14 @@ export default function chapterResult() {
         <View>
             <Text>做题结果</Text>
             {results.map((result, index) => (
-                <View key={index} onClick={() => console.log("todo")}>
+                <View
+                    key={index}
+                    onClick={() =>
+                        navigateTo({
+                            url: `${pageNames.practiceReview}?questionSetId=${result.questionSetId}`
+                        })
+                    }
+                >
                     <ResultBall questionSetResult={result} index={index} />
                 </View>
             ))}

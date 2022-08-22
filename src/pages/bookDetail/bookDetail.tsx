@@ -1,12 +1,9 @@
 import { View, Text } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-    selectBookById,
-    setCurrentBookId
-} from "../../features/books/booksSlice";
-import BookCard from "../../features/books/components/BookCard";
-import Content from "../../features/books/components/Content";
+import { selectBookById, setCurrentBookId } from "@/features/books/booksSlice";
+import BookCard from "@/features/books/components/BookCard";
+import Content from "@/features/books/components/Content";
 import { useEffect } from "react";
 
 export default function BookDetailPage() {

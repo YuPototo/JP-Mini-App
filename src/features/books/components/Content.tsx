@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import { useState } from "react";
 import { useGetBookContentQuery } from "../booksService";
 import { IChapter, ISection } from "../booksTypes";
-import pageNames from "../../../routes";
+import pageNames from "@/routes/pageNames";
 
 type Props = {
     bookId: string;

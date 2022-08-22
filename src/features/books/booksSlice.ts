@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store/store";
+import type { RootState } from "@/store/store";
 import type { IBook, ICategory, CategoryKey } from "./booksTypes";
 import { booksApi } from "./booksService";
 

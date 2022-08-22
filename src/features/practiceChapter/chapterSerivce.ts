@@ -1,4 +1,4 @@
-import { splitApi } from "../../store/query/splitApi";
+import { splitApi } from "@/store/query/splitApi";
 
 interface ChapterInfo {
     id: string;

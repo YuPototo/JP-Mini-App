@@ -1,5 +1,5 @@
-import { RootState } from "../../store/store";
-import { splitApi } from "../../store/query/splitApi";
+import { RootState } from "@/store/store";
+import { splitApi } from "@/store/query/splitApi";
 import type { ICategory, IBook, ISection, IChapter} from "./booksTypes";
 
 export const booksApi = splitApi.injectEndpoints({
