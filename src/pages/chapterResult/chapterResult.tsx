@@ -1,5 +1,5 @@
 import { View, Text, Button } from "@tarojs/components";
-import { useRouter, navigateTo, redirectTo } from "@tarojs/taro";
+import { useRouter, navigateTo, redirectTo, navigateBack } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
     booksApi,
@@ -61,12 +61,14 @@ function NextInfo({
         }
     }, [nextInfo.resultType, bookId, dispatch]);
 
-    const toHomePage = () => redirectTo({ url: routes.homePage() });
-
     const toNextChapter = (chapterId: string) =>
         redirectTo({
             url: routes.practiceChapter(chapterId)
         });
+
+    const ToBookDetailButton = (
+        <Button onClick={() => navigateBack()}>返回目录</Button>
+    );
 
     if (nextInfo.resultType === NextInfoResultType.NoContent) {
         // 不处理，等待 content 获取结果
@@ -78,7 +80,6 @@ function NextInfo({
         return (
             <View>
                 <Text>出错了：{nextInfo.errorMsg}</Text>
-                <Button onClick={toHomePage}>返回首页</Button>
             </View>
         );
     }
@@ -87,7 +88,7 @@ function NextInfo({
         return (
             <View>
                 <View>恭喜你，完成了所有练习</View>
-                <Button onClick={toHomePage}>返回首页</Button>
+                {ToBookDetailButton}
             </View>
         );
     }
@@ -99,7 +100,7 @@ function NextInfo({
                 <Button onClick={() => toNextChapter(nextInfo.nextChapter.id)}>
                     继续做题
                 </Button>
-                <Button onClick={toHomePage}>返回首页</Button>
+                {ToBookDetailButton}
             </View>
         );
     }
@@ -114,7 +115,7 @@ function NextInfo({
                 <Button onClick={() => toNextChapter(nextInfo.nextChapter.id)}>
                     继续做题
                 </Button>
-                <Button onClick={toHomePage}>返回首页</Button>
+                {ToBookDetailButton}
             </View>
         );
     }

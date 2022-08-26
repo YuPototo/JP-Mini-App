@@ -1,9 +1,10 @@
-import { Button, View } from "@tarojs/components";
+import { Button, View, Text } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
     incQuestionSetIndex,
+    initResults,
     setChapterId,
     setQuestionSetIndex
 } from "@/features/practiceChapter/practiceChapterSlice";
@@ -17,14 +18,13 @@ import {
 } from "@/features/questionSet/questionSetSlice";
 import Taro from "@tarojs/taro";
 import routes from "@/routes/routes";
+import { useGetQuestionSetQuery } from "@/features/questionSet/questionSetService";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    /** tech debt
-     * * 移除 as keyword
-     */
+    // tech debt：移除 as
     const { chapterId } = router.params as { chapterId: string };
 
     useEffect(() => {
@@ -47,14 +47,52 @@ export default function PracticeChapterPage() {
         state => state.practiceChapter.questionSetIndex
     );
 
-    const isDone = useAppSelector(selectIsDone);
-    const isQuestionSetError = useAppSelector(
-        state => state.questionSet.isError
-    );
-
     const questionSets = chapterInfo?.questionSets || [];
-
     const questionSetId = questionSets[questionSetIndex];
+
+    // init results
+    useEffect(() => {
+        if (isQuerySuccess) {
+            dispatch(initResults(questionSets.length));
+        }
+    }, [dispatch, chapterId, isQuerySuccess, questionSets.length]);
+
+    const {
+        isFetching: isFetchingQuestionSet,
+        isLoading: isLoadingQuestionSet
+    } = useGetQuestionSetQuery(questionSetId!, {
+        skip: questionSetId === undefined
+    });
+
+    if (isLoadingChapterInfo) {
+        return (
+            <>
+                <QuestionInfoSkeleton />
+
+                <QuestionSetSkeleton />
+            </>
+        );
+    }
+
+    if (isQueryError) {
+        return <Text>获取 chapter 信息出错：{JSON.stringify(error)}</Text>;
+    }
+
+    const foundQuestionSetId = questionSetId !== undefined;
+
+    if (!foundQuestionSetId) {
+        return (
+            <Text>
+                出错了：chapter.questionSetIds 里找不到第{questionSetIndex}个
+                element
+            </Text>
+        );
+    }
+
+    const showBtnArea = isQuerySuccess && !isLoadingQuestionSet;
+    const showChapterInfo = chapterInfo && questionSetIndex === 0;
+    const showQuestionSet = isQuerySuccess && foundQuestionSetId;
+    const disableBtnArea = isFetchingQuestionSet;
 
     const handleFinishChapter = () => {
         Taro.redirectTo({
@@ -62,105 +100,105 @@ export default function PracticeChapterPage() {
         });
     };
 
-    if (isQueryError) {
-        return <div>出错了：{JSON.stringify(error)}</div>;
-    }
-
     return (
         <View>
-            <ChapterTitle
-                isLoading={isLoadingChapterInfo}
-                title={chapterInfo?.title}
-            />
-            <ChapterDesc
-                isLoading={isLoadingChapterInfo}
-                desc={chapterInfo?.desc}
-            />
+            {showChapterInfo && (
+                <ChapterInfo
+                    title={chapterInfo.title}
+                    desc={chapterInfo.desc}
+                />
+            )}
 
-            {isLoadingChapterInfo && <QuestionSetSkeleton />}
+            {showQuestionSet && (
+                <QuestionSet
+                    questionSetId={questionSetId}
+                    practiceMode={PracticeMode.Chapter}
+                />
+            )}
 
-            {isQuerySuccess &&
-                (questionSetId ? (
-                    <QuestionSet
-                        questionSetId={questionSetId}
-                        practiceMode={PracticeMode.Chapter}
-                    />
-                ) : (
-                    <div>
-                        出错了：chapter 内没有第{questionSetIndex}个 question
-                        set id
-                    </div>
-                ))}
+            {showBtnArea && (
+                <OperationArea
+                    questionSetIndex={questionSetIndex}
+                    questionSets={questionSets}
+                    disabled={disableBtnArea}
+                    handleFinishChapter={handleFinishChapter}
+                />
+            )}
+        </View>
+    );
+}
 
-            {noLastQuestionSet(questionSetIndex) || (
-                <Button onClick={() => dispatch(incQuestionSetIndex(-1))}>
+function QuestionInfoSkeleton() {
+    return (
+        <View>
+            <Text>Question Info Skeleton: todo</Text>
+        </View>
+    );
+}
+
+function ChapterInfo({ title, desc }: { title: string; desc?: string }) {
+    return (
+        <View>
+            <Text>{title}</Text>
+            {desc && <Text>{desc}</Text>}
+        </View>
+    );
+}
+
+function OperationArea({
+    questionSetIndex,
+    questionSets,
+    disabled,
+    handleFinishChapter
+}: {
+    questionSetIndex: number;
+    questionSets: string[];
+    disabled: boolean;
+    handleFinishChapter: () => void;
+}) {
+    const dispatch = useAppDispatch();
+    const isDone = useAppSelector(selectIsDone);
+
+    const isQuestionSetError = useAppSelector(
+        state => state.questionSet.isError
+    );
+
+    const hasNext = questionSetIndex < questionSets.length - 1;
+    const hasPreviousQuestionSet = questionSetIndex > 0;
+
+    const handleToNext = () => dispatch(incQuestionSetIndex(1));
+
+    const handleContinue = () => {
+        hasNext ? handleToNext() : handleFinishChapter();
+    };
+
+    return (
+        <>
+            {hasPreviousQuestionSet && (
+                <Button
+                    onClick={() => dispatch(incQuestionSetIndex(-1))}
+                    disabled={disabled}
+                >
                     上一题
                 </Button>
             )}
 
             {isDone || (
-                <Button onClick={() => dispatch(fillOptionsThunk())}>
+                <Button
+                    onClick={() => dispatch(fillOptionsThunk())}
+                    disabled={disabled}
+                >
                     答案
                 </Button>
             )}
 
-            {showNextBtn(isDone, isQuestionSetError) &&
-                hasNextQuestionSet(questionSetIndex, questionSets) && (
-                    <Button onClick={() => dispatch(incQuestionSetIndex(1))}>
-                        下一题
-                    </Button>
-                )}
-
-            {showNextBtn(isDone, isQuestionSetError) &&
-                isLastQuestionSet(questionSetIndex, questionSets) && (
-                    <Button onClick={handleFinishChapter}>完成本章</Button>
-                )}
-        </View>
+            {showNextBtn(isDone, isQuestionSetError) && (
+                <Button onClick={handleContinue} disabled={disabled}>
+                    {hasNext ? "下一题" : "完成本节"}
+                </Button>
+            )}
+        </>
     );
-}
-
-function ChapterTitle({
-    isLoading,
-    title
-}: {
-    isLoading: boolean;
-    title?: string;
-}) {
-    if (isLoading) {
-        return <View>Todo: skeleton</View>;
-    }
-
-    return <View>{title}</View>;
-}
-
-function ChapterDesc({
-    isLoading,
-    desc
-}: {
-    isLoading: boolean;
-    desc?: string;
-}) {
-    if (isLoading) {
-        return <View>todo: loading skeleton</View>;
-    }
-
-    if (desc) {
-        return <View>{desc}</View>;
-    }
-
-    return <></>;
-}
-
-function noLastQuestionSet(qSetIndex: number) {
-    return qSetIndex === 0;
-}
-
-function hasNextQuestionSet(qSetIndex: number, questionSets: string[]) {
-    return qSetIndex < questionSets.length - 1;
-}
-
-function isLastQuestionSet(qSetIndex: number, questionSets: string[]) {
-    return qSetIndex === questionSets.length - 1;
 }
 
 function showNextBtn(isDone: boolean, isQuestionSetError: boolean) {
