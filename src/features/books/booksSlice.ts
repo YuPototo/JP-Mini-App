@@ -28,28 +28,40 @@ export const bookListSlice = createSlice({
             state,
             action: PayloadAction<{ categoryLevel: number; key: string }>
         ) => {
-            const { categoryLevel: index, key } = action.payload;
+            const { categoryLevel: index, key } = action.payload
 
             if (index > state.selectedCategoryKeys.length) {
                 console.error(
                     `setCategoryKey: index ${index} is larger than selectedCategoryKeys.length ${state.selectedCategoryKeys.length}`
-                );
-                return;
+                )
+                return
             }
 
             if (index === 0) {
-                state.selectedCategoryKeys = [key];
+                if (state.selectedCategoryKeys[0] === key) {
+                    state.selectedCategoryKeys = [] // 反选
+                } else {
+                    state.selectedCategoryKeys = [key]
+                }
             } else if (index === 1) {
-                state.selectedCategoryKeys = [
-                    state.selectedCategoryKeys[0],
-                    key,
-                ];
+                if (state.selectedCategoryKeys[1] === key) {
+                    state.selectedCategoryKeys.splice(1, 1)
+                } else {
+                    state.selectedCategoryKeys = [
+                        state.selectedCategoryKeys[0] as string, // Tech debt: remove as
+                        key,
+                    ]
+                }
             } else if (index === 2) {
-                state.selectedCategoryKeys = [
-                    state.selectedCategoryKeys[0],
-                    state.selectedCategoryKeys[1],
-                    key,
-                ];
+                if (state.selectedCategoryKeys[2] === key) {
+                    state.selectedCategoryKeys.splice(2, 1)
+                } else {
+                    state.selectedCategoryKeys = [
+                        state.selectedCategoryKeys[0] as string, // Tech debt: remove as
+                        state.selectedCategoryKeys[1] as string,
+                        key,
+                    ]
+                }
             }
         },
     },
