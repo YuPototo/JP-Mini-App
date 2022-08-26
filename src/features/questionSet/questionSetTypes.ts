@@ -18,6 +18,7 @@ export interface IQuestion {
 
 export interface IAudio {
     key: string;
+    title: string;
     transcription?: string;
 }
 

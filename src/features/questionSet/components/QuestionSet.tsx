@@ -12,6 +12,7 @@ import { PracticeMode } from "../questionSetTypes";
 import Body from "./Body";
 import Questions from "./Questions";
 import Explanation from "./Explanation";
+import AudioPlayer from "./AudioPlayer";
 import { View } from "@tarojs/components";
 
 type Props = {
@@ -55,10 +56,13 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
         <View style={{ backgroundColor: isFetching ? "lightBlue" : "" }}>
             {questionSet ? (
                 <>
-                    {/* <Audio audio={questionSet.audio} /> */}
                     <Body body={questionSet.body} />
                     <Questions questions={questionSet.questions} />
                     <Explanation explanation={questionSet.explanation} />
+                    {questionSet.audio && (
+                        <AudioPlayer audio={questionSet.audio} />
+                    )}
+
                     {isDone &&
                         (isRight ? <View>正确</View> : <View>错误</View>)}
                 </>
@@ -70,8 +74,3 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
         </View>
     );
 }
-
-// function Audio({ audio }: { audio?: IAudio }) {
-//     if (!audio) return null;
-//     return <audio controls src={audio.key} />;
-// }
