@@ -11,7 +11,8 @@ export const chapterApi = splitApi.injectEndpoints({
     endpoints: build => ({
         getChapter: build.query<ChapterInfo, string>({
             query: chapterId => `chapters/${chapterId}`,
-            transformResponse: (res: { chapter: ChapterInfo }) => res.chapter
+            transformResponse: (res: { chapter: ChapterInfo }) => res.chapter,
+            keepUnusedDataFor: 300
         })
     })
 });
