@@ -10,6 +10,10 @@ export default function ParagraphTwo() {
         {
             type: "paragraph",
             children: [{ text: "This is another paragraph" }]
+        },
+        {
+            type: "paragraph",
+            children: [{ text: "空格     空格后面（应该有多个空格）" }]
         }
     ];
 

@@ -4,6 +4,7 @@ import ComplexThree from "./examples/ComplexThree";
 import ComplexTwo from "./examples/ComplexTwo";
 import FillerExample from "./examples/FillerExample";
 import ImageExmaple from "./examples/ImageExample";
+import ImageExmaple2 from "./examples/ImageExample2";
 import Paragraph from "./examples/ParagraphExample";
 import ParagraphTwo from "./examples/ParagraphExample2";
 import BoldText from "./examples/TextBold";
@@ -27,6 +28,7 @@ export default function RendererExamplePage() {
             <TipSimple />
             <TipSimpleTwo />
             <ImageExmaple />
+            <ImageExmaple2 />
             <ComplexOne />
             <ComplexTwo />
             <ComplexThree />

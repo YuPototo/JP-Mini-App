@@ -16,7 +16,17 @@ export default function Index() {
                     })
                 }
             >
-                To renderer
+                To Rich Text renderer
+            </Button>
+
+            <Button
+                onClick={() =>
+                    Taro.navigateTo({
+                        url: routes.play()
+                    })
+                }
+            >
+                To Play Page
             </Button>
 
             <BookList />

@@ -1,12 +1,13 @@
 import Example from "../Example";
 import RenderWrapper from "../RenderWrapper";
 
-export default function ImageExmaple() {
+export default function ImageExmaple2() {
     const baseData = [
         {
             type: "image",
-            alt: "这是 alt",
-            src: "https://picsum.photos/200/300",
+            alt: "解析图片",
+            src:
+                "https://assets.riyu.love/images/not_exist_not_exist_not_exist.jpg",
             children: [{ text: "" }]
         }
     ];
@@ -14,7 +15,7 @@ export default function ImageExmaple() {
     const data = JSON.stringify(baseData);
 
     return (
-        <Example title="Image">
+        <Example title="图片不存在的例子">
             <RenderWrapper data={data} />
         </Example>
     );

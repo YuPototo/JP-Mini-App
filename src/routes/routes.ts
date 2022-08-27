@@ -4,7 +4,8 @@ const pageNames = {
     rendererExample: "/pages/rendererExample/rendererExample",
     practiceChapter: "/pages/practiceChapter/practiceChapter",
     practiceReview: "/pages/practiceReview/practiceReview",
-    chapterResult: "/pages/chapterResult/chapterResult"
+    chapterResult: "/pages/chapterResult/chapterResult",
+    play: "/pages/play/play"
 };
 
 export const pageList = [
@@ -13,7 +14,8 @@ export const pageList = [
     removeFirstCharacter(pageNames.rendererExample),
     removeFirstCharacter(pageNames.practiceChapter),
     removeFirstCharacter(pageNames.practiceReview),
-    removeFirstCharacter(pageNames.chapterResult)
+    removeFirstCharacter(pageNames.chapterResult),
+    removeFirstCharacter(pageNames.play)
 ];
 
 const routes = {
@@ -25,7 +27,8 @@ const routes = {
         `${pageNames.chapterResult}?chapterId=${chapterId}`,
     practiceReview: (questionSetId: string) =>
         `${pageNames.practiceReview}?questionSetId=${questionSetId}`,
-    rendererExample: () => pageNames.rendererExample
+    rendererExample: () => pageNames.rendererExample,
+    play: () => pageNames.play
 };
 
 export default routes;

@@ -5,7 +5,12 @@ export default function Paragraph() {
     const baseData = [
         {
             type: "paragraph",
-            children: [{ text: "This is a paragraph" }]
+            children: [
+                {
+                    text:
+                        "This is a paragraph and the text is pretty long, This is a paragraph and the text is pretty long"
+                }
+            ]
         }
     ];
 
