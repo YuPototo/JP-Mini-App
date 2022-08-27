@@ -14,6 +14,7 @@ import Questions from "./Questions";
 import Explanation from "./Explanation";
 import AudioPlayer from "./AudioPlayer";
 import { View } from "@tarojs/components";
+import Transcription from "./Transcription";
 
 type Props = {
     questionSetId: string;
@@ -62,7 +63,11 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
                     {questionSet.audio && (
                         <AudioPlayer audio={questionSet.audio} />
                     )}
-
+                    {isDone && (
+                        <Transcription
+                            transcription={questionSet.audio?.transcription}
+                        />
+                    )}
                     {isDone &&
                         (isRight ? <View>正确</View> : <View>错误</View>)}
                 </>
