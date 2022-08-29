@@ -6,12 +6,14 @@ import listenerMiddleware from "./listenerMiddleware";
 import bookListReducer from "@/features/books/booksSlice";
 import practiceChapterReducer from "@/features/practiceChapter/practiceChapterSlice";
 import questionSetReducer from "@/features/questionSet/questionSetSlice";
+import userReduer from "@/features/user/userSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
     bookList: bookListReducer,
     practiceChapter: practiceChapterReducer,
-    questionSet: questionSetReducer
+    questionSet: questionSetReducer,
+    user: userReduer
 });
 
 export const store = configureStore({

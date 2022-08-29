@@ -32,7 +32,7 @@ interface WxRequestArgs {
 interface QueryArgs {
     url: string;
     method: HttpMethods;
-    data?: unknown;
+    body?: unknown;
     header?: Header;
     info?: any; // 任何我想往下传的信息
 }
@@ -104,7 +104,7 @@ export function wxRequestBaseQuery({
         let {
             url,
             method = "GET" as const,
-            data = undefined,
+            body = undefined,
             info = undefined,
         } = typeof arg == "string" ? { url: arg } : arg;
 
@@ -113,7 +113,7 @@ export function wxRequestBaseQuery({
         let wxRequestArgs: WxRequestArgs = {
             url: baseUrl + url,
             method,
-            data,
+            data: body,
         };
 
         if (prepareHeaders) {

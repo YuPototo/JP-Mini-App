@@ -1,7 +1,21 @@
-import { pageList } from "./routes/routes";
+import { pageList, removeFirstCharacter, pageNames } from "./routes/routes";
+
+// * 设置修改时需要重新 build
 
 export default defineAppConfig({
     pages: pageList,
+    tabBar: {
+        list: [
+            {
+                pagePath: removeFirstCharacter(pageNames.homePage),
+                text: "首页"
+            },
+            {
+                pagePath: removeFirstCharacter(pageNames.mine),
+                text: "我"
+            }
+        ]
+    },
     window: {
         backgroundTextStyle: "light",
         navigationBarBackgroundColor: "#fff",

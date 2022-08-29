@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./app.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import "./utils/abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
+import { useAppDispatch } from "./store/hooks";
+import { getLocalUserInfo } from "./features/user/userSlice";
 
 const InnerApp: React.FC<{ children: React.ReactNode }> = props => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(getLocalUserInfo());
+    }, []);
     return <>{props.children}</>;
 };
 
