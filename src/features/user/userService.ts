@@ -1,8 +1,9 @@
 import { splitApi } from "../../store/query/splitApi";
 import { IUser } from "./userTypes";
 import storageService from "../../utils/storageService";
-import Taro from "@tarojs/taro";
 import { getErrorMessage } from "@/utils/errorHandler";
+import { loginThunk } from "./userSlice";
+import { showLoginFailureModal } from "./showLoginFailureModal";
 
 interface LoginRes {
     token: string;
@@ -13,22 +14,21 @@ export const userApi = splitApi.injectEndpoints({
     endpoints: build => ({
         login: build.mutation<LoginRes, string>({
             query: (code: string) => ({
-                url: "/users/login/wx/miniApp2",
+                url: "/users/login/wx/miniApp",
                 method: "POST",
                 body: { loginCode: code }
             }),
-            async onQueryStarted(_, { queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     storageService.setUserInfo(data.token, data.user.displayId);
                 } catch (err) {
-                    // todo: 获取 err 内容
-                    const message = `登录失败: ${getErrorMessage(err)}`;
-                    console.error(message);
-                    Taro.showModal({
-                        title: "登录失败",
-                        content: message
-                    });
+                    const maybeMessage = err.error?.data?.message;
+                    const errMessage = maybeMessage ?? getErrorMessage(err);
+                    console.error("登录失败 ", errMessage);
+                    showLoginFailureModal(errMessage, () =>
+                        dispatch(loginThunk())
+                    );
                 }
             }
         })

@@ -3,16 +3,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import type { AppThunk, RootState } from '../../store/store'
 import storageService from '../../utils/storageService'
-import { userApi } from './userService'
+import { showLoginFailureModal } from './showLoginFailureModal'
+import {  userApi } from './userService'
 
 export interface UserSliceState {
     token: string | null
     displayId: string | null
+    isLoginFailure: boolean | null
 }
 
 const initialState: UserSliceState = {
     token: null,
     displayId: null,
+    isLoginFailure: null
 }
 
 export const userSlice = createSlice({
@@ -32,7 +35,13 @@ export const userSlice = createSlice({
             (state, { payload }) => {
                 state.token = payload.token
                 state.displayId = payload.user.displayId
+                state.isLoginFailure = false
             },
+        ).addMatcher(
+            userApi.endpoints.login.matchRejected,
+            (state) => {
+                state.isLoginFailure = true
+            }
         )
     },
 })
@@ -63,15 +72,12 @@ export const loginThunk = () : AppThunk => async (dispatch) => {
     try {
         const res = await Taro.login()
         code = res.code
-        console.log(code)
     } catch (err) {
-        const message = `微信返回code错误:${getErrorMessage(err)}`
+        const message = `请求微信登录code错误:${getErrorMessage(err)}`
         console.error(message)
-        Taro.showToast({
-            title: message,
-            icon: 'none',
-            duration: 2000
-          })
+        showLoginFailureModal(message, () =>
+            dispatch(loginThunk())
+        )
         return;
     }
 
