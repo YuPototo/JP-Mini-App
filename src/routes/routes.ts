@@ -6,7 +6,8 @@ export const pageNames = {
     practiceReview: "/pages/practiceReview/practiceReview",
     chapterResult: "/pages/chapterResult/chapterResult",
     play: "/pages/play/play",
-    mine: "/pages/mine/mine"
+    mine: "/pages/mine/mine",
+    bookShelf: "/pages/bookShelf/bookShelf"
 };
 
 export const pageList = [
@@ -17,10 +18,11 @@ export const pageList = [
     removeFirstCharacter(pageNames.practiceReview),
     removeFirstCharacter(pageNames.chapterResult),
     removeFirstCharacter(pageNames.play),
-    removeFirstCharacter(pageNames.mine)
+    removeFirstCharacter(pageNames.mine),
+    removeFirstCharacter(pageNames.bookShelf)
 ];
 
-const routes = {
+const routesBuilder = {
     homePage: () => pageNames.homePage,
     bookDetail: (bookId: string) => `${pageNames.bookDetail}?bookId=${bookId}`,
     practiceChapter: (chapterId: string) =>
@@ -31,10 +33,11 @@ const routes = {
         `${pageNames.practiceReview}?questionSetId=${questionSetId}`,
     rendererExample: () => pageNames.rendererExample,
     play: () => pageNames.play,
-    mine: () => pageNames.mine
+    mine: () => pageNames.mine,
+    bookShelf: () => pageNames.bookShelf
 };
 
-export default routes;
+export default routesBuilder;
 
 export function removeFirstCharacter(str: string) {
     return str.substring(1);

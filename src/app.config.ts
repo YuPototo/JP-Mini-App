@@ -11,6 +11,10 @@ export default defineAppConfig({
                 text: "首页"
             },
             {
+                pagePath: removeFirstCharacter(pageNames.bookShelf),
+                text: "书架"
+            },
+            {
                 pagePath: removeFirstCharacter(pageNames.mine),
                 text: "我"
             }
