@@ -67,6 +67,11 @@ export const getLocalUserInfo = (): AppThunk => (dispatch) => {
     }
 }
 
+export const logoutThunk = (): AppThunk => async(dispatch) => {
+    dispatch(setToken(null))
+    dispatch(setDisplayId(null))
+}
+
 export const loginThunk = () : AppThunk => async (dispatch) => {
     let code: string
     try {
