@@ -26,7 +26,7 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>; //https://github.com/reduxjs/redux/issues/4267
 export type AppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
     RootState,
