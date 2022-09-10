@@ -9,7 +9,7 @@ import { extractQueyError } from "@/store/utils/errorHandling";
 export default function CategoryNav() {
     const { isLoading, error } = useGetCategoriyesQuery();
 
-    const topCategories = useAppSelector((state) => state.bookList.categories);
+    const topCategories = useAppSelector((state) => state.books.categories);
 
     return (
         <View className="my-4">
@@ -39,7 +39,7 @@ function CategoryList({ categories, categoryLevel }: CategoryListProps) {
     const children = useAppSelector(selectChildrenByLevel(categoryLevel));
 
     const selectedCategoryKey = useAppSelector(
-        (state) => state.bookList.selectedCategoryKeys?.[categoryLevel]
+        (state) => state.books.selectedCategoryKeys?.[categoryLevel]
     );
 
     const handleClickCategory = (key: string) => {

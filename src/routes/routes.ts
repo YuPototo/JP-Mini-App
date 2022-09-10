@@ -1,13 +1,13 @@
 export const pageNames = {
     homePage: "/pages/index/index",
-    bookDetail: "/pages/bookDetail/bookDetail",
-    rendererExample: "/pages/rendererExample/rendererExample",
-    practiceChapter: "/pages/practiceChapter/practiceChapter",
-    practiceReview: "/pages/practiceReview/practiceReview",
-    chapterResult: "/pages/chapterResult/chapterResult",
-    play: "/pages/play/play",
-    mine: "/pages/mine/mine",
-    bookShelf: "/pages/bookShelf/bookShelf"
+    bookDetail: "/pages/bookDetail/bookDetailPage",
+    rendererExample: "/pages/rendererExample/rendererExamplePage",
+    practiceChapter: "/pages/practiceChapter/practiceChapterPage",
+    practiceReview: "/pages/practiceReview/practiceReviewPage",
+    chapterResult: "/pages/chapterResult/chapterResultPage",
+    play: "/pages/play/playPage",
+    mine: "/pages/mine/minePage",
+    bookShelf: "/pages/bookShelf/bookShelfPage"
 };
 
 export const pageList = [
@@ -22,8 +22,8 @@ export const pageList = [
     removeFirstCharacter(pageNames.bookShelf)
 ];
 
-const routesBuilder = {
-    homePage: () => pageNames.homePage,
+const routes = {
+    home: () => pageNames.homePage,
     bookDetail: (bookId: string) => `${pageNames.bookDetail}?bookId=${bookId}`,
     practiceChapter: (chapterId: string) =>
         `${pageNames.practiceChapter}?chapterId=${chapterId}`,
@@ -37,7 +37,7 @@ const routesBuilder = {
     bookShelf: () => pageNames.bookShelf
 };
 
-export default routesBuilder;
+export default routes;
 
 export function removeFirstCharacter(str: string) {
     return str.substring(1);

@@ -13,7 +13,7 @@ import {
 } from "@/features/bookFav/bookFavService";
 import Taro from "@tarojs/taro";
 import { useGetBooksQuery } from "@/features/books/booksService";
-import routesBuilder from "@/routes/routes";
+import routes from "@/routes/routes";
 import {
     useDeleteChapterDoneMutation,
     useGetChapterDoneQuery
@@ -80,7 +80,7 @@ function FavButton({ bookId }: { bookId: string }) {
         if (!isLogin) {
             Taro.showToast({ title: "请先登录", icon: "error" });
             setTimeout(() => {
-                Taro.switchTab({ url: routesBuilder.mine() });
+                Taro.switchTab({ url: routes.mine() });
             }, 1500);
         }
 

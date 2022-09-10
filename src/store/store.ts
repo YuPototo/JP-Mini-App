@@ -5,14 +5,14 @@ import listenerMiddleware from "./listenerMiddleware";
 import { authRejectionMiddleware } from "./middleware/authRejectionMiddleware";
 import { queryErrorMiddleware } from "./middleware/queryErrorMiddleware";
 
-import bookListReducer from "@/features/books/booksSlice";
+import booksReducer from "@/features/books/booksSlice";
 import practiceChapterReducer from "@/features/practiceChapter/practiceChapterSlice";
 import questionSetReducer from "@/features/questionSet/questionSetSlice";
 import userReduer from "@/features/user/userSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
-    bookList: bookListReducer,
+    books: booksReducer,
     practiceChapter: practiceChapterReducer,
     questionSet: questionSetReducer,
     user: userReduer

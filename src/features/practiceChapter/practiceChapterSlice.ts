@@ -97,7 +97,7 @@ export const doneInChapter =
         const isLogin = selectIsLogin(state)
         if (!isLogin) return
         if (questionSetIndex === questionSetIds.length - 1) {
-            const bookId = state.bookList.currentBookId
+            const bookId = state.books.currentBookId
             if (!bookId) {
                 console.error('doneInChapter: bookId is null')
             } else {

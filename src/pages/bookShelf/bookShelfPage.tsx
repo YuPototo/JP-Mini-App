@@ -2,7 +2,7 @@ import { useGetBookFavsQuery } from "@/features/bookFav/bookFavService";
 import { selectBookById } from "@/features/books/booksSlice";
 import BookCard from "@/features/books/components/BookCard";
 import { selectIsLogin } from "@/features/user/userSlice";
-import routesBuilder from "@/routes/routes";
+import routes from "@/routes/routes";
 import { useAppSelector } from "@/store/hooks";
 import { Button, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
@@ -19,7 +19,7 @@ export default function bookShelf() {
                     key={bookId}
                     onClick={() =>
                         Taro.navigateTo({
-                            url: routesBuilder.bookDetail(bookId)
+                            url: routes.bookDetail(bookId)
                         })
                     }
                 >
@@ -33,7 +33,7 @@ export default function bookShelf() {
                     <Button
                         onClick={() =>
                             Taro.switchTab({
-                                url: routesBuilder.homePage()
+                                url: routes.home()
                             })
                         }
                     >
