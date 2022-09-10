@@ -1,9 +1,13 @@
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetBookContentQuery } from "../booksService";
 import { IChapter, ISection } from "../booksTypes";
 import routes from "@/routes/routes";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLogin } from "@/features/user/userSlice";
+import { useGetChapterDoneQuery } from "@/features/chapterDone/chapterDoneService";
+import { selectContentProgress } from "../booksSlice";
 
 type Props = {
     bookId: string;
@@ -13,6 +17,20 @@ export default function Content({ bookId }: Props) {
     const [activeSectionIndex, setActiveSectionIndex] = useState(0);
     const { data: sections, isLoading } = useGetBookContentQuery(bookId);
 
+    const isLogin = useAppSelector(selectIsLogin);
+
+    const { data: chaptersDone } = useGetChapterDoneQuery(bookId, {
+        skip: !isLogin
+    });
+
+    const { openSectionIndex, nextChapterId } = useAppSelector(
+        selectContentProgress
+    );
+
+    useEffect(() => {
+        setActiveSectionIndex(openSectionIndex);
+    }, [openSectionIndex]);
+
     return (
         <View>
             {isLoading && <Text>加载练习目录...</Text>}
@@ -21,6 +39,8 @@ export default function Content({ bookId }: Props) {
                 sections.map((section, index) => (
                     <View key={section.id}>
                         <Section
+                            chaptersDone={chaptersDone}
+                            nextChapterId={nextChapterId}
                             section={section}
                             showChapter={index === activeSectionIndex}
                             onClickTitle={() => setActiveSectionIndex(index)}
@@ -34,10 +54,19 @@ export default function Content({ bookId }: Props) {
 type SectionProps = {
     section: ISection;
     showChapter: boolean;
+    nextChapterId?: string;
+
+    chaptersDone?: string[];
     onClickTitle: () => void;
 };
 
-function Section({ section, showChapter = false, onClickTitle }: SectionProps) {
+function Section({
+    section,
+    nextChapterId,
+    showChapter = false,
+    chaptersDone = [],
+    onClickTitle
+}: SectionProps) {
     const { title, chapters } = section;
 
     return (
@@ -47,7 +76,11 @@ function Section({ section, showChapter = false, onClickTitle }: SectionProps) {
                 <View className="">
                     {chapters.map(chapter => (
                         <View key={chapter.id}>
-                            <Chapter chapter={chapter} />
+                            <Chapter
+                                chapter={chapter}
+                                isNext={chapter.id === nextChapterId}
+                                isDone={chaptersDone?.includes(chapter.id)}
+                            />
                         </View>
                     ))}
                 </View>
@@ -57,10 +90,12 @@ function Section({ section, showChapter = false, onClickTitle }: SectionProps) {
 }
 
 type ChapterProps = {
+    isNext: boolean;
     chapter: IChapter;
+    isDone: boolean;
 };
 
-function Chapter({ chapter }: ChapterProps) {
+function Chapter({ chapter, isDone, isNext }: ChapterProps) {
     const toPractice = () => {
         Taro.navigateTo({
             url: routes.practiceChapter(chapter.id)
@@ -70,6 +105,8 @@ function Chapter({ chapter }: ChapterProps) {
     return (
         <View onClick={toPractice}>
             <Text>{chapter.title}</Text>
+            {isDone && <Text>完成</Text>}
+            {isNext && <Text>下一章</Text>}
         </View>
     );
 }
