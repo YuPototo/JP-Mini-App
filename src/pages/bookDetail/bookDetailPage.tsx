@@ -1,7 +1,7 @@
 import { View, Button } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { selectBookById, setCurrentBookId } from "@/features/books/booksSlice";
+import { selectBookById, bookViewed } from "@/features/books/booksSlice";
 import BookCard from "@/features/books/components/BookCard";
 import Content from "@/features/books/components/Content";
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ export default function BookDetailPage() {
     const { bookId } = router.params as { bookId: string };
 
     useEffect(() => {
-        dispatch(setCurrentBookId(bookId));
+        dispatch(bookViewed(bookId));
     }, [bookId, dispatch]);
 
     return (

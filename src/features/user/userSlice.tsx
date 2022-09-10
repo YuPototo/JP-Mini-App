@@ -1,9 +1,5 @@
-import { getErrorMessage } from '@/utils/errorHandler'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import Taro from '@tarojs/taro'
-import type { AppThunk, RootState } from '../../store/store'
-import storageService from '../../utils/storageService'
-import { showLoginFailureModal } from './showLoginFailureModal'
+import type {  RootState } from '../../store/store'
 import {  userApi } from './userService'
 
 export interface UserSliceState {
@@ -22,12 +18,14 @@ export const userSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        setToken: (state, action: PayloadAction<string | null>) => {
-            state.token = action.payload
+        userLoggedIn: (state, {payload}: PayloadAction<{token: string, displayId: string}>) => {
+            state.token = payload.token
+            state.displayId = payload.displayId
         },
-        setDisplayId: (state, action: PayloadAction<string | null>) => {
-            state.displayId = action.payload
-        },
+        userLoggedOut: (state) => {
+            state.token = null
+            state.displayId = null
+        }
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -46,7 +44,7 @@ export const userSlice = createSlice({
     },
 })
 
-export const { setToken, setDisplayId } = userSlice.actions
+export const { userLoggedIn, userLoggedOut } = userSlice.actions
 
 /* selectors */
 export const selectIsLogin = (state: RootState) => {
@@ -55,38 +53,3 @@ export const selectIsLogin = (state: RootState) => {
 
 export default userSlice.reducer
 
-/* thunks */
-export const getLocalUserInfo = (): AppThunk => (dispatch) => {
-    const result = storageService.getUserInfo()
-
-    if (result) {
-        dispatch(setToken(result.token))
-        dispatch(setDisplayId(result.displayId))
-    } else {
-        dispatch(loginThunk());
-    }
-}
-
-export const logoutThunk = (): AppThunk => async(dispatch) => {
-    dispatch(setToken(null))
-    dispatch(setDisplayId(null))
-}
-
-export const loginThunk = () : AppThunk => async (dispatch) => {
-    let code: string
-    try {
-        const res = await Taro.login()
-        code = res.code
-    } catch (err) {
-        const message = `请求微信登录code错误:${getErrorMessage(err)}`
-        console.error(message)
-        showLoginFailureModal(message, () =>
-            dispatch(loginThunk())
-        )
-        return;
-    }
-
-    await dispatch(
-        userApi.endpoints.login.initiate(code)
-    )
-}

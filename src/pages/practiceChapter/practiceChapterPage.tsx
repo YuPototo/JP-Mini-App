@@ -3,10 +3,10 @@ import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-    incQuestionSetIndex,
+    questionSetIndexIncreased,
     initResults,
-    setChapterId,
-    setQuestionSetIndex
+    chapterUsed,
+    questionSetChanged
 } from "@/features/practiceChapter/practiceChapterSlice";
 import { useGetChapterQuery } from "@/features/practiceChapter/chapterSerivce";
 import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSkeleton";
@@ -16,7 +16,7 @@ import { selectIsDone } from "@/features/questionSet/questionSetSlice";
 import Taro from "@tarojs/taro";
 import routes from "@/routes/routes";
 import { useGetQuestionSetQuery } from "@/features/questionSet/questionSetService";
-import { fillOptionsThunk } from "@/features/questionSet/questionSetThunks";
+import { showAnswer } from "@/features/questionSet/questionSetThunks";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
@@ -26,11 +26,11 @@ export default function PracticeChapterPage() {
     const { chapterId } = router.params as { chapterId: string };
 
     useEffect(() => {
-        dispatch(setChapterId(chapterId));
+        dispatch(chapterUsed(chapterId));
     }, [chapterId, dispatch]);
 
     useEffect(() => {
-        dispatch(setQuestionSetIndex(0));
+        dispatch(questionSetChanged(0));
     }, [dispatch]);
 
     const {
@@ -164,7 +164,7 @@ function OperationArea({
     const hasNext = questionSetIndex < questionSets.length - 1;
     const hasPreviousQuestionSet = questionSetIndex > 0;
 
-    const handleToNext = () => dispatch(incQuestionSetIndex(1));
+    const handleToNext = () => dispatch(questionSetIndexIncreased(1));
 
     const handleContinue = () => {
         hasNext ? handleToNext() : handleFinishChapter();
@@ -174,7 +174,7 @@ function OperationArea({
         <>
             {hasPreviousQuestionSet && (
                 <Button
-                    onClick={() => dispatch(incQuestionSetIndex(-1))}
+                    onClick={() => dispatch(questionSetIndexIncreased(-1))}
                     disabled={disabled}
                 >
                     上一题
@@ -183,7 +183,7 @@ function OperationArea({
 
             {isDone || (
                 <Button
-                    onClick={() => dispatch(fillOptionsThunk())}
+                    onClick={() => dispatch(showAnswer())}
                     disabled={disabled}
                 >
                     答案

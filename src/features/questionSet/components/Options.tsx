@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectPickedIndex } from "../questionSetSlice";
 import RichTextRenderer from "@/utils/renderer";
 import { View } from "@tarojs/components";
-import { pickOptionThunk } from "../questionSetThunks";
+import { pickOption } from "../questionSetThunks";
 
 export default function Options({
     options,
@@ -44,7 +44,7 @@ function Option({
         <View
             onClick={() =>
                 dispatch(
-                    pickOptionThunk({
+                    pickOption({
                         questionIndex,
                         optionIndex
                     })

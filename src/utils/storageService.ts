@@ -12,9 +12,15 @@ const getUserInfo = () => {
     return { token, displayId };
 };
 
+const removeUserInfo = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("displayId");
+};
+
 const storageService = {
     setUserInfo,
-    getUserInfo
+    getUserInfo,
+    removeUserInfo
 };
 
 export default storageService;

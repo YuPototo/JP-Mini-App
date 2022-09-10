@@ -16,7 +16,7 @@ export const questionSetSlice = createSlice({
     name: "questionSet",
     initialState,
     reducers: {
-        initQuestionSet: (
+        newQuestionSetInitiated: (
             state,
             {
                 payload
@@ -30,7 +30,7 @@ export const questionSetSlice = createSlice({
             state.optionsSelected = [];
             state.isError = false;
         },
-        setOptionSelected: (
+        optionSelected: (
             state,
             action: PayloadAction<{
                 questionIndex: number;
@@ -40,23 +40,23 @@ export const questionSetSlice = createSlice({
             const { questionIndex, optionIndex } = action.payload;
             state.optionsSelected[questionIndex] = optionIndex;
         },
-        fillOptions: (
+        answerShown: (
             state,
             { payload }: PayloadAction<{ questionLength: number }>
         ) => {
             state.optionsSelected = Array(payload.questionLength).fill(-1);
         },
-        setIsError: (state, { payload }: PayloadAction<boolean>) => {
+        errorOccured: (state, { payload }: PayloadAction<boolean>) => {
             state.isError = payload;
         }
     }
 });
 
 export const {
-    setOptionSelected,
-    fillOptions,
-    initQuestionSet,
-    setIsError
+    optionSelected,
+    answerShown,
+    newQuestionSetInitiated,
+    errorOccured
 } = questionSetSlice.actions;
 
 /* selectors */
@@ -130,7 +130,7 @@ export default questionSetSlice.reducer;
 
 export const addQuestionSetListeners = (startListening: AppStartListening) => {
     startListening({
-        actionCreator: setOptionSelected,
+        actionCreator: optionSelected,
         effect: (_, { getState, dispatch }) => {
             const state = getState();
             const isDone = selectIsDone(state);

@@ -1,7 +1,7 @@
 import { View, Text } from "@tarojs/components";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectChildrenByLevel, setCategoryKey } from "../booksSlice";
+import { selectChildrenByLevel, categoryPicked } from "../booksSlice";
 import { useGetCategoriyesQuery } from "../booksService";
 import type { ICategory } from "../booksTypes";
 import { extractQueyError } from "@/store/utils/errorHandling";
@@ -43,7 +43,7 @@ function CategoryList({ categories, categoryLevel }: CategoryListProps) {
     );
 
     const handleClickCategory = (key: string) => {
-        dispatch(setCategoryKey({ categoryLevel, key }));
+        dispatch(categoryPicked({ categoryLevel, key }));
     };
 
     return (

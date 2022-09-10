@@ -1,4 +1,4 @@
-import { loginThunk } from "@/features/user/userSlice";
+import { login } from "@/features/user/userThunks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { View } from "@tarojs/components";
 
@@ -13,9 +13,7 @@ export default function mine() {
 
     return (
         <View>
-            <View onClick={() => dispatch(loginThunk())}>
-                ID: {idOrMessage}
-            </View>
+            <View onClick={() => dispatch(login())}>ID: {idOrMessage}</View>
         </View>
     );
 }

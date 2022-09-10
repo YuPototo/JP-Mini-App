@@ -20,19 +20,19 @@ export const practiceChapterSlice = createSlice({
     name: 'practiceChapter',
     initialState,
     reducers: {
-        setQuestionSetIndex: (state, { payload }: PayloadAction<number>) => {
+        questionSetChanged: (state, { payload }: PayloadAction<number>) => {
             state.questionSetIndex = payload
         },
-        incQuestionSetIndex: (state, {payload}: PayloadAction<number>) => {
+        questionSetIndexIncreased: (state, {payload}: PayloadAction<number>) => {
             state.questionSetIndex += payload
         },
-        setChapterId: (state, { payload }: PayloadAction<string>) => {
+        chapterUsed: (state, { payload }: PayloadAction<string>) => {
             state.chapterId = payload
         },
         initResults: (state, { payload }: PayloadAction<number>) => {
             state.results = Array(payload).fill(Result.NoRecord)
         },
-        setResult: (
+        resultChanged: (
             state,
             {
                 payload,
@@ -48,7 +48,7 @@ export const practiceChapterSlice = createSlice({
     },
 })
 
-export const { setResult, initResults, setChapterId, setQuestionSetIndex, incQuestionSetIndex } =
+export const { resultChanged, initResults, chapterUsed, questionSetChanged, questionSetIndexIncreased } =
     practiceChapterSlice.actions
 
 // selectors

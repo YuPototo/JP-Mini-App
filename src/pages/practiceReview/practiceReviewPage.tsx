@@ -3,7 +3,7 @@ import { useRouter, navigateBack } from "@tarojs/taro";
 import { useAppDispatch } from "@/store/hooks";
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
-import { fillOptionsThunk } from "@/features/questionSet/questionSetThunks";
+import { showAnswer } from "@/features/questionSet/questionSetThunks";
 
 type Props = {};
 
@@ -24,9 +24,7 @@ export default function practiceReview({}: Props) {
             />
 
             <View>
-                <Button onClick={() => dispatch(fillOptionsThunk())}>
-                    显示答案
-                </Button>
+                <Button onClick={() => dispatch(showAnswer())}>显示答案</Button>
                 <Button onClick={() => navigateBack()}>返回</Button>
             </View>
         </View>

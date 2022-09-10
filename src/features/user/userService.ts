@@ -2,8 +2,8 @@ import { splitApi } from "../../store/query/splitApi";
 import { IUser } from "./userTypes";
 import storageService from "../../utils/storageService";
 import { getErrorMessage } from "@/utils/errorHandler";
-import { loginThunk } from "./userSlice";
 import { showLoginFailureModal } from "./showLoginFailureModal";
+import { login } from "./userThunks";
 
 interface LoginRes {
     token: string;
@@ -26,9 +26,7 @@ export const userApi = splitApi.injectEndpoints({
                     const maybeMessage = err.error?.data?.message;
                     const errMessage = maybeMessage ?? getErrorMessage(err);
                     console.error("登录失败 ", errMessage);
-                    showLoginFailureModal(errMessage, () =>
-                        dispatch(loginThunk())
-                    );
+                    showLoginFailureModal(errMessage, () => dispatch(login()));
                 }
             }
         })

@@ -23,10 +23,10 @@ export const booksSlice = createSlice({
     name: "books",
     initialState,
     reducers: {
-        setCurrentBookId: (state, { payload }: PayloadAction<string>) => {
+        bookViewed: (state, { payload }: PayloadAction<string>) => {
             state.currentBookId = payload
         },
-        setCategoryKey: (
+        categoryPicked: (
             state,
             action: PayloadAction<{ categoryLevel: number; key: string }>
         ) => {
@@ -34,7 +34,7 @@ export const booksSlice = createSlice({
 
             if (index > state.selectedCategoryKeys.length) {
                 console.error(
-                    `setCategoryKey: index ${index} is larger than selectedCategoryKeys.length ${state.selectedCategoryKeys.length}`
+                    `categoryPicked: index ${index} is larger than selectedCategoryKeys.length ${state.selectedCategoryKeys.length}`
                 )
                 return
             }
@@ -84,7 +84,7 @@ export const booksSlice = createSlice({
     },
 });
 
-export const { setCategoryKey, setCurrentBookId } = booksSlice.actions;
+export const { categoryPicked, bookViewed } = booksSlice.actions;
 
 /* selectors */
 export const selectContentProgress = (
