@@ -17,7 +17,7 @@ export default function chapterResult() {
     const { chapterId } = router.params as { chapterId: string };
 
     const results = useAppSelector(state => state.practiceChapter.results);
-    const bookId = useAppSelector(state => state.bookList.currentBookId);
+    const bookId = useAppSelector(state => state.books.currentBookId);
 
     const nextInfo = useAppSelector(selectNextInfo(bookId, chapterId));
 

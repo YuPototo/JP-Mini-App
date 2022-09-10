@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { pickOptionThunk, selectPickedIndex } from "../questionSetSlice";
+import { selectPickedIndex } from "../questionSetSlice";
 import RichTextRenderer from "@/utils/renderer";
 import { View } from "@tarojs/components";
+import { pickOptionThunk } from "../questionSetThunks";
 
 export default function Options({
     options,

@@ -3,7 +3,7 @@ import { useRouter, navigateBack } from "@tarojs/taro";
 import { useAppDispatch } from "@/store/hooks";
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
-import { fillOptionsThunk } from "@/features/questionSet/questionSetSlice";
+import { fillOptionsThunk } from "@/features/questionSet/questionSetThunks";
 
 type Props = {};
 

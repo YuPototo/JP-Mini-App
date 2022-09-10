@@ -12,13 +12,11 @@ import { useGetChapterQuery } from "@/features/practiceChapter/chapterSerivce";
 import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSkeleton";
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
-import {
-    fillOptionsThunk,
-    selectIsDone
-} from "@/features/questionSet/questionSetSlice";
+import { selectIsDone } from "@/features/questionSet/questionSetSlice";
 import Taro from "@tarojs/taro";
 import routes from "@/routes/routes";
 import { useGetQuestionSetQuery } from "@/features/questionSet/questionSetService";
+import { fillOptionsThunk } from "@/features/questionSet/questionSetThunks";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
