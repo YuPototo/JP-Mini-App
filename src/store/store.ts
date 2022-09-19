@@ -9,13 +9,15 @@ import booksReducer from "@/features/books/booksSlice";
 import practiceChapterReducer from "@/features/practiceChapter/practiceChapterSlice";
 import questionSetReducer from "@/features/questionSet/questionSetSlice";
 import userReduer from "@/features/user/userSlice";
+import notebookReducer from "../features/notebook/notebookSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
     books: booksReducer,
     practiceChapter: practiceChapterReducer,
     questionSet: questionSetReducer,
-    user: userReduer
+    user: userReduer,
+    notebook: notebookReducer
 });
 
 export const store = configureStore({

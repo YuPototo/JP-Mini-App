@@ -7,7 +7,9 @@ export const pageNames = {
     chapterResult: "/pages/chapterResult/chapterResultPage",
     play: "/pages/play/playPage",
     mine: "/pages/mine/minePage",
-    bookShelf: "/pages/bookShelf/bookShelfPage"
+    bookShelf: "/pages/bookShelf/bookShelfPage",
+    notebookList: "/pages/notebookList/notebookListPage",
+    createNotebook: "/pages/createNotebook/createNotebookPage"
 };
 
 export const pageList = [
@@ -19,7 +21,9 @@ export const pageList = [
     removeFirstCharacter(pageNames.chapterResult),
     removeFirstCharacter(pageNames.play),
     removeFirstCharacter(pageNames.mine),
-    removeFirstCharacter(pageNames.bookShelf)
+    removeFirstCharacter(pageNames.bookShelf),
+    removeFirstCharacter(pageNames.notebookList),
+    removeFirstCharacter(pageNames.createNotebook)
 ];
 
 const routes = {
@@ -34,7 +38,9 @@ const routes = {
     rendererExample: () => pageNames.rendererExample,
     play: () => pageNames.play,
     mine: () => pageNames.mine,
-    bookShelf: () => pageNames.bookShelf
+    bookShelf: () => pageNames.bookShelf,
+    notebookList: () => pageNames.notebookList,
+    createNotebook: () => pageNames.createNotebook
 };
 
 export default routes;
