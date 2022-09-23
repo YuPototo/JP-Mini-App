@@ -1,6 +1,6 @@
 import { updateQuestionSetFav } from "@/features/questionSet/questionSetService";
+import toast from "@/utils/toast/toast";
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -60,7 +60,7 @@ function Notebooks({
         try {
             setNotebookSaving(notebookId);
             await saveQuestionSet({ questionSetId, notebookId }).unwrap();
-            Taro.showToast({ title: "已收藏", icon: "success" });
+            toast.success("已收藏");
             dispatch(updateQuestionSetFav(questionSetId, true));
             onQuestionSetSaved();
         } catch (err) {

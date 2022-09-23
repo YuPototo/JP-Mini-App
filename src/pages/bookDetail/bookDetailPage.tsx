@@ -19,6 +19,7 @@ import {
     useGetChapterDoneQuery
 } from "@/features/chapterDone/chapterDoneService";
 import { navigate } from "@/utils/navigator/navigator";
+import toast from "@/utils/toast/toast";
 
 export default function BookDetailPage() {
     const router = useRouter();
@@ -79,7 +80,7 @@ function FavButton({ bookId }: { bookId: string }) {
 
     const toggleBookFav = async () => {
         if (!isLogin) {
-            Taro.showToast({ title: "请先登录", icon: "error" });
+            toast.error("请先登录");
             setTimeout(() => {
                 navigate(routes.mine(), { method: "switchTab" });
             }, 1500);
@@ -90,7 +91,7 @@ function FavButton({ bookId }: { bookId: string }) {
 
         try {
             await mutation(bookId).unwrap();
-            Taro.showToast({ title: toastText, icon: "success" });
+            toast.success(toastText);
         } catch (err) {
             // handled by middlware
         }
@@ -124,7 +125,7 @@ function ResetChapterDoneBtn({ bookId }: { bookId: string }) {
     const handleConfirm = async () => {
         try {
             await removeChapterDone(bookId).unwrap();
-            Taro.showToast({ title: "已重置进度", icon: "success" });
+            toast.success("重置成功");
         } catch (err) {
             // handled by middleware
         }

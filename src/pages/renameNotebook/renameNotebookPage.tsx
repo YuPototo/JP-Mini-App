@@ -3,6 +3,7 @@ import {
     useUpdateNotebookMutation
 } from "@/features/notebook/notebookService";
 import { navigate } from "@/utils/navigator/navigator";
+import toast from "@/utils/toast/toast";
 import { Button, Input, View, Text } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState } from "react";
@@ -17,9 +18,9 @@ export default function renameNotebookPage() {
 
     const handleSubmit = async () => {
         try {
-            Taro.showLoading();
+            toast.loading();
             await renameNotebook({ notebookId, title }).unwrap();
-            Taro.showToast({ title: "修改成功", icon: "success" });
+            toast.success("修改成功");
             setTitle("");
             setTimeout(() => {
                 navigate(-1);
@@ -27,7 +28,7 @@ export default function renameNotebookPage() {
         } catch (err) {
             // 在 middleware 处理了
         } finally {
-            Taro.hideLoading();
+            toast.hideLoading();
         }
     };
 

@@ -1,4 +1,5 @@
 import { navigate } from "@/utils/navigator/navigator";
+import toast from "@/utils/toast/toast";
 import { Button, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useDeleteNotebookMutation } from "../notebookService";
@@ -13,19 +14,16 @@ export default function NotebookDeleteButton({ notebook }: Props) {
 
     const handleDelete = async () => {
         try {
-            Taro.showLoading();
+            toast.loading();
             await deleteNotebook(notebook.id).unwrap();
-            Taro.showToast({
-                title: "删除成功",
-                icon: "success"
-            });
+            toast.success("删除成功");
             setTimeout(() => {
                 navigate(-1);
             }, 1000);
         } catch (err) {
             // 在 middleware 处理了
         } finally {
-            Taro.hideLoading();
+            toast.hideLoading();
         }
     };
 

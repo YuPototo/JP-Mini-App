@@ -1,5 +1,6 @@
 import { useCreateNotebookMutation } from "@/features/notebook/notebookService";
 import { navigate } from "@/utils/navigator/navigator";
+import toast from "@/utils/toast/toast";
 import { Input, View, Text, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useState } from "react";
@@ -11,7 +12,7 @@ export default function createNotebookPage() {
 
     const handleSubmit = async () => {
         try {
-            Taro.showLoading({ title: "正在创建..." });
+            toast.loading("创建中...");
             await createNotebook(title).unwrap();
             setTitle("");
             navigate(-1);

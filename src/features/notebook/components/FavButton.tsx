@@ -1,6 +1,6 @@
 import { updateQuestionSetFav } from "@/features/questionSet/questionSetService";
+import toast from "@/utils/toast/toast";
 import { Button } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useState } from "react";
 
 import { useAppDispatch } from "../../../store/hooks";
@@ -22,7 +22,7 @@ export default function FavButton({ isFav, questionSetId }: Props) {
 
         try {
             await unsaveQuestionSet(questionSetId).unwrap();
-            Taro.showToast({ title: "已取消收藏", icon: "success" });
+            toast.success("已取消收藏");
             dispatch(updateQuestionSetFav(questionSetId, false));
         } catch (err) {
             // middleware 已经处理
