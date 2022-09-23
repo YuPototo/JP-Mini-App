@@ -35,8 +35,8 @@ export const pageList = [
 const routes = {
     home: () => pageNames.homePage,
     bookDetail: (bookId: string) => `${pageNames.bookDetail}?bookId=${bookId}`,
-    practiceChapter: (chapterId: string) =>
-        `${pageNames.practiceChapter}?chapterId=${chapterId}`,
+    practiceChapter: (chapterId: string, startingIndex: number) =>
+        `${pageNames.practiceChapter}?chapterId=${chapterId}&startingIndex=${startingIndex}`,
     chapterResult: (chapterId: string) =>
         `${pageNames.chapterResult}?chapterId=${chapterId}`,
     practiceReview: (questionSetId: string) =>
@@ -51,8 +51,8 @@ const routes = {
         `${pageNames.notebook}?notebookId=${notebookId}`,
     renameNotebook: (notebookId: string) =>
         `${pageNames.renameNotebook}?notebookId=${notebookId}`,
-    practiceNotebook: (notebookId: string, questionSetIndex: number) =>
-        `${pageNames.practiceNotebook}?notebookId=${notebookId}&questionSetIndex=${questionSetIndex}`
+    practiceNotebook: (notebookId: string, startingIndex: number) =>
+        `${pageNames.practiceNotebook}?notebookId=${notebookId}&startingIndex=${startingIndex}`
 };
 
 export default routes;

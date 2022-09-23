@@ -1,5 +1,4 @@
 import { View, Text } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { useGetBookContentQuery } from "../booksService";
 import { IChapter, ISection } from "../booksTypes";
@@ -98,7 +97,8 @@ type ChapterProps = {
 
 function Chapter({ chapter, isDone, isNext }: ChapterProps) {
     const toPractice = () => {
-        navigate(routes.practiceChapter(chapter.id));
+        const startingIndex = 0;
+        navigate(routes.practiceChapter(chapter.id, startingIndex));
     };
 
     return (

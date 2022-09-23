@@ -6,7 +6,7 @@ import {
 } from "@/features/notebook/notebookService";
 import {
     getNotebookProgress,
-    selectNotebokProgress
+    selectNotebokProgressIndex
 } from "@/features/notebook/notebookSlice";
 import routes from "@/routes/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -29,7 +29,7 @@ export default function notebookPage() {
     }, [notebookId, dispatch]);
 
     const notebook = notebooks?.find(el => el.id === notebookId);
-    const notebookProgress = useAppSelector(selectNotebokProgress(notebookId));
+    const notebookProgress = useAppSelector(selectNotebokProgressIndex);
 
     if (!notebook) {
         return <View>加载中...</View>;
@@ -39,13 +39,9 @@ export default function notebookPage() {
 
     const notebookDoable = !isEmptyNotebook && questionSetIds !== undefined;
 
-    const hasFinished = questionSetIds
-        ? notebookProgress >= questionSetIds?.length
-        : false;
-
-    const studyProgressText = hasFinished
-        ? "已完成"
-        : `第${notebookProgress + 1}题`;
+    const progress = questionSetIds
+        ? notebookProgress / questionSetIds.length
+        : 0;
 
     const handleStart = () => {
         navigate(routes.practiceNotebook(notebookId, notebookProgress));
@@ -84,9 +80,9 @@ export default function notebookPage() {
                 <>
                     <View>收藏了{questionSetIds.length}题</View>
 
-                    <View>复习进度：{studyProgressText}</View>
+                    <View>复习进度：{progress}</View>
 
-                    {!hasFinished && (
+                    {progress < 1 && (
                         <View>
                             <Button onClick={handleStart}>
                                 {notebookProgress > 0 ? "继续" : "开始"}复习

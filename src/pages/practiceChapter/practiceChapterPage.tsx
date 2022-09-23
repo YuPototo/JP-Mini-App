@@ -13,71 +13,59 @@ import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSk
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
 import routes from "@/routes/routes";
-import { useGetQuestionSetQuery } from "@/features/questionSet/questionSetService";
 import QuestionSetListOperator from "@/components/QuestionSetListOperator/QuestionSetListOperator";
 import { navigate } from "@/utils/navigator/navigator";
+import { useGetQuestionSetLoadingInfo } from "@/features/questionSet/hooks/useGetQuestionSetLoadingInfo";
 
 export default function PracticeChapterPage() {
-    const router = useRouter();
     const dispatch = useAppDispatch();
 
-    // tech debt：移除 as
-    const { chapterId } = router.params as { chapterId: string };
+    // init chapter practice
+    const { chapterId, questionSetIndex } = useInitChapterPractice();
 
-    useEffect(() => {
-        dispatch(chapterUsed(chapterId));
-    }, [chapterId, dispatch]);
-
-    useEffect(() => {
-        dispatch(questionSetChanged(0));
-    }, [dispatch]);
-
+    // get question set ids
     const {
         data: chapterInfo,
         isLoading: isLoadingChapterInfo,
         isError: isQueryError,
-        isSuccess: isQuerySuccess,
+        isSuccess: isGettingChapterInfoSuccess,
         error
     } = useGetChapterQuery(chapterId);
 
-    const questionSetIndex = useAppSelector(
-        state => state.practiceChapter.questionSetIndex
-    );
-
     const questionSets = chapterInfo?.questionSets || [];
-    const questionSetId = questionSets[questionSetIndex];
 
-    // init results
+    // init queston set results for review feature
     useEffect(() => {
-        if (isQuerySuccess) {
+        if (isGettingChapterInfoSuccess) {
             dispatch(initResults(questionSets.length));
         }
-    }, [dispatch, chapterId, isQuerySuccess, questionSets.length]);
+    }, [dispatch, chapterId, isGettingChapterInfoSuccess, questionSets.length]);
 
+    const questionSetId = questionSets[questionSetIndex];
+
+    // get question set loading info
     const {
-        isFetching: isFetchingQuestionSet,
-        isLoading: isLoadingQuestionSet
-    } = useGetQuestionSetQuery(questionSetId!, {
-        skip: questionSetId === undefined
-    });
+        isLoadingQuestionSet,
+        isFetchingQuestionSet
+    } = useGetQuestionSetLoadingInfo(questionSetId);
 
+    // 页面状态1：正在加载章节信息
     if (isLoadingChapterInfo) {
         return (
             <>
                 <QuestionInfoSkeleton />
-
                 <QuestionSetSkeleton />
             </>
         );
     }
 
+    // 页面状态2：加载 chapter 信息失败
     if (isQueryError) {
         return <Text>获取 chapter 信息出错：{JSON.stringify(error)}</Text>;
     }
 
-    const foundQuestionSetId = questionSetId !== undefined;
-
-    if (!foundQuestionSetId) {
+    // 页面状态3：无法从 chapter.questionSetIds 里获取 index 对应的 questionSetId
+    if (questionSetId === undefined) {
         return (
             <Text>
                 出错了：chapter.questionSetIds 里找不到第{questionSetIndex}个
@@ -86,9 +74,10 @@ export default function PracticeChapterPage() {
         );
     }
 
-    const showBtnArea = isQuerySuccess && !isLoadingQuestionSet;
+    const showBtnArea = isGettingChapterInfoSuccess && !isLoadingQuestionSet;
     const showChapterInfo = chapterInfo && questionSetIndex === 0;
-    const showQuestionSet = isQuerySuccess && foundQuestionSetId;
+    const showQuestionSet =
+        isGettingChapterInfoSuccess && questionSetId !== undefined;
     const disableBtnArea = isFetchingQuestionSet;
 
     const handleFinishChapter = () => {
@@ -140,4 +129,35 @@ function ChapterInfo({ title, desc }: { title: string; desc?: string }) {
             {desc && <Text>{desc}</Text>}
         </View>
     );
+}
+
+/**
+ * Init chapter pracitce
+ */
+function useInitChapterPractice() {
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+    const { chapterId, startingIndex } = router.params as {
+        chapterId: string;
+        startingIndex: string;
+    };
+
+    const index = parseInt(startingIndex);
+
+    useEffect(() => {
+        dispatch(chapterUsed(chapterId));
+    }, [chapterId, dispatch]);
+
+    useEffect(() => {
+        dispatch(questionSetChanged(index));
+    }, [dispatch]);
+
+    const questionSetIndex = useAppSelector(
+        state => state.practiceChapter.questionSetIndex
+    );
+
+    return {
+        chapterId,
+        questionSetIndex
+    };
 }

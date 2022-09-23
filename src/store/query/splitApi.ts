@@ -21,5 +21,5 @@ export const splitApi = createApi({
         }
     }),
     endpoints: () => ({}),
-    tagTypes: ["BookFav", "ChapterDone", "Notebook"]
+    tagTypes: ["BookFav", "ChapterDone", "Notebook", "QuestionSetFav"]
 });

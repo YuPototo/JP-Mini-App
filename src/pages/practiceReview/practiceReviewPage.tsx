@@ -11,9 +11,6 @@ export default function practiceReview({}: Props) {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    /** tech debt
-     * * 移除 as keyword
-     */
     const { questionSetId } = router.params as { questionSetId: string };
 
     return (
