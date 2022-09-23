@@ -1,10 +1,10 @@
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useAppSelector } from "@/store/hooks";
 import BookCard from "./BookCard";
 import { useGetBooksQuery } from "../booksService";
 import { selectBooksByCategory } from "../booksSlice";
 import routes from "@/routes/routes";
+import { navigate } from "@/utils/navigator/navigator";
 
 export default function BookList() {
     useGetBooksQuery();
@@ -16,11 +16,7 @@ export default function BookList() {
                 books.map(book => (
                     <View
                         key={book.id}
-                        onClick={() =>
-                            Taro.navigateTo({
-                                url: routes.bookDetail(book.id)
-                            })
-                        }
+                        onClick={() => navigate(routes.bookDetail(book.id))}
                     >
                         <BookCard book={book} />
                     </View>

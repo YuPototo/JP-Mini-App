@@ -8,6 +8,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectIsLogin } from "@/features/user/userSlice";
 import { useGetChapterDoneQuery } from "@/features/chapterDone/chapterDoneService";
 import { selectContentProgress } from "../booksSlice";
+import { navigate } from "@/utils/navigator/navigator";
 
 type Props = {
     bookId: string;
@@ -97,9 +98,7 @@ type ChapterProps = {
 
 function Chapter({ chapter, isDone, isNext }: ChapterProps) {
     const toPractice = () => {
-        Taro.navigateTo({
-            url: routes.practiceChapter(chapter.id)
-        });
+        navigate(routes.practiceChapter(chapter.id));
     };
 
     return (

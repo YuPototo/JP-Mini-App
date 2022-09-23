@@ -1,4 +1,5 @@
 import routes from "@/routes/routes";
+import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useAppSelector } from "../../../store/hooks";
@@ -27,7 +28,7 @@ function Notebooks({ notebooks }: { notebooks: INotebook[] }) {
     const newNotebookId = useAppSelector(state => state.notebook.newNotebook);
 
     const handleToNotebook = (notebookId: string) => {
-        Taro.navigateTo({ url: routes.notebookPage(notebookId) });
+        navigate(routes.notebookPage(notebookId));
     };
 
     return (

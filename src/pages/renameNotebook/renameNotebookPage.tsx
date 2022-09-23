@@ -2,6 +2,7 @@ import {
     useGetNotebooksQuery,
     useUpdateNotebookMutation
 } from "@/features/notebook/notebookService";
+import { navigate } from "@/utils/navigator/navigator";
 import { Button, Input, View, Text } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState } from "react";
@@ -21,7 +22,7 @@ export default function renameNotebookPage() {
             Taro.showToast({ title: "修改成功", icon: "success" });
             setTitle("");
             setTimeout(() => {
-                Taro.navigateBack();
+                navigate(-1);
             }, 1000);
         } catch (err) {
             // 在 middleware 处理了
@@ -58,7 +59,7 @@ export default function renameNotebookPage() {
             <Button disabled={disableButton} onClick={handleSubmit}>
                 确认改名
             </Button>
-            <Button onClick={() => Taro.navigateBack()}>返回</Button>
+            <Button onClick={() => navigate(-1)}>返回</Button>
         </View>
     );
 }

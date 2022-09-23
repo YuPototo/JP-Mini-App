@@ -1,3 +1,4 @@
+import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useDeleteNotebookMutation } from "../notebookService";
@@ -19,7 +20,7 @@ export default function NotebookDeleteButton({ notebook }: Props) {
                 icon: "success"
             });
             setTimeout(() => {
-                Taro.navigateBack();
+                navigate(-1);
             }, 1000);
         } catch (err) {
             // 在 middleware 处理了

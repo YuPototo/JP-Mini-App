@@ -1,8 +1,8 @@
 import { Button, View } from "@tarojs/components";
 import ModalWall from "@/components/ModalWall/ModalWall";
-import Taro from "@tarojs/taro";
 import routes from "@/routes/routes";
 import NotebookListInModal from "./NotebookListInModal";
+import { navigate } from "@/utils/navigator/navigator";
 
 type Props = {
     questionSetId: string;
@@ -20,11 +20,7 @@ export default function PickNotebookModal({
                 questionSetId={questionSetId}
                 onQuestionSetSaved={onModalClosed}
             />
-            <Button
-                onClick={() =>
-                    Taro.navigateTo({ url: routes.createNotebook() })
-                }
-            >
+            <Button onClick={() => navigate(routes.createNotebook())}>
                 创建笔记本
             </Button>
         </ModalWall>

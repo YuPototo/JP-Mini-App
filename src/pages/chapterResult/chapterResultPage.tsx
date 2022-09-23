@@ -1,5 +1,5 @@
 import { View, Text, Button } from "@tarojs/components";
-import { useRouter, navigateTo, redirectTo, navigateBack } from "@tarojs/taro";
+import { useRouter } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
     booksApi,
@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import ResultBall from "@/features/practiceChapter/ResultBall";
 import routes from "@/routes/routes";
+import { navigate } from "@/utils/navigator/navigator";
 
 export default function chapterResult() {
     const router = useRouter();
@@ -32,9 +33,7 @@ export default function chapterResult() {
                 <View
                     key={index}
                     onClick={() =>
-                        navigateTo({
-                            url: routes.practiceReview(result.questionSetId)
-                        })
+                        navigate(routes.practiceReview(result.questionSetId))
                     }
                 >
                     <ResultBall questionSetResult={result} index={index} />
@@ -62,12 +61,10 @@ function NextInfo({
     }, [nextInfo.resultType, bookId, dispatch]);
 
     const toNextChapter = (chapterId: string) =>
-        redirectTo({
-            url: routes.practiceChapter(chapterId)
-        });
+        navigate(routes.practiceChapter(chapterId), { method: "redirectTo" });
 
     const ToBookDetailButton = (
-        <Button onClick={() => navigateBack()}>返回目录</Button>
+        <Button onClick={() => navigate(-1)}>返回目录</Button>
     );
 
     if (nextInfo.resultType === NextInfoResultType.NoContent) {

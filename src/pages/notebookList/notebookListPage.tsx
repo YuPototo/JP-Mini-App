@@ -1,13 +1,11 @@
 import NotebookList from "@/features/notebook/components/NotebookListInPage";
 import routes from "@/routes/routes";
+import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 
 export default function notebookListPage() {
     const toCreateNotebookPage = () => {
-        Taro.navigateTo({
-            url: routes.createNotebook()
-        });
+        navigate(routes.createNotebook());
     };
     return (
         <View>

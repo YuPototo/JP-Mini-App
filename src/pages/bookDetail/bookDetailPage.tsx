@@ -18,6 +18,7 @@ import {
     useDeleteChapterDoneMutation,
     useGetChapterDoneQuery
 } from "@/features/chapterDone/chapterDoneService";
+import { navigate } from "@/utils/navigator/navigator";
 
 export default function BookDetailPage() {
     const router = useRouter();
@@ -80,7 +81,7 @@ function FavButton({ bookId }: { bookId: string }) {
         if (!isLogin) {
             Taro.showToast({ title: "请先登录", icon: "error" });
             setTimeout(() => {
-                Taro.switchTab({ url: routes.mine() });
+                navigate(routes.mine(), { method: "switchTab" });
             }, 1500);
         }
 

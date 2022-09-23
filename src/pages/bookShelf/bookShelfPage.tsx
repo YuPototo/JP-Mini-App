@@ -4,8 +4,8 @@ import BookCard from "@/features/books/components/BookCard";
 import { selectIsLogin } from "@/features/user/userSlice";
 import routes from "@/routes/routes";
 import { useAppSelector } from "@/store/hooks";
+import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 
 export default function bookShelf() {
     const isLogin = useAppSelector(selectIsLogin);
@@ -17,11 +17,7 @@ export default function bookShelf() {
             {data?.map(bookId => (
                 <View
                     key={bookId}
-                    onClick={() =>
-                        Taro.navigateTo({
-                            url: routes.bookDetail(bookId)
-                        })
-                    }
+                    onClick={() => navigate(routes.bookDetail(bookId))}
                 >
                     <BookWrapper bookId={bookId} />
                 </View>
@@ -32,9 +28,7 @@ export default function bookShelf() {
                     <View>暂无收藏的练习册</View>
                     <Button
                         onClick={() =>
-                            Taro.switchTab({
-                                url: routes.home()
-                            })
+                            navigate(routes.home(), { method: "switchTab" })
                         }
                     >
                         浏览练习册

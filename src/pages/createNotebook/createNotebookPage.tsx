@@ -1,4 +1,5 @@
 import { useCreateNotebookMutation } from "@/features/notebook/notebookService";
+import { navigate } from "@/utils/navigator/navigator";
 import { Input, View, Text, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useState } from "react";
@@ -13,7 +14,7 @@ export default function createNotebookPage() {
             Taro.showLoading({ title: "正在创建..." });
             await createNotebook(title).unwrap();
             setTitle("");
-            Taro.navigateBack();
+            navigate(-1);
         } catch (err) {
             // 在 middleware 处理了
         } finally {
@@ -38,7 +39,7 @@ export default function createNotebookPage() {
             <Button disabled={disabled} onClick={handleSubmit}>
                 创建
             </Button>
-            <Button onClick={() => Taro.navigateBack()}>返回</Button>
+            <Button onClick={() => navigate(-1)}>返回</Button>
         </View>
     );
 }

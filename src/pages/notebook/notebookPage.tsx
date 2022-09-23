@@ -10,8 +10,9 @@ import {
 } from "@/features/notebook/notebookSlice";
 import routes from "@/routes/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
-import Taro, { useRouter } from "@tarojs/taro";
+import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 
 export default function notebookPage() {
@@ -47,9 +48,7 @@ export default function notebookPage() {
         : `第${notebookProgress + 1}题`;
 
     const handleStart = () => {
-        Taro.navigateTo({
-            url: routes.practiceNotebook(notebookId, notebookProgress)
-        });
+        navigate(routes.practiceNotebook(notebookId, notebookProgress));
     };
 
     return (
@@ -59,9 +58,7 @@ export default function notebookPage() {
                 <View>
                     <Button
                         onClick={() =>
-                            Taro.navigateTo({
-                                url: routes.renameNotebook(notebookId)
-                            })
+                            navigate(routes.renameNotebook(notebookId))
                         }
                     >
                         改名
@@ -74,7 +71,9 @@ export default function notebookPage() {
                 <View>
                     <View>这个笔记本是空的</View>
                     <Button
-                        onClick={() => Taro.switchTab({ url: routes.home() })}
+                        onClick={() =>
+                            navigate(routes.home(), { method: "switchTab" })
+                        }
                     >
                         去练习
                     </Button>

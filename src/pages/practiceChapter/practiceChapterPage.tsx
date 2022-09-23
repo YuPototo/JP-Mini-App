@@ -1,4 +1,4 @@
-import { Button, View, Text } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -12,11 +12,10 @@ import { useGetChapterQuery } from "@/features/practiceChapter/chapterSerivce";
 import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSkeleton";
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
-import { selectIsDone } from "@/features/questionSet/questionSetSlice";
-import Taro from "@tarojs/taro";
 import routes from "@/routes/routes";
 import { useGetQuestionSetQuery } from "@/features/questionSet/questionSetService";
-import { showAnswer } from "@/features/questionSet/questionSetThunks";
+import QuestionSetListOperator from "@/components/QuestionSetListOperator/QuestionSetListOperator";
+import { navigate } from "@/utils/navigator/navigator";
 
 export default function PracticeChapterPage() {
     const router = useRouter();
@@ -93,9 +92,7 @@ export default function PracticeChapterPage() {
     const disableBtnArea = isFetchingQuestionSet;
 
     const handleFinishChapter = () => {
-        Taro.redirectTo({
-            url: routes.chapterResult(chapterId)
-        });
+        navigate(routes.chapterResult(chapterId), { method: "redirectTo" });
     };
 
     return (
@@ -115,11 +112,13 @@ export default function PracticeChapterPage() {
             )}
 
             {showBtnArea && (
-                <OperationArea
-                    questionSetIndex={questionSetIndex}
-                    questionSets={questionSets}
+                <QuestionSetListOperator
+                    index={questionSetIndex}
+                    questionSetCount={questionSets.length}
                     disabled={disableBtnArea}
-                    handleFinishChapter={handleFinishChapter}
+                    onToLast={() => dispatch(questionSetIndexIncreased(-1))}
+                    onToNext={() => dispatch(questionSetIndexIncreased(1))}
+                    onFinish={handleFinishChapter}
                 />
             )}
         </View>
@@ -141,65 +140,4 @@ function ChapterInfo({ title, desc }: { title: string; desc?: string }) {
             {desc && <Text>{desc}</Text>}
         </View>
     );
-}
-
-function OperationArea({
-    questionSetIndex,
-    questionSets,
-    disabled,
-    handleFinishChapter
-}: {
-    questionSetIndex: number;
-    questionSets: string[];
-    disabled: boolean;
-    handleFinishChapter: () => void;
-}) {
-    const dispatch = useAppDispatch();
-    const isDone = useAppSelector(selectIsDone);
-
-    const isQuestionSetError = useAppSelector(
-        state => state.questionSet.isError
-    );
-
-    const hasNext = questionSetIndex < questionSets.length - 1;
-    const hasPreviousQuestionSet = questionSetIndex > 0;
-
-    const handleToNext = () => dispatch(questionSetIndexIncreased(1));
-
-    const handleContinue = () => {
-        hasNext ? handleToNext() : handleFinishChapter();
-    };
-
-    return (
-        <>
-            {hasPreviousQuestionSet && (
-                <Button
-                    onClick={() => dispatch(questionSetIndexIncreased(-1))}
-                    disabled={disabled}
-                >
-                    上一题
-                </Button>
-            )}
-
-            {isDone || (
-                <Button
-                    onClick={() => dispatch(showAnswer())}
-                    disabled={disabled}
-                >
-                    答案
-                </Button>
-            )}
-
-            {showNextBtn(isDone, isQuestionSetError) && (
-                <Button onClick={handleContinue} disabled={disabled}>
-                    {hasNext ? "下一题" : "完成本节"}
-                </Button>
-            )}
-        </>
-    );
-}
-
-function showNextBtn(isDone: boolean, isQuestionSetError: boolean) {
-    if (isQuestionSetError) return true;
-    return isDone;
 }

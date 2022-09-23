@@ -10,8 +10,8 @@ import { useGetQuestionSetQuery } from "@/features/questionSet/questionSetServic
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
 import routes from "@/routes/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 
@@ -71,7 +71,7 @@ export default function practiceNotebookPage() {
     };
 
     const handleFinish = () => {
-        Taro.redirectTo({ url: routes.notebookPage(notebookId) });
+        navigate(routes.notebookPage(notebookId), { method: "redirectTo" });
     };
 
     return (
