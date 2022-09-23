@@ -15,6 +15,7 @@ import Explanation from "./Explanation";
 import AudioPlayer from "./AudioPlayer";
 import { View } from "@tarojs/components";
 import Transcription from "./Transcription";
+import FavButton from "@/features/notebook/components/FavButton";
 
 type Props = {
     questionSetId: string;
@@ -23,7 +24,7 @@ type Props = {
 
 export default function QuestionSet({ questionSetId, practiceMode }: Props) {
     const {
-        data: questionSet,
+        data,
         isLoading, // 第1次请求
         isFetching, // 正在请求
         isError,
@@ -31,6 +32,8 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
     } = useGetQuestionSetQuery(questionSetId!, {
         skip: questionSetId === undefined
     });
+
+    const { questionSet, isFav } = data || {};
 
     const dispatch = useAppDispatch();
 
@@ -68,6 +71,9 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
                             transcription={questionSet.audio?.transcription}
                         />
                     )}
+
+                    <FavButton isFav={isFav} questionSetId={questionSetId} />
+
                     {isDone &&
                         (isRight ? <View>正确</View> : <View>错误</View>)}
                 </>

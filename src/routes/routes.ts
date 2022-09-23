@@ -9,7 +9,10 @@ export const pageNames = {
     mine: "/pages/mine/minePage",
     bookShelf: "/pages/bookShelf/bookShelfPage",
     notebookList: "/pages/notebookList/notebookListPage",
-    createNotebook: "/pages/createNotebook/createNotebookPage"
+    createNotebook: "/pages/createNotebook/createNotebookPage",
+    notebook: "/pages/notebook/notebookPage",
+    renameNotebook: "/pages/renameNotebook/renameNotebookPage",
+    practiceNotebook: "/pages/practiceNotebook/practiceNotebookPage"
 };
 
 export const pageList = [
@@ -23,7 +26,10 @@ export const pageList = [
     removeFirstCharacter(pageNames.mine),
     removeFirstCharacter(pageNames.bookShelf),
     removeFirstCharacter(pageNames.notebookList),
-    removeFirstCharacter(pageNames.createNotebook)
+    removeFirstCharacter(pageNames.createNotebook),
+    removeFirstCharacter(pageNames.notebook),
+    removeFirstCharacter(pageNames.renameNotebook),
+    removeFirstCharacter(pageNames.practiceNotebook)
 ];
 
 const routes = {
@@ -40,7 +46,13 @@ const routes = {
     mine: () => pageNames.mine,
     bookShelf: () => pageNames.bookShelf,
     notebookList: () => pageNames.notebookList,
-    createNotebook: () => pageNames.createNotebook
+    createNotebook: () => pageNames.createNotebook,
+    notebookPage: (notebookId: string) =>
+        `${pageNames.notebook}?notebookId=${notebookId}`,
+    renameNotebook: (notebookId: string) =>
+        `${pageNames.renameNotebook}?notebookId=${notebookId}`,
+    practiceNotebook: (notebookId: string, questionSetIndex: number) =>
+        `${pageNames.practiceNotebook}?notebookId=${notebookId}&questionSetIndex=${questionSetIndex}`
 };
 
 export default routes;

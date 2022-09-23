@@ -6,7 +6,8 @@ export interface QuestionSetState {
 }
 
 export enum PracticeMode {
-    Chapter
+    Chapter,
+    Notebook
 }
 
 export interface IQuestion {

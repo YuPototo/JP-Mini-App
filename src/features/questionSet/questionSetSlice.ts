@@ -4,6 +4,7 @@ import { questionSetApi } from "./questionSetService";
 import { PracticeMode, QuestionSetState } from "./questionSetTypes";
 import { AppStartListening } from "../../store/listenerMiddleware";
 import { finishQuestionSet } from "../practiceChapter/practiceChapterThunks";
+import { finishNotebookQuestionSet } from "../notebook/notebookSlice";
 
 const initialState: QuestionSetState = {
     questionSetId: null,
@@ -73,11 +74,11 @@ export const selectCurrentQuestionSet = (state: RootState) => {
         return;
     }
 
-    const {
-        data: questionSet
-    } = questionSetApi.endpoints.getQuestionSet.select(questionSetId)(state);
+    const { data } = questionSetApi.endpoints.getQuestionSet.select(
+        questionSetId
+    )(state);
 
-    return questionSet;
+    return data?.questionSet;
 };
 
 // 当前的 questionSet 里有多少个 questions
@@ -150,6 +151,9 @@ export const addQuestionSetListeners = (startListening: AppStartListening) => {
             switch (practiceMode) {
                 case PracticeMode.Chapter:
                     dispatch(finishQuestionSet({ questionSetId, isRight }));
+                    break;
+                case PracticeMode.Notebook:
+                    dispatch(finishNotebookQuestionSet(questionSetId));
                     break;
                 default:
                     console.log(`unhandled practice mode: ${practiceMode}`);

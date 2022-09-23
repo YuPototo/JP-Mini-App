@@ -13,8 +13,8 @@ const getUserInfo = () => {
 };
 
 const removeUserInfo = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("displayId");
+    Taro.removeStorage({ key: "token" });
+    Taro.removeStorage({ key: "displayId" });
 };
 
 const storageService = {

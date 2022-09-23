@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store/store";
+import { AppThunk, RootState } from "../../store/store";
 import { notebookApi } from "./notebookService";
+import notebookStorageService from "./notebookStorage";
 // import notebookStorageService from './notebookStorage'
 
 interface NotebookState {
@@ -8,13 +9,15 @@ interface NotebookState {
     notebookProgress: Record<string, number>;
     currentNotebook: string | null;
     questionSetIds: string[];
+    questionSetIndex: number;
 }
 
 const initialState: NotebookState = {
     newNotebook: null,
     notebookProgress: {},
     currentNotebook: null,
-    questionSetIds: []
+    questionSetIds: [],
+    questionSetIndex: 0
 };
 
 export const notebookSlice = createSlice({
@@ -36,6 +39,12 @@ export const notebookSlice = createSlice({
         },
         notebookUsed: (state, action: PayloadAction<string>) => {
             state.currentNotebook = action.payload;
+        },
+        notebookQuestionSetIndexChanged: (
+            state,
+            { payload }: PayloadAction<number>
+        ) => {
+            state.questionSetIndex = payload;
         }
     },
     extraReducers: builder => {
@@ -52,7 +61,8 @@ export const {
     notebookCreated,
     notebookProgressUpdated,
     notebookUsed,
-    questionSetIdsAdded
+    questionSetIdsAdded,
+    notebookQuestionSetIndexChanged
 } = notebookSlice.actions;
 
 export default notebookSlice.reducer;
@@ -66,39 +76,39 @@ export const selectNotebokProgress = (notebookId: string) => (
 };
 
 /* thunks */
-// export const getNotebookProgress = (
-//     notebookId: string
-// ): AppThunk => dispatch => {
-//     const progress = notebookStorageService.getProgress(notebookId);
-//     dispatch(notebookProgressUpdated({ notebookId, index: progress }));
-// };
+export const getNotebookProgress = (
+    notebookId: string
+): AppThunk => dispatch => {
+    const progress = notebookStorageService.getProgress(notebookId);
+    dispatch(notebookProgressUpdated({ notebookId, index: progress }));
+};
 
-// export const setNotebookProgress = (
-//     notebookId: string,
-//     index: number
-// ): AppThunk => dispatch => {
-//     notebookStorageService.setProgress(notebookId, index);
-//     dispatch(notebookProgressUpdated({ notebookId, index: 0 }));
-// };
+export const setNotebookProgress = (
+    notebookId: string,
+    index: number
+): AppThunk => dispatch => {
+    notebookStorageService.setProgress(notebookId, index);
+    dispatch(notebookProgressUpdated({ notebookId, index: 0 }));
+};
 
-// export const finishNotebookQuestionSet = (questionSetId: string): AppThunk => (
-//     dispatch,
-//     getState
-// ) => {
-//     const state = getState();
-//     const currentNotebook = state.notebook.currentNotebook;
-//     if (!currentNotebook) {
-//         console.error("找不到 current notebook");
-//         return;
-//     }
+export const finishNotebookQuestionSet = (questionSetId: string): AppThunk => (
+    dispatch,
+    getState
+) => {
+    const state = getState();
+    const currentNotebook = state.notebook.currentNotebook;
+    if (!currentNotebook) {
+        console.error("找不到 current notebook");
+        return;
+    }
 
-//     const questionSetIds = state.notebook.questionSetIds;
+    const questionSetIds = state.notebook.questionSetIds;
 
-//     const index = questionSetIds.indexOf(questionSetId);
-//     if (index === -1) {
-//         console.error(
-//             `在 state.notebook.questionSetIds 里找不到 questionSetId ${questionSetId}`
-//         );
-//     }
-//     dispatch(setNotebookProgress(currentNotebook, index + 1));
-// };
+    const index = questionSetIds.indexOf(questionSetId);
+    if (index === -1) {
+        console.error(
+            `在 state.notebook.questionSetIds 里找不到 questionSetId ${questionSetId}`
+        );
+    }
+    dispatch(setNotebookProgress(currentNotebook, index + 1));
+};

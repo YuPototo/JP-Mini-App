@@ -1,11 +1,13 @@
+import routes from "@/routes/routes";
 import { View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import { useAppSelector } from "../../../store/hooks";
 import { selectIsLogin } from "../../user/userSlice";
 import { useGetNotebooksQuery } from "../notebookService";
 import { INotebook } from "../notebookTypes";
 import { useOrderNotebooks } from "../useOrderNotebooks";
 
-export default function NotebookList() {
+export default function NotebookListInPage() {
     const isLogin = useAppSelector(selectIsLogin);
 
     const { data, isLoading } = useGetNotebooksQuery(undefined, {
@@ -25,7 +27,7 @@ function Notebooks({ notebooks }: { notebooks: INotebook[] }) {
     const newNotebookId = useAppSelector(state => state.notebook.newNotebook);
 
     const handleToNotebook = (notebookId: string) => {
-        console.log(`to notebook :${notebookId}`);
+        Taro.navigateTo({ url: routes.notebookPage(notebookId) });
     };
 
     return (
