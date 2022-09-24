@@ -5,6 +5,10 @@ import { PracticeMode, QuestionSetState } from "./questionSetTypes";
 import { AppStartListening } from "../../store/listenerMiddleware";
 import { finishQuestionSet } from "../practiceChapter/practiceChapterThunks";
 import { finishNotebookQuestionSet } from "../notebook/notebookSlice";
+import {
+    removeWrongRecord,
+    sendWrongRecord
+} from "../wrongRecord/wrongRecordService";
 
 const initialState: QuestionSetState = {
     questionSetId: null,
@@ -151,9 +155,13 @@ export const addQuestionSetListeners = (startListening: AppStartListening) => {
             switch (practiceMode) {
                 case PracticeMode.Chapter:
                     dispatch(finishQuestionSet({ questionSetId, isRight }));
+                    isRight || dispatch(sendWrongRecord(questionSetId));
                     break;
                 case PracticeMode.Notebook:
                     dispatch(finishNotebookQuestionSet(questionSetId));
+                    break;
+                case PracticeMode.WrongRecord:
+                    isRight && dispatch(removeWrongRecord(questionSetId));
                     break;
                 default:
                     console.log(`unhandled practice mode: ${practiceMode}`);

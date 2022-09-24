@@ -12,7 +12,9 @@ export const pageNames = {
     createNotebook: "/pages/createNotebook/createNotebookPage",
     notebook: "/pages/notebook/notebookPage",
     renameNotebook: "/pages/renameNotebook/renameNotebookPage",
-    practiceNotebook: "/pages/practiceNotebook/practiceNotebookPage"
+    practiceNotebook: "/pages/practiceNotebook/practiceNotebookPage",
+    wrongNotebook: "/pages/wrongNotebook/wrongNotebookPage",
+    practiceWrongRecord: "/pages/practiceWrongRecord/practiceWrongRecordPage"
 };
 
 export const pageList = [
@@ -29,7 +31,9 @@ export const pageList = [
     removeFirstCharacter(pageNames.createNotebook),
     removeFirstCharacter(pageNames.notebook),
     removeFirstCharacter(pageNames.renameNotebook),
-    removeFirstCharacter(pageNames.practiceNotebook)
+    removeFirstCharacter(pageNames.practiceNotebook),
+    removeFirstCharacter(pageNames.wrongNotebook),
+    removeFirstCharacter(pageNames.practiceWrongRecord)
 ];
 
 const routes = {
@@ -52,7 +56,9 @@ const routes = {
     renameNotebook: (notebookId: string) =>
         `${pageNames.renameNotebook}?notebookId=${notebookId}`,
     practiceNotebook: (notebookId: string, startingIndex: number) =>
-        `${pageNames.practiceNotebook}?notebookId=${notebookId}&startingIndex=${startingIndex}`
+        `${pageNames.practiceNotebook}?notebookId=${notebookId}&startingIndex=${startingIndex}`,
+    wrongNotebook: () => pageNames.wrongNotebook,
+    practiceWrongRecord: () => pageNames.practiceWrongRecord
 };
 
 export default routes;

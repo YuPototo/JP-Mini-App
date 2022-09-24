@@ -7,7 +7,8 @@ export interface QuestionSetState {
 
 export enum PracticeMode {
     Chapter,
-    Notebook
+    Notebook,
+    WrongRecord
 }
 
 export interface IQuestion {

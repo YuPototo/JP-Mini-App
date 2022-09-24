@@ -10,6 +10,7 @@ import practiceChapterReducer from "@/features/practiceChapter/practiceChapterSl
 import questionSetReducer from "@/features/questionSet/questionSetSlice";
 import userReduer from "@/features/user/userSlice";
 import notebookReducer from "../features/notebook/notebookSlice";
+import wrongRecordReducer from "../features/wrongRecord/wrongRecordSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     practiceChapter: practiceChapterReducer,
     questionSet: questionSetReducer,
     user: userReduer,
-    notebook: notebookReducer
+    notebook: notebookReducer,
+    wrongRecord: wrongRecordReducer
 });
 
 export const store = configureStore({

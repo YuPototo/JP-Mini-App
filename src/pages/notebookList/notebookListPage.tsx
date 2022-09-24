@@ -7,10 +7,12 @@ export default function notebookListPage() {
     const toCreateNotebookPage = () => {
         navigate(routes.createNotebook());
     };
+
     return (
         <View>
-            <Button onClick={toCreateNotebookPage}>创建笔记本</Button>
+            <View onClick={() => navigate(routes.wrongNotebook())}>错题本</View>
             <NotebookList />
+            <Button onClick={toCreateNotebookPage}>创建笔记本</Button>
         </View>
     );
 }

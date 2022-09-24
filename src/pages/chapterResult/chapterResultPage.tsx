@@ -61,7 +61,9 @@ function NextInfo({
     }, [nextInfo.resultType, bookId, dispatch]);
 
     const toNextChapter = (chapterId: string) =>
-        navigate(routes.practiceChapter(chapterId), { method: "redirectTo" });
+        navigate(routes.practiceChapter(chapterId, 0), {
+            method: "redirectTo"
+        });
 
     const ToBookDetailButton = (
         <Button onClick={() => navigate(-1)}>返回目录</Button>
