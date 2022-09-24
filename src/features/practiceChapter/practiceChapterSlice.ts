@@ -13,14 +13,13 @@ const initialState: PracticeChapterState = {
     chapterId: null,
     results: [],
     questionSetIndex: 0
-
 }
 
 export const practiceChapterSlice = createSlice({
     name: 'practiceChapter',
     initialState,
     reducers: {
-        questionSetChanged: (state, { payload }: PayloadAction<number>) => {
+        questionSetIndexChanged: (state, { payload }: PayloadAction<number>) => {
             state.questionSetIndex = payload
         },
         questionSetIndexIncreased: (state, {payload}: PayloadAction<number>) => {
@@ -48,7 +47,7 @@ export const practiceChapterSlice = createSlice({
     },
 })
 
-export const { resultChanged, initResults, chapterUsed, questionSetChanged, questionSetIndexIncreased } =
+export const { resultChanged, initResults, chapterUsed, questionSetIndexChanged, questionSetIndexIncreased } =
     practiceChapterSlice.actions
 
 // selectors

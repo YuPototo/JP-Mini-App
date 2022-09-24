@@ -20,6 +20,7 @@ import {
 } from "@/features/chapterDone/chapterDoneService";
 import { navigate } from "@/utils/navigator/navigator";
 import toast from "@/utils/toast/toast";
+import { useBookProgress } from "@/features/progress/hooks/useWorkingBook";
 
 export default function BookDetailPage() {
     const router = useRouter();
@@ -37,6 +38,7 @@ export default function BookDetailPage() {
     return (
         <View>
             <BookCardWrapper bookId={bookId} />
+            <WorkingProgress bookId={bookId} />
             <FavButton bookId={bookId} />
             <ResetChapterDoneBtn bookId={bookId} />
             <Content bookId={bookId} />
@@ -149,5 +151,29 @@ function ResetChapterDoneBtn({ bookId }: { bookId: string }) {
                 <Button onClick={() => showDeleteModal()}>重置进度</Button>
             )}
         </>
+    );
+}
+
+/**
+ * Feature: 做题进度
+ */
+function WorkingProgress({ bookId }: { bookId: string }) {
+    const {
+        isDone,
+        questionSetIndex,
+        chapterTitle,
+        sectionTitle
+    } = useBookProgress(bookId);
+
+    if (isDone) return <View>做完了！</View>;
+
+    return (
+        <View className="m-2 bg-red-100 p-2">
+            <View>{sectionTitle}</View>
+            <View>{chapterTitle}</View>
+            {questionSetIndex !== undefined && (
+                <View>第{questionSetIndex + 1}题</View>
+            )}
+        </View>
     );
 }

@@ -6,7 +6,7 @@ import {
     questionSetIndexIncreased,
     initResults,
     chapterUsed,
-    questionSetChanged
+    questionSetIndexChanged
 } from "@/features/practiceChapter/practiceChapterSlice";
 import { useGetChapterQuery } from "@/features/practiceChapter/chapterSerivce";
 import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSkeleton";
@@ -149,7 +149,7 @@ function useInitChapterPractice() {
     }, [chapterId, dispatch]);
 
     useEffect(() => {
-        dispatch(questionSetChanged(index));
+        dispatch(questionSetIndexChanged(index));
     }, [dispatch]);
 
     const questionSetIndex = useAppSelector(

@@ -168,3 +168,12 @@ export const getCurrentSectionIndex = (
     }
     return -1
 }
+
+export const getCurrentSectionByChapterId = (
+    chapterId: string,
+    content: ISection[],
+): ISection | null => {
+    const index = getCurrentSectionIndex(chapterId, content)
+    return content[index] || null
+}
+

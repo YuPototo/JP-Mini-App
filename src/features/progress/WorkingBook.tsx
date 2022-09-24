@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../store/hooks";
-import progressStorage from "./progressStorage";
-import { selectBookById } from "../books/booksSlice";
 import BookCard from "../books/components/BookCard";
 import { navigate } from "@/utils/navigator/navigator";
 import routes from "@/routes/routes";
 import { View } from "@tarojs/components";
+import { useWorkingBook } from "./hooks/useWorkingBook";
 
 export default function WorkingBook(): JSX.Element {
-    const book = useWorkingBook();
+    const {
+        book,
+        isDone,
+        sectionTitle,
+        chapterTitle,
+        questionSetIndex
+    } = useWorkingBook();
 
     if (!book) return <></>;
 
@@ -19,19 +22,17 @@ export default function WorkingBook(): JSX.Element {
         >
             <View>working book</View>
             <BookCard book={book} />
+            {isDone ? (
+                <View>这本书做完了</View>
+            ) : (
+                <View>
+                    <View>{sectionTitle}</View>
+                    <View>{chapterTitle}</View>
+                    {questionSetIndex !== undefined && (
+                        <View>第{questionSetIndex + 1}题</View>
+                    )}
+                </View>
+            )}
         </View>
     );
-}
-
-function useWorkingBook() {
-    const [workingBookId, setWorkingBookId] = useState<string | undefined>();
-
-    useEffect(() => {
-        const bookId = progressStorage.getWorkingBook();
-        setWorkingBookId(bookId ? bookId : undefined);
-    }, []);
-
-    const book = useAppSelector(selectBookById(workingBookId));
-
-    return book;
 }
