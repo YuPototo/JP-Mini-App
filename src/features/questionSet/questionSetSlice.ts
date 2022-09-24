@@ -3,12 +3,9 @@ import { RootState } from "../../store/store";
 import { questionSetApi } from "./questionSetService";
 import { PracticeMode, QuestionSetState } from "./questionSetTypes";
 import { AppStartListening } from "../../store/listenerMiddleware";
-import { finishQuestionSet } from "../practiceChapter/practiceChapterThunks";
+import { finishChapterQuestionSet } from "../practiceChapter/practiceChapterThunks";
 import { finishNotebookQuestionSet } from "../notebook/notebookSlice";
-import {
-    removeWrongRecord,
-    sendWrongRecord
-} from "../wrongRecord/wrongRecordService";
+import { removeWrongRecord } from "../wrongRecord/wrongRecordService";
 
 const initialState: QuestionSetState = {
     questionSetId: null,
@@ -154,8 +151,9 @@ export const addQuestionSetListeners = (startListening: AppStartListening) => {
 
             switch (practiceMode) {
                 case PracticeMode.Chapter:
-                    dispatch(finishQuestionSet({ questionSetId, isRight }));
-                    isRight || dispatch(sendWrongRecord(questionSetId));
+                    dispatch(
+                        finishChapterQuestionSet({ questionSetId, isRight })
+                    );
                     break;
                 case PracticeMode.Notebook:
                     dispatch(finishNotebookQuestionSet(questionSetId));
