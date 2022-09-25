@@ -38,11 +38,18 @@ export const progressSlice = createSlice({
         ) => {
             const { bookId, progress } = payload;
             state.progressByBook[bookId] = progress;
+        },
+        progressRemoved: (state, { payload }: PayloadAction<string>) => {
+            delete state.progressByBook[payload];
         }
     }
 });
 
-export const { workingBookChanged, progressChanged } = progressSlice.actions;
+export const {
+    workingBookChanged,
+    progressChanged,
+    progressRemoved
+} = progressSlice.actions;
 export default progressSlice.reducer;
 
 /* selectors */
@@ -53,6 +60,10 @@ export const selectProgressByBook = (bookId?: string | null) => (
     if (bookId) {
         return state.progress.progressByBook[bookId];
     }
+};
+
+export const selectHasProgress = (bookId: string) => (state: RootState) => {
+    return !!state.progress.progressByBook[bookId];
 };
 
 /**

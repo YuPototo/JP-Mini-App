@@ -26,11 +26,19 @@ const setProgressDetail = (bookId: string, progressDetail: AllProgressType) => {
     });
 };
 
+const removeProgressDetail = (bookId: string) => {
+    // localStorage.removeItem(`bookProgress_${bookId}`)
+    Taro.removeStorage({
+        key: `bookProgress_${bookId}`
+    });
+};
+
 const progressStorage = {
     setWorkingBook,
     getWorkingBook,
     getProgressDetail,
-    setProgressDetail
+    setProgressDetail,
+    removeProgressDetail
 };
 
 export default progressStorage;

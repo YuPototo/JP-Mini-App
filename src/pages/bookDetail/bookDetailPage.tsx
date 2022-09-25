@@ -21,6 +21,8 @@ import {
 import { navigate } from "@/utils/navigator/navigator";
 import toast from "@/utils/toast/toast";
 import { useBookProgress } from "@/features/progress/hooks/useWorkingBook";
+import { selectHasProgress } from "@/features/progress/progressSlice";
+import { resetProgress } from "@/features/progress/progressThunks";
 
 export default function BookDetailPage() {
     const router = useRouter();
@@ -40,7 +42,7 @@ export default function BookDetailPage() {
             <BookCardWrapper bookId={bookId} />
             <WorkingProgress bookId={bookId} />
             <FavButton bookId={bookId} />
-            <ResetChapterDoneBtn bookId={bookId} />
+            <ResetProgressButton bookId={bookId} />
             <Content bookId={bookId} />
         </View>
     );
@@ -113,7 +115,8 @@ function FavButton({ bookId }: { bookId: string }) {
  * Feature: 重置 chapter dones
  * product debt: 这个操作没有展示 loading
  */
-function ResetChapterDoneBtn({ bookId }: { bookId: string }) {
+function ResetProgressButton({ bookId }: { bookId: string }) {
+    const dispatch = useAppDispatch();
     const isLogin = useAppSelector(selectIsLogin);
 
     const { data: chaptersDone } = useGetChapterDoneQuery(bookId, {
@@ -123,9 +126,12 @@ function ResetChapterDoneBtn({ bookId }: { bookId: string }) {
     const [removeChapterDone] = useDeleteChapterDoneMutation();
 
     const hasChapterDones = chaptersDone && chaptersDone.length > 0;
+    const hasProgress = useAppSelector(selectHasProgress(bookId));
+    const showBtn = hasChapterDones || hasProgress;
 
     const handleConfirm = async () => {
         try {
+            dispatch(resetProgress(bookId));
             await removeChapterDone(bookId).unwrap();
             toast.success("重置成功");
         } catch (err) {
@@ -135,7 +141,7 @@ function ResetChapterDoneBtn({ bookId }: { bookId: string }) {
 
     const showDeleteModal = () => {
         Taro.showModal({
-            title: "重置章节进度",
+            title: "重置进度",
             content: "确定吗？",
             success: res => {
                 if (res.confirm) {
@@ -147,7 +153,7 @@ function ResetChapterDoneBtn({ bookId }: { bookId: string }) {
 
     return (
         <>
-            {hasChapterDones && (
+            {showBtn && (
                 <Button onClick={() => showDeleteModal()}>重置进度</Button>
             )}
         </>

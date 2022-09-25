@@ -2,6 +2,7 @@ import { AppThunk } from "../../store/store";
 import progressStorage from "./progressStorage";
 import {
     progressChanged,
+    progressRemoved,
     selectNextQuestionSetProgress,
     workingBookChanged
 } from "./progressSlice";
@@ -46,4 +47,9 @@ export const getWorkingProgress = (): AppThunk => dispatch => {
         dispatch(workingBookChanged(bookId));
         dispatch(getProgressByBookId(bookId));
     }
+};
+
+export const resetProgress = (bookId: string): AppThunk => dispatch => {
+    dispatch(progressRemoved(bookId));
+    progressStorage.removeProgressDetail(bookId);
 };
