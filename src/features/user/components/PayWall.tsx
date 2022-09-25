@@ -1,15 +1,15 @@
 import ModalWall from "@/components/ModalWall/ModalWall";
-import { View } from "@tarojs/components";
+import { useRewardAd } from "@/features/adReward/useRewardAd";
+import { Button, View } from "@tarojs/components";
 
-type Props = {
-    isOpen: boolean;
-};
+export default function PayWall() {
+    const showAd = useRewardAd();
 
-export default function PayWall({ isOpen }: Props) {
-    if (!isOpen) return <></>;
     return (
         <ModalWall onModalClosed={() => console.log("不允许关闭")}>
             <View>付费功能</View>
+
+            <Button onClick={showAd}>看广告</Button>
         </ModalWall>
     );
 }

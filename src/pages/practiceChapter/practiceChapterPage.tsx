@@ -90,7 +90,7 @@ export default function PracticeChapterPage() {
 
     return (
         <View>
-            <PayWall isOpen={showPayWall} />
+            {showPayWall && <PayWall />}
 
             {showChapterInfo && (
                 <ChapterInfo

@@ -30,9 +30,12 @@ export const userSlice = createSlice({
             state.token = null
             state.displayId = null
         },
-        quizChanceChangedBy: (state, { payload }: PayloadAction<number>) => {
-            state.quizChance += payload
+        rewardAdWatched: (state) => {
+            state.quizChance += 5 // 默认奖励5个题目
         },
+        quizChanceConsumed: (state) => {
+            state.quizChance = state.quizChance - 1 < 0 ? 0: state.quizChance - 1;
+        }
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -59,7 +62,7 @@ export const userSlice = createSlice({
     },
 })
 
-export const { userLoggedIn, userLoggedOut,quizChanceChangedBy } = userSlice.actions
+export const { userLoggedIn, userLoggedOut,rewardAdWatched, quizChanceConsumed } = userSlice.actions
 
 /* selectors */
 export const selectIsLogin = (state: RootState) => {

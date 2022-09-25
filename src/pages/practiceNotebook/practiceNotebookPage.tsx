@@ -56,7 +56,7 @@ export default function practiceNotebookPage() {
 
     return (
         <View>
-            <PayWall isOpen={showPayWall} />
+            {showPayWall && <PayWall />}
 
             {questionSetId !== undefined && (
                 <QuestionSet
