@@ -1,3 +1,5 @@
 export interface IUser {
-    displayId: string
+    displayId: string;
+    isMember: boolean;
+    quizChance: number;
 }

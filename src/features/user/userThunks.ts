@@ -2,9 +2,9 @@ import { AppThunk } from "@/store/store";
 import { getErrorMessage } from "@/utils/errorHandler";
 import userStorage from "@/features/user/userStorage";
 import Taro from "@tarojs/taro";
-import { showLoginFailureModal } from "./showLoginFailureModal";
+import { showLoginFailureModal } from "./components/showLoginFailureModal";
 import { userApi } from "./userService";
-import { userLoggedIn, userLoggedOut } from "./userSlice";
+import { quizChanceChangedBy, userLoggedIn, userLoggedOut } from "./userSlice";
 
 export const getLocalUserInfo = (): AppThunk => dispatch => {
     const result = userStorage.getUserInfo();
@@ -34,4 +34,9 @@ export const login = (): AppThunk => async dispatch => {
     }
 
     await dispatch(userApi.endpoints.login.initiate(code));
+};
+
+export const reduceQuizChance = (): AppThunk => dispatch => {
+    dispatch(quizChanceChangedBy(-1));
+    dispatch(userApi.endpoints.reduceQuizChance.initiate());
 };

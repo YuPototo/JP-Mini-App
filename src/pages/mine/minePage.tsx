@@ -7,12 +7,17 @@ export default function mine() {
     const displayId = useAppSelector(state => state.user.displayId);
     const isLoginFailure = useAppSelector(state => state.user.isLoginFailure);
 
+    const quizChance = useAppSelector(state => state.user.quizChance);
+    const isMember = useAppSelector(state => state.user.isMember);
+
     const idOrMessage = isLoginFailure
         ? "登录失败，点击此处重新登录"
         : displayId;
 
     return (
         <View>
+            <View>会员状态：{isMember ? "是" : "否"}</View>
+            <View>做题机会：{quizChance}</View>
             <View onClick={() => dispatch(login())}>ID: {idOrMessage}</View>
         </View>
     );

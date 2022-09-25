@@ -16,9 +16,13 @@ import routes from "@/routes/routes";
 import QuestionSetListOperator from "@/components/QuestionSetListOperator/QuestionSetListOperator";
 import { navigate } from "@/utils/navigator/navigator";
 import { useGetQuestionSetLoadingInfo } from "@/features/questionSet/hooks/useGetQuestionSetLoadingInfo";
+import { useChanceGuard } from "@/features/user/useChanceGuard";
+import PayWall from "@/features/user/components/PayWall";
 
 export default function PracticeChapterPage() {
     const dispatch = useAppDispatch();
+
+    const showPayWall = useChanceGuard();
 
     // init chapter practice
     const { chapterId, questionSetIndex } = useInitChapterPractice();
@@ -86,6 +90,8 @@ export default function PracticeChapterPage() {
 
     return (
         <View>
+            <PayWall isOpen={showPayWall} />
+
             {showChapterInfo && (
                 <ChapterInfo
                     title={chapterInfo.title}

@@ -3,12 +3,18 @@ import "./app.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import "./utils/abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { getLocalUserInfo } from "./features/user/userThunks";
 import { getWorkingProgress } from "./features/progress/progressThunks";
+import { selectIsLogin } from "./features/user/userSlice";
+import { useGetUserQuery } from "./features/user/userService";
 
 const InnerApp: React.FC<{ children: React.ReactNode }> = props => {
     const dispatch = useAppDispatch();
+
+    const isLogin = useAppSelector(selectIsLogin);
+
+    useGetUserQuery(undefined, { skip: !isLogin });
 
     useEffect(() => {
         dispatch(getLocalUserInfo());

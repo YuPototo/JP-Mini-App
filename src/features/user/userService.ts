@@ -2,7 +2,7 @@ import { splitApi } from "../../store/query/splitApi";
 import { IUser } from "./userTypes";
 import userStorage from "./userStorage";
 import { getErrorMessage } from "@/utils/errorHandler";
-import { showLoginFailureModal } from "./showLoginFailureModal";
+import { showLoginFailureModal } from "./components/showLoginFailureModal";
 import { login } from "./userThunks";
 
 interface LoginRes {
@@ -29,8 +29,18 @@ export const userApi = splitApi.injectEndpoints({
                     showLoginFailureModal(errMessage, () => dispatch(login()));
                 }
             }
+        }),
+        getUser: build.query<IUser, void>({
+            query: () => "/users",
+            transformResponse: (res: { user: IUser }) => res.user
+        }),
+        reduceQuizChance: build.mutation<void, void>({
+            query: () => ({
+                url: "/users/reduceQuizChance",
+                method: "PUT"
+            })
         })
     })
 });
 
-export const { useLoginMutation } = userApi;
+export const { useLoginMutation, useGetUserQuery } = userApi;

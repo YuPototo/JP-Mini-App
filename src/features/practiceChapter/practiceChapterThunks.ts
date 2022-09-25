@@ -4,6 +4,7 @@ import { finishChapter } from '../chapterDone/chapterDoneThunks'
 import { Result, selectChapterId, resultChanged } from './practiceChapterSlice'
 import { sendWrongRecord } from '../wrongRecord/wrongRecordService'
 import { setProgress } from '../progress/progressThunks'
+import { reduceQuizChance } from '../user/userThunks'
 
 /**
  * 获取某个 chapter 的 questionSetIds
@@ -75,5 +76,10 @@ export const finishChapterQuestionSet =
         // 如果是最后一个 questionSet，就发送 chapterDone 的请求
         if (questionSetIndex === questionSetIds.length - 1) {
             dispatch(finishChapter(chapterId))
+        }
+
+        const isMember = state.user.isMember
+        if (!isMember) {
+            dispatch(reduceQuizChance())
         }
     }

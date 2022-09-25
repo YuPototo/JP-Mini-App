@@ -8,6 +8,8 @@ import {
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
 import { useGetQuestionSetLoadingInfo } from "@/features/questionSet/hooks/useGetQuestionSetLoadingInfo";
 import { PracticeMode } from "@/features/questionSet/questionSetTypes";
+import PayWall from "@/features/user/components/PayWall";
+import { useChanceGuard } from "@/features/user/useChanceGuard";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
@@ -16,6 +18,8 @@ import { useEffect } from "react";
 
 export default function practiceNotebookPage() {
     const dispatch = useAppDispatch();
+
+    const showPayWall = useChanceGuard();
 
     // init practice notebook page
     const {
@@ -52,6 +56,8 @@ export default function practiceNotebookPage() {
 
     return (
         <View>
+            <PayWall isOpen={showPayWall} />
+
             {questionSetId !== undefined && (
                 <QuestionSet
                     questionSetId={questionSetId}
