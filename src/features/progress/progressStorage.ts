@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { ProgressDetail } from "./progressSlice";
+import { AllProgressType } from "./progressSlice";
 
 const setWorkingBook = (bookId: string) => {
     Taro.setStorage({
@@ -12,30 +12,18 @@ const getWorkingBook = () => {
     return Taro.getStorageSync("workingBookId") as string | null;
 };
 
-const getProgressDetail = (
-    bookId: string
-): ProgressDetail | undefined | { isDone: true } => {
+const getProgressDetail = (bookId: string): AllProgressType | undefined => {
     const value = Taro.getStorageSync(`bookProgress_${bookId}`);
     if (value) {
         return JSON.parse(value);
     }
 };
 
-const setProgressDetail = (
-    bookId: string,
-    progressDetail: ProgressDetail | 1
-) => {
-    if (progressDetail === 1) {
-        Taro.setStorage({
-            key: `bookProgress_${bookId}`,
-            data: JSON.stringify({ isDone: true })
-        });
-    } else {
-        Taro.setStorage({
-            key: `bookProgress_${bookId}`,
-            data: JSON.stringify(progressDetail)
-        });
-    }
+const setProgressDetail = (bookId: string, progressDetail: AllProgressType) => {
+    Taro.setStorage({
+        key: `bookProgress_${bookId}`,
+        data: JSON.stringify(progressDetail)
+    });
 };
 
 const progressStorage = {

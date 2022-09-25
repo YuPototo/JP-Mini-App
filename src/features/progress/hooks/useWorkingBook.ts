@@ -1,31 +1,27 @@
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../store/hooks";
-import progressStorage from "../progressStorage";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
     selectBookById,
     selectSectionAndChapterTitle
 } from "../../books/booksSlice";
 import { useGetBookContentQuery } from "../../books/booksService";
+import { selectProgressByBook } from "../progressSlice";
+import { useEffect } from "react";
+import { getProgressByBookId } from "../progressThunks";
 
 export function useWorkingBook() {
-    const [workingBookId, setWorkingBookId] = useState<string | undefined>();
+    const bookId = useAppSelector(state => state.progress.workingBook);
 
     const {
         isDone,
         questionSetIndex,
         chapterTitle,
         sectionTitle
-    } = useBookProgress(workingBookId);
+    } = useBookProgress(bookId);
 
-    useEffect(() => {
-        const bookId = progressStorage.getWorkingBook();
-        setWorkingBookId(bookId ? bookId : undefined);
-    }, []);
+    const book = useAppSelector(selectBookById(bookId));
 
-    const book = useAppSelector(selectBookById(workingBookId));
-
-    useGetBookContentQuery(workingBookId!, {
-        skip: workingBookId === undefined
+    useGetBookContentQuery(bookId!, {
+        skip: bookId === undefined
     });
 
     return {
@@ -37,29 +33,21 @@ export function useWorkingBook() {
     };
 }
 
-// 这个实现方式有问题：题目更新后，hook 里的 effect 不会重新运行，导致 ui 不会更新
 export function useBookProgress(bookId?: string) {
-    const [sectionId, setSectionId] = useState<string | undefined>();
-    const [chapterId, setChapterId] = useState<string | undefined>();
-    const [questionSetIndex, setQuestionSetIndex] = useState<
-        number | undefined
-    >();
-    const [isDone, setIsDone] = useState(false);
-
+    const dispatch = useAppDispatch();
     useEffect(() => {
-        if (!bookId) return;
-        const progressDetail = progressStorage.getProgressDetail(bookId);
-        console.log(progressDetail);
-        if (progressDetail) {
-            if ("isDone" in progressDetail) {
-                setIsDone(true);
-            } else {
-                setSectionId(progressDetail.sectionId);
-                setChapterId(progressDetail.chapterId);
-                setQuestionSetIndex(progressDetail.questionSetIndex);
-            }
-        }
-    }, [bookId]);
+        bookId && dispatch(getProgressByBookId(bookId));
+    }, [bookId, dispatch]);
+    const progress = useAppSelector(selectProgressByBook(bookId));
+
+    const hasProgressDetail = progress !== undefined && progress !== 1;
+
+    const isDone = progress === 1;
+    const sectionId = hasProgressDetail ? progress.sectionId : undefined;
+    const chapterId = hasProgressDetail ? progress.chapterId : undefined;
+    const questionSetIndex = hasProgressDetail
+        ? progress.questionSetIndex
+        : undefined;
 
     const result = useAppSelector(
         selectSectionAndChapterTitle(bookId, sectionId, chapterId)
