@@ -1,13 +1,13 @@
 import { AppThunk } from "@/store/store";
 import { getErrorMessage } from "@/utils/errorHandler";
-import storageService from "@/utils/storageService";
+import userStorage from "@/features/user/userStorage";
 import Taro from "@tarojs/taro";
 import { showLoginFailureModal } from "./showLoginFailureModal";
 import { userApi } from "./userService";
 import { userLoggedIn, userLoggedOut } from "./userSlice";
 
 export const getLocalUserInfo = (): AppThunk => dispatch => {
-    const result = storageService.getUserInfo();
+    const result = userStorage.getUserInfo();
 
     if (result) {
         dispatch(userLoggedIn(result));
@@ -17,7 +17,7 @@ export const getLocalUserInfo = (): AppThunk => dispatch => {
 };
 
 export const logout = (): AppThunk => async dispatch => {
-    storageService.removeUserInfo();
+    userStorage.removeUserInfo();
     dispatch(userLoggedOut());
 };
 

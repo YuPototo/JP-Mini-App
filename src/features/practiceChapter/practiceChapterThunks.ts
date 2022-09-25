@@ -66,11 +66,11 @@ export const finishChapterQuestionSet =
         const questionSetIndex = questionSetIds.indexOf(questionSetId)
         dispatch(resultChanged({ questionSetIndex, questionSetId, result }))
 
-        // 如果做错了，就发送错误记录
-        isRight || dispatch(sendWrongRecord(questionSetId))
-
         // 记录做题进度
         dispatch(setProgress())
+
+        // 如果做错了，就发送错误记录
+        isRight || dispatch(sendWrongRecord(questionSetId))
 
         // 如果是最后一个 questionSet，就发送 chapterDone 的请求
         if (questionSetIndex === questionSetIds.length - 1) {

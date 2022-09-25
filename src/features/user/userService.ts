@@ -1,6 +1,6 @@
 import { splitApi } from "../../store/query/splitApi";
 import { IUser } from "./userTypes";
-import storageService from "../../utils/storageService";
+import userStorage from "./userStorage";
 import { getErrorMessage } from "@/utils/errorHandler";
 import { showLoginFailureModal } from "./showLoginFailureModal";
 import { login } from "./userThunks";
@@ -21,7 +21,7 @@ export const userApi = splitApi.injectEndpoints({
             async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    storageService.setUserInfo(data.token, data.user.displayId);
+                    userStorage.setUserInfo(data.token, data.user.displayId);
                 } catch (err) {
                     const maybeMessage = err.error?.data?.message;
                     const errMessage = maybeMessage ?? getErrorMessage(err);

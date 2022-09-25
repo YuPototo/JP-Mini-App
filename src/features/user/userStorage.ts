@@ -17,10 +17,10 @@ const removeUserInfo = () => {
     Taro.removeStorage({ key: "displayId" });
 };
 
-const storageService = {
+const userStorage = {
     setUserInfo,
     getUserInfo,
     removeUserInfo
 };
 
-export default storageService;
+export default userStorage;
