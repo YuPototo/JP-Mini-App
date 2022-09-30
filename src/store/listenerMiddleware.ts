@@ -5,6 +5,7 @@ import { createListenerMiddleware, addListener } from '@reduxjs/toolkit'
 import type { TypedStartListening, TypedAddListener } from '@reduxjs/toolkit'
 
 import type { RootState, AppDispatch } from './store'
+import { addOrderListeners } from '@/features/order/orderSlice'
 
 export const listenerMiddleware = createListenerMiddleware()
 
@@ -21,3 +22,4 @@ export const addAppListener = addListener as TypedAddListener<
 export default listenerMiddleware
 
 addQuestionSetListeners(startAppListening)
+addOrderListeners(startAppListening)

@@ -4,13 +4,13 @@ import { splitApi } from "../../store/query/splitApi";
 export const bookFavApi = splitApi.injectEndpoints({
     endpoints: build => ({
         checkBookFav: build.query<boolean, string>({
-            query: (bookId: string) => `bookFav/${bookId}`,
+            query: (bookId: string) => `/bookFav/${bookId}`,
             transformResponse: (res: { isFav: boolean }) => res.isFav,
             providesTags: (_, __, bookId) => [{ type: "BookFav", id: bookId }]
         }),
         addBookFav: build.mutation<void, string>({
             query: (bookId: string) => ({
-                url: `bookFav/${bookId}`,
+                url: `/bookFav/${bookId}`,
                 method: "POST"
             }),
             invalidatesTags: (_, __, bookId) => [
@@ -20,7 +20,7 @@ export const bookFavApi = splitApi.injectEndpoints({
         }),
         removeBookFav: build.mutation<void, string>({
             query: (bookId: string) => ({
-                url: `bookFav/${bookId}`,
+                url: `/bookFav/${bookId}`,
                 method: "DELETE"
             }),
             invalidatesTags: (_, __, bookId) => [
@@ -29,7 +29,7 @@ export const bookFavApi = splitApi.injectEndpoints({
             ]
         }),
         getBookFavs: build.query<string[], void>({
-            query: () => "bookFav",
+            query: () => "/bookFav",
             transformResponse: (res: { books: string[] }) => res.books,
             providesTags: ["BookFav"]
         })

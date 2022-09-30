@@ -9,7 +9,7 @@ interface GetQuestionSetRes {
 export const questionSetApi = splitApi.injectEndpoints({
     endpoints: build => ({
         getQuestionSet: build.query<GetQuestionSetRes, string>({
-            query: questionSetId => `questionSets/${questionSetId}`
+            query: questionSetId => `/questionSets/${questionSetId}`
         })
     })
 });

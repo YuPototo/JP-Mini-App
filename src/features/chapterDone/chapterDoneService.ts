@@ -8,7 +8,7 @@ type AddChapterDoneArg = {
 export const chapterDoneApi = splitApi.injectEndpoints({
     endpoints: build => ({
         getChapterDone: build.query<string[], string>({
-            query: bookId => `chapterDone/${bookId}`,
+            query: bookId => `/chapterDone/${bookId}`,
             transformResponse: (res: { chapters: string[] }) => res.chapters,
             providesTags: (_, __, bookId) => [
                 { type: "ChapterDone", id: bookId }
@@ -16,7 +16,7 @@ export const chapterDoneApi = splitApi.injectEndpoints({
         }),
         addChapterDone: build.mutation<void, AddChapterDoneArg>({
             query: ({ bookId, chapterId }) => ({
-                url: `chapterDone/${bookId}`,
+                url: `/chapterDone/${bookId}`,
                 method: "POST",
                 body: { chapterId }
             }),
@@ -26,7 +26,7 @@ export const chapterDoneApi = splitApi.injectEndpoints({
         }),
         deleteChapterDone: build.mutation<void, string>({
             query: bookId => ({
-                url: `chapterDone/${bookId}`,
+                url: `/chapterDone/${bookId}`,
                 method: "DELETE"
             }),
             invalidatesTags: (_, __, bookId) => [

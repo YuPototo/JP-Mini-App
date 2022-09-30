@@ -8,8 +8,6 @@ export function useChanceGuard() {
 
     const quizChance = useAppSelector(state => state.user.quizChance);
 
-    console.log(quizChance);
-
     // 会员不考虑这个
     if (isMember) {
         return false;

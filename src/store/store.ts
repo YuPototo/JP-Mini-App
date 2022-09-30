@@ -12,6 +12,7 @@ import userReduer from "@/features/user/userSlice";
 import notebookReducer from "../features/notebook/notebookSlice";
 import wrongRecordReducer from "../features/wrongRecord/wrongRecordSlice";
 import progressReducer from "../features/progress/progressSlice";
+import orderReducer from "../features/order/orderSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
     user: userReduer,
     notebook: notebookReducer,
     wrongRecord: wrongRecordReducer,
-    progress: progressReducer
+    progress: progressReducer,
+    order: orderReducer
 });
 
 export const store = configureStore({

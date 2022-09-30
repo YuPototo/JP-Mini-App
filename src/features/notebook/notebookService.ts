@@ -4,7 +4,7 @@ import { INotebook } from "./notebookTypes";
 export const notebookApi = splitApi.injectEndpoints({
     endpoints: build => ({
         getNotebooks: build.query<INotebook[], void>({
-            query: () => "notebooks",
+            query: () => "/notebooks",
             transformResponse: (res: { notebooks: INotebook[] }) =>
                 res.notebooks,
             keepUnusedDataFor: 6000,
@@ -12,7 +12,7 @@ export const notebookApi = splitApi.injectEndpoints({
         }),
         createNotebook: build.mutation<INotebook, string>({
             query: title => ({
-                url: "notebooks",
+                url: "/notebooks",
                 body: {
                     title
                 },

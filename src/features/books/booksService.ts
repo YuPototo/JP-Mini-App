@@ -5,18 +5,18 @@ import type { ICategory, IBook, ISection, IChapter} from "./booksTypes";
 export const booksApi = splitApi.injectEndpoints({
     endpoints: (build) => ({
         getCategoriyes: build.query<ICategory[], void>({
-            query: () => "categories",
+            query: () => "/categories",
             transformResponse: (res: { categories: ICategory[] }) =>
                 res.categories,
             keepUnusedDataFor: 600,
         }),
         getBooks: build.query<IBook[], void>({
-            query: () => "books",
+            query: () => "/books",
             transformResponse: (res: { books: IBook[] }) => res.books,
             keepUnusedDataFor: 600,
         }),
         getBookContent: build.query<ISection[], string>({
-            query: bookId => `books/${bookId}/contents`,
+            query: bookId => `/books/${bookId}/contents`,
             transformResponse: (res: { sections: ISection[] }) => res.sections,
             keepUnusedDataFor: 300,
         })

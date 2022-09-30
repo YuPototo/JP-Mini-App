@@ -1,5 +1,7 @@
 import { login } from "@/features/user/userThunks";
+import routes from "@/routes/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
 
 export default function mine() {
@@ -19,6 +21,9 @@ export default function mine() {
             <View>会员状态：{isMember ? "是" : "否"}</View>
             <View>做题机会：{quizChance}</View>
             <View onClick={() => dispatch(login())}>ID: {idOrMessage}</View>
+            <View onClick={() => navigate(routes.memberLanding())}>
+                成为会员
+            </View>
         </View>
     );
 }
