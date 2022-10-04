@@ -1,5 +1,4 @@
 import { useAppDispatch } from "@/store/hooks";
-import { navigate } from "@/utils/navigator/navigator";
 import toast from "@/utils/toast/toast";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";

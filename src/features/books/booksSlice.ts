@@ -88,6 +88,10 @@ export const booksSlice = createSlice({
 export const { categoryPicked, bookViewed } = booksSlice.actions;
 
 /* selectors */
+
+/**
+ * 计算应该展开哪一个 section
+ */
 export const selectContentProgress =
     (bookId: string) =>
     (
@@ -97,9 +101,9 @@ export const selectContentProgress =
         const sections = selectContentByBook(bookId)(state).data
 
         if (!sections) {
-            // cache 可能已经被删掉。出现的概率不高。
             // tech debt
-            console.error('selectContentProgress: 找不到 sections')
+            // 情况1： cache 可能已经被删掉。出现的概率不高。
+            // 情况2: 还没有加载好 section
             return
         }
 
