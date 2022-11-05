@@ -5,6 +5,8 @@ import { selectChildrenByLevel, categoryPicked } from "../booksSlice";
 import { useGetCategoriyesQuery } from "../booksService";
 import type { ICategory } from "../booksTypes";
 import { extractQueyError } from "@/store/utils/errorHandling";
+import styles from "./CategoryNav.module.scss";
+
 
 export default function CategoryNav() {
     const { isLoading, error } = useGetCategoriyesQuery();
@@ -12,15 +14,15 @@ export default function CategoryNav() {
     const topCategories = useAppSelector((state) => state.books.categories);
 
     return (
-        <View className="my-4">
+        <View className={clsx(styles.categoryNav, 'full-width')}>
             {isLoading ? (
-                <View className="skeleton mb-4 h-6  w-60"></View>
+                <View className="">加载中...</View>
             ) : (
                 <CategoryList categories={topCategories} categoryLevel={0} />
             )}
 
             {error && (
-                <Text className="text-red-500">
+                <Text>
                     {`获取内容分类出错：${extractQueyError(error)}`}
                 </Text>
             )}
@@ -48,23 +50,22 @@ function CategoryList({ categories, categoryLevel }: CategoryListProps) {
 
     return (
         <>
-            <View className="m-2">
+            <View className={styles.itemList}>
                 {categories.map((category) => (
-                    <Text
+                    <View
                         className={clsx(
-                            selectedCategoryKey === category.key &&
-                                "bg-red-200",
-                            "m-2 p-2 hover:cursor-pointer hover:bg-red-200"
+                            selectedCategoryKey === category.key && styles.categoryItemSelected,
+                            styles.categoryItem
                         )}
                         key={category.key}
                         onClick={() => handleClickCategory(category.key)}
                     >
                         {category.displayValue}
-                    </Text>
+                    </View>
                 ))}
             </View>
 
-            <View className="m-2">
+            <View>
                 {children && (
                     <CategoryList
                         categories={children}

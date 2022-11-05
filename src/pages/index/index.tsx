@@ -1,26 +1,24 @@
-import { View, Button } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import BookList from "@/features/books/components/BookList";
-import CategoryNav from "@/features/books/components/Category";
+import CategoryNav from "@/features/books/components/CategoryNav";
 import "./index.scss";
-import routes from "@/routes/routes";
-import { navigate } from "@/utils/navigator/navigator";
 import WorkingBook from "@/features/progress/WorkingBook";
 
 export default function Index() {
     return (
-        <View>
+        <View className="page">
             <CategoryNav />
             <WorkingBook />
 
-            <Button onClick={() => navigate(routes.rendererExample())}>
+            <BookList />
+
+            {/* <Button onClick={() => navigate(routes.rendererExample())}>
                 To Rich Text renderer
             </Button>
 
             <Button onClick={() => navigate(routes.play())}>
                 To Play Page
-            </Button>
-
-            <BookList />
+            </Button> */}
         </View>
     );
 }
