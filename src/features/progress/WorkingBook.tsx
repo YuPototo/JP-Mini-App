@@ -5,8 +5,7 @@ import { useWorkingBook } from "./hooks/useWorkingBook";
 import styles from "./WorkingBook.module.scss";
 
 export default function WorkingBook(): JSX.Element {
-    const { book, isDone, sectionTitle, chapterTitle, questionSetIndex } =
-        useWorkingBook();
+    const { book, isDone, sectionTitle, chapterTitle } = useWorkingBook();
 
     if (!book) return <></>;
 
@@ -35,14 +34,11 @@ export default function WorkingBook(): JSX.Element {
                                 <View className={styles.progressContent}>
                                     <View>{sectionTitle}</View>
                                     <View>{chapterTitle}</View>
-                                    {questionSetIndex !== undefined && (
-                                        <View>第{questionSetIndex + 1}题</View>
-                                    )}
                                 </View>
                             )}
                         </View>
                     </View>
-                    {/* <View></View> */}
+                    <View className="btn btn-primary--outline">继续练习</View>
                 </View>
             </View>
         </View>

@@ -10,14 +10,14 @@ export interface BooksState {
     categories: ICategory[];
     selectedCategoryKeys: CategoryKey[];
     books: IBook[];
-    currentBookId: string | null
+    currentBookId: string | null;
 }
 
 const initialState: BooksState = {
     categories: [],
     selectedCategoryKeys: [],
     books: [],
-    currentBookId: null
+    currentBookId: null,
 };
 
 export const booksSlice = createSlice({
@@ -25,47 +25,50 @@ export const booksSlice = createSlice({
     initialState,
     reducers: {
         bookViewed: (state, { payload }: PayloadAction<string>) => {
-            state.currentBookId = payload
+            state.currentBookId = payload;
         },
         categoryPicked: (
             state,
             action: PayloadAction<{ categoryLevel: number; key: string }>
         ) => {
-            const { categoryLevel: index, key } = action.payload
+            const { categoryLevel: index, key } = action.payload;
 
             if (index > state.selectedCategoryKeys.length) {
                 console.error(
                     `categoryPicked: index ${index} is larger than selectedCategoryKeys.length ${state.selectedCategoryKeys.length}`
-                )
-                return
+                );
+                return;
             }
 
             if (index === 0) {
                 if (state.selectedCategoryKeys[0] === key) {
-                    state.selectedCategoryKeys = [] // 反选
+                    state.selectedCategoryKeys = []; // 反选
                 } else {
-                    state.selectedCategoryKeys = [key]
+                    state.selectedCategoryKeys = [key];
                 }
             } else if (index === 1) {
                 if (state.selectedCategoryKeys[1] === key) {
-                    state.selectedCategoryKeys.splice(1, 1)
+                    state.selectedCategoryKeys.splice(1, 1);
                 } else {
                     state.selectedCategoryKeys = [
                         state.selectedCategoryKeys[0] as string, // Tech debt: remove as
                         key,
-                    ]
+                    ];
                 }
             } else if (index === 2) {
                 if (state.selectedCategoryKeys[2] === key) {
-                    state.selectedCategoryKeys.splice(2, 1)
+                    state.selectedCategoryKeys.splice(2, 1);
                 } else {
                     state.selectedCategoryKeys = [
                         state.selectedCategoryKeys[0] as string, // Tech debt: remove as
                         state.selectedCategoryKeys[1] as string,
                         key,
-                    ]
+                    ];
                 }
             }
+        },
+        cleanCategory: (state) => {
+            state.selectedCategoryKeys = [];
         },
     },
     extraReducers: (builder) => {
@@ -85,7 +88,7 @@ export const booksSlice = createSlice({
     },
 });
 
-export const { categoryPicked, bookViewed } = booksSlice.actions;
+export const { categoryPicked, bookViewed, cleanCategory } = booksSlice.actions;
 
 /* selectors */
 
@@ -95,45 +98,45 @@ export const { categoryPicked, bookViewed } = booksSlice.actions;
 export const selectContentProgress =
     (bookId: string) =>
     (
-        state: RootState,
+        state: RootState
         //@ts-ignore
     ): { openSectionIndex: number; nextChapterId?: string } | undefined => {
-        const sections = selectContentByBook(bookId)(state).data
+        const sections = selectContentByBook(bookId)(state).data;
 
         if (!sections) {
             // tech debt
             // 情况1： cache 可能已经被删掉。出现的概率不高。
             // 情况2: 还没有加载好 section
-            return
+            return;
         }
 
         // 如果有 progress，优先返回 progress
-        const progress = selectProgressByBook(bookId)(state)
+        const progress = selectProgressByBook(bookId)(state);
         if (progress) {
             if (progress === 1) {
                 // case 1: 做完 book 了
-                return
+                return;
             } else {
                 // case 2：有进度
-                const sectionId = progress.sectionId
+                const sectionId = progress.sectionId;
                 const sectionIndex = sections.findIndex(
-                    (section) => section.id === sectionId,
-                )
+                    (section) => section.id === sectionId
+                );
                 return {
                     openSectionIndex: sectionIndex,
                     nextChapterId: progress.chapterId,
-                }
+                };
             }
         }
 
         // 没有 progress，返回第1个没做完的 chapter 及其所在的 section
-        const chapterDones = selectChapterDonesByBook(bookId)(state).data
+        const chapterDones = selectChapterDonesByBook(bookId)(state).data;
         if (!chapterDones) {
-            return { openSectionIndex: 0 }
+            return { openSectionIndex: 0 };
         }
 
-        return getOpenSection(sections, chapterDones)
-    }
+        return getOpenSection(sections, chapterDones);
+    };
 
 /**
  * 给定 Category level 和 state，返回被选中的 category 的 chidlren
@@ -160,7 +163,7 @@ export const selectChildrenByLevel =
 
 export const selectBooksByCategory = (state: RootState) => {
     const selectedCategoryKeys = state.books.selectedCategoryKeys;
-    const books = state.books.books.filter((book) => !book.hidden)
+    const books = state.books.books.filter((book) => !book.hidden);
 
     const selectedCategoryLength = selectedCategoryKeys.length;
     if (selectedCategoryLength === 0) {
@@ -191,65 +194,65 @@ export const selectBooksByCategory = (state: RootState) => {
 };
 
 export const selectBookById = (bookId?: string) => (state: RootState) => {
-    return state.books.books.find((book) => book.id === bookId)
-}
+    return state.books.books.find((book) => book.id === bookId);
+};
 
 export const selectSectionAndChapterTitle =
     (bookId?: string, sectionId?: string, chapterId?: string) =>
     (state: RootState) => {
         if (!bookId || !sectionId || !chapterId) {
-            return
+            return;
         }
 
-        const sections = selectContentByBook(bookId)(state).data
+        const sections = selectContentByBook(bookId)(state).data;
 
         if (!sections) {
-            return
+            return;
         }
 
-        const section = sections.find((section) => section.id === sectionId)
+        const section = sections.find((section) => section.id === sectionId);
 
         if (!section) {
-            console.error('selectSectionTitle: 找不到 section')
-            return
+            console.error("selectSectionTitle: 找不到 section");
+            return;
         }
 
         const chapter = section.chapters.find(
-            (chapter) => chapter.id === chapterId,
-        )
+            (chapter) => chapter.id === chapterId
+        );
 
         if (!chapter) {
-            console.error('selectSectionTitle: 找不到 chapter')
-            return
+            console.error("selectSectionTitle: 找不到 chapter");
+            return;
         }
 
-        return { sectionTitle: section.title, chapterTitle: chapter.title }
-    }
+        return { sectionTitle: section.title, chapterTitle: chapter.title };
+    };
 
 export const selectSectionByChapterId =
     (chapterId: string) => (state: RootState) => {
-        const bookId = state.books.currentBookId
+        const bookId = state.books.currentBookId;
 
         if (!bookId) {
-            console.error('selectSectionByChapterId: currentBookId is null')
-            return
+            console.error("selectSectionByChapterId: currentBookId is null");
+            return;
         }
 
-        const sections = selectContentByBook(bookId)(state).data
+        const sections = selectContentByBook(bookId)(state).data;
 
         if (!sections) {
-            return
+            return;
         }
 
         for (const section of sections) {
             const chapter = section.chapters.find(
-                (chapter) => chapter.id === chapterId,
-            )
+                (chapter) => chapter.id === chapterId
+            );
 
             if (chapter) {
-                return section
+                return section;
             }
         }
-    }
-    
+    };
+
 export default booksSlice.reducer;
