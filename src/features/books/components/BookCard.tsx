@@ -8,7 +8,7 @@ interface BookProps {
     book: IBook;
 }
 
-function BookCard({ book }: BookProps) {
+function BookCard({ book}: BookProps) {
     return (
         <View className={styles["book-card"]}>
             <View className={styles["book-card-image-wrapper"]}>

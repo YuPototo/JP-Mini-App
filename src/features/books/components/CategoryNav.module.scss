@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     background-color: white;
-    padding-bottom: 5px;
+    padding-bottom: 5rpx;
 }
 
 
@@ -10,13 +10,13 @@
     width: 100wh;
     display: flex;
     justify-content: space-around;
-    margin: 10px 0;
+    margin: 10rpx 0;
 }
 
 .categoryItem {
    background-color: #F2F2F2;
-   border-radius: 30px;
-   padding: 13px 35px;
+   border-radius: 30Px;
+   padding: 13rpx 35rpx;
 }
 
 .categoryItemSelected {

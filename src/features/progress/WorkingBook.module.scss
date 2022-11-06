@@ -1,10 +1,15 @@
-@import "../../../styles/variables";
+@import "../../styles/variables";
+
+.workingBook {
+    width: 90%;
+    margin: 20rpx auto;
+}
 
 .book-card {
     display: flex;
     height: 260rpx;
     background-color: white;
-    border-radius: 5Px;
+    border-radius: 5px;
     padding: 10rpx 20rpx;
 }
 
@@ -24,13 +29,25 @@
     font-size: 40rpx;
 }
 
-.book-desc {
-    font-size: 30rpx;
-}
-
 .rightPart {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: $space_4;
+}
+
+.progress {
+    display: flex;
+    gap: 30rpx;
+    align-items: center;
+}
+
+.progressContent {
+    display: flex;
+    flex-direction: column;
+    gap: 6rpx;
+}
+
+.progressLabel {
+    color: $color-gray-500;
 }
