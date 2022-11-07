@@ -1,7 +1,6 @@
 import { View } from "@tarojs/components";
 import BookList from "@/features/books/components/BookList";
 import CategoryNav from "@/features/books/components/CategoryNav";
-import "./index.scss";
 import WorkingBook from "@/features/progress/WorkingBook";
 
 export default function Index() {

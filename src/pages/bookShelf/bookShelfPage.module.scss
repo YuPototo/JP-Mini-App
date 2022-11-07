@@ -1,0 +1,10 @@
+.bookList {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    gap: 32rpx;
+    width: 90%;
+    padding-top: 32rpx;
+    padding-bottom: 32rpx;
+    margin: 0 auto;
+}

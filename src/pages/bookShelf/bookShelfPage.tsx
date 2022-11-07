@@ -6,6 +6,7 @@ import routes from "@/routes/routes";
 import { useAppSelector } from "@/store/hooks";
 import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
+import styles from "./bookShelfPage.module.scss";
 
 export default function bookShelf() {
     const isLogin = useAppSelector(selectIsLogin);
@@ -13,15 +14,17 @@ export default function bookShelf() {
     const { data } = useGetBookFavsQuery(undefined, { skip: !isLogin });
 
     return (
-        <View>
-            {data?.map(bookId => (
-                <View
-                    key={bookId}
-                    onClick={() => navigate(routes.bookDetail(bookId))}
-                >
-                    <BookWrapper bookId={bookId} />
-                </View>
-            ))}
+        <View className="page">
+            <View className={styles.bookList}>
+                {data?.map((bookId) => (
+                    <View
+                        key={bookId}
+                        onClick={() => navigate(routes.bookDetail(bookId))}
+                    >
+                        <BookWrapper bookId={bookId} />
+                    </View>
+                ))}
+            </View>
 
             {data?.length === 0 && (
                 <>

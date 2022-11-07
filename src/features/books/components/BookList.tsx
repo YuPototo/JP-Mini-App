@@ -23,7 +23,6 @@ export default function BookList() {
                     <View
                         key={book.id}
                         onClick={() => navigate(routes.bookDetail(book.id))}
-                        className=""
                     >
                         <BookCard book={book} />
                     </View>
