@@ -1,0 +1,10 @@
+{
+    "symbol_url": "https://at.alicdn.com/t/font_2849655_l0ektplycmk.js?spm=a313x.7781069.1998910419.54&file=font_2849655_l0ektplycmk.js",
+    "save_dir": "./src/components/iconfont",
+    "use_typescript": true,
+    "platforms": ["weapp"],
+    "use_rpx": true,
+    "trim_icon_prefix": "icon",
+    "default_icon_size": 18,
+    "design_width": 750
+}

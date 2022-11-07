@@ -1,4 +1,4 @@
-import { View, Button } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -95,6 +95,8 @@ function FavButton({ bookId }: { bookId: string }) {
             }, 1500);
         }
 
+        if (disableAddFav) return;
+
         const mutation = isFav ? removeBookFav : addBookFav;
         const toastText = isFav ? "取消收藏成功" : "收藏成功";
 
@@ -108,10 +110,13 @@ function FavButton({ bookId }: { bookId: string }) {
 
     return (
         <View>
-            <Button onClick={toggleBookFav} disabled={disableAddFav}>
+            <View
+                className="btn btn-secondary--outline"
+                onClick={toggleBookFav}
+            >
                 {isFav ? "取消收藏" : "收藏"}
                 {isUpdating && "中..."}
-            </Button>
+            </View>
         </View>
     );
 }

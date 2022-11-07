@@ -1,0 +1,46 @@
+@import "../../../styles/variables";
+
+.content {
+    margin: 32rpx 0;
+    border-radius: 10rpx;
+}
+
+.sectionTitleWrapper {
+    background-color: $color-gray-100;
+    border: 4rpx solid white;
+    padding: 20rpx 30rpx;
+
+    display: flex;
+    align-items: center;
+
+    &:active {
+        background-color: $color-gray-200;
+    }
+}
+
+.sectionIcon {
+    margin-right: 16rpx;
+}
+
+.chaptersInSection {
+    background-color: white;
+    padding: 10rpx 0;
+}
+
+.chapterWrapper {
+    font-size: $text-sm;
+}
+
+.chapterTitleWrapper {
+    padding: 20rpx 40rpx;
+    display: flex;
+    justify-content: space-between;
+
+    &:active {
+        background-color: $color-green-100;
+    }
+}
+
+.nextChapter {
+    background-color: $color-green-50;
+}

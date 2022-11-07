@@ -237,7 +237,6 @@ export const selectSectionByChapterId =
         const bookId = state.books.currentBookId;
 
         if (!bookId) {
-            console.error("selectSectionByChapterId: currentBookId is null");
             return;
         }
 
@@ -262,7 +261,6 @@ export const selectFirstChapterId = (state: RootState) => {
     const bookId = state.books.currentBookId;
 
     if (!bookId) {
-        console.error("selectSectionByChapterId: currentBookId is null");
         return;
     }
 

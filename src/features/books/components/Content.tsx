@@ -8,6 +8,9 @@ import { selectIsLogin } from "@/features/user/userSlice";
 import { useGetChapterDoneQuery } from "@/features/chapterDone/chapterDoneService";
 import { selectContentProgress } from "../booksSlice";
 import { navigate } from "@/utils/navigator/navigator";
+import IconFont from "@/components/iconfont";
+import styles from "./Content.module.scss";
+import clsx from "clsx";
 
 type Props = {
     bookId: string;
@@ -20,7 +23,7 @@ export default function Content({ bookId }: Props) {
     const isLogin = useAppSelector(selectIsLogin);
 
     const { data: chaptersDone } = useGetChapterDoneQuery(bookId, {
-        skip: !isLogin
+        skip: !isLogin,
     });
 
     const contentProgress = useAppSelector(selectContentProgress(bookId));
@@ -32,7 +35,7 @@ export default function Content({ bookId }: Props) {
     }, [openSectionIndex]);
 
     return (
-        <View>
+        <View className={styles.content}>
             {isLoading && <Text>加载练习目录...</Text>}
 
             {sections &&
@@ -65,17 +68,33 @@ function Section({
     nextChapterId,
     showChapter = false,
     chaptersDone = [],
-    onClickTitle
+    onClickTitle,
 }: SectionProps) {
     const { title, chapters } = section;
 
     return (
-        <View>
-            <View onClick={() => onClickTitle()}>{title}</View>
+        <>
+            <View
+                className={styles.sectionTitleWrapper}
+                onClick={() => onClickTitle()}
+            >
+                <View className={styles.sectionIcon}>
+                    {showChapter ? (
+                        <IconFont name="arrow-down-bold" size={22} />
+                    ) : (
+                        <IconFont name="arrow-right-bold" size={22} />
+                    )}
+                </View>
+
+                {title}
+            </View>
             {showChapter ? (
-                <View className="">
-                    {chapters.map(chapter => (
-                        <View key={chapter.id}>
+                <View className={styles.chaptersInSection}>
+                    {chapters.map((chapter) => (
+                        <View
+                            className={styles.chapterWrapper}
+                            key={chapter.id}
+                        >
                             <Chapter
                                 chapter={chapter}
                                 isNext={chapter.id === nextChapterId}
@@ -85,7 +104,7 @@ function Section({
                     ))}
                 </View>
             ) : null}
-        </View>
+        </>
     );
 }
 
@@ -102,10 +121,18 @@ function Chapter({ chapter, isDone, isNext }: ChapterProps) {
     };
 
     return (
-        <View onClick={toPractice}>
+        <View
+            className={clsx(
+                styles.chapterTitleWrapper,
+                isNext && styles.nextChapter
+            )}
+            onClick={toPractice}
+        >
             <Text>{chapter.title}</Text>
-            {isDone && <Text>完成</Text>}
-            {isNext && <Text>下一章</Text>}
+            {isDone && <IconFont name="check" size={30} color={"#059669"} />}
+            {isNext && (
+                <IconFont name="map-marker" size={28} color={"#059669"} />
+            )}
         </View>
     );
 }
