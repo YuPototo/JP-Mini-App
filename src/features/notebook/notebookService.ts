@@ -2,24 +2,24 @@ import { splitApi } from "../../store/query/splitApi";
 import { INotebook } from "./notebookTypes";
 
 export const notebookApi = splitApi.injectEndpoints({
-    endpoints: build => ({
+    endpoints: (build) => ({
         getNotebooks: build.query<INotebook[], void>({
             query: () => "/notebooks",
             transformResponse: (res: { notebooks: INotebook[] }) =>
                 res.notebooks,
             keepUnusedDataFor: 6000,
-            providesTags: ["Notebook"]
+            providesTags: ["Notebook"],
         }),
         createNotebook: build.mutation<INotebook, string>({
-            query: title => ({
+            query: (title) => ({
                 url: "/notebooks",
                 body: {
-                    title
+                    title,
                 },
-                method: "POST"
+                method: "POST",
             }),
             transformResponse: (res: { notebook: INotebook }) => res.notebook,
-            invalidatesTags: ["Notebook"]
+            invalidatesTags: ["Notebook"],
         }),
         updateNotebook: build.mutation<
             INotebook,
@@ -28,42 +28,42 @@ export const notebookApi = splitApi.injectEndpoints({
             query: ({ notebookId, title }) => ({
                 url: `/notebooks/${notebookId}`,
                 method: "POST",
-                body: { title }
+                body: { title },
             }),
-            invalidatesTags: ["Notebook"]
+            invalidatesTags: ["Notebook"],
         }),
         deleteNotebook: build.mutation<void, string>({
-            query: notebookId => ({
+            query: (notebookId) => ({
                 url: `/notebooks/${notebookId}`,
-                method: "DELETE"
+                method: "DELETE",
             }),
-            invalidatesTags: ["Notebook"]
+            invalidatesTags: ["Notebook"],
         }),
         saveQuestionSet: build.mutation<
             void,
             { notebookId: string; questionSetId: string }
         >({
             query: ({ notebookId, questionSetId }) => ({
-                url: `notebooks/${notebookId}/questionSets/${questionSetId}`,
-                method: "POST"
+                url: `/notebooks/${notebookId}/questionSets/${questionSetId}`,
+                method: "POST",
             }),
-            invalidatesTags: ["QuestionSetFav"]
+            invalidatesTags: ["QuestionSetFav"],
         }),
         deleteQuestionSet: build.mutation<void, string>({
-            query: questionDetId => ({
-                url: `notebooks/questionSets/${questionDetId}`,
-                method: "DELETE"
+            query: (questionDetId) => ({
+                url: `/notebooks/questionSets/${questionDetId}`,
+                method: "DELETE",
             }),
-            invalidatesTags: ["QuestionSetFav"]
+            invalidatesTags: ["QuestionSetFav"],
         }),
         getNotebookContent: build.query<string[], string>({
-            query: notebookId => `notebooks/${notebookId}/questionSets`,
+            query: (notebookId) => `/notebooks/${notebookId}/questionSets`,
             transformResponse: (res: { questionSets: string[] }) => {
                 return res.questionSets;
             },
-            providesTags: ["QuestionSetFav"]
-        })
-    })
+            providesTags: ["QuestionSetFav"],
+        }),
+    }),
 });
 
 export const {
@@ -73,5 +73,5 @@ export const {
     useUpdateNotebookMutation,
     useSaveQuestionSetMutation,
     useDeleteQuestionSetMutation,
-    useGetNotebookContentQuery
+    useGetNotebookContentQuery,
 } = notebookApi;

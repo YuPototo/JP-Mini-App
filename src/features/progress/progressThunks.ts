@@ -4,7 +4,7 @@ import {
     progressChanged,
     progressRemoved,
     selectNextQuestionSetProgress,
-    workingBookChanged
+    workingBookChanged,
 } from "./progressSlice";
 
 export const setProgress = (): AppThunk => (dispatch, getState) => {
@@ -30,18 +30,21 @@ export const setProgress = (): AppThunk => (dispatch, getState) => {
     progressStorage.setProgressDetail(currentBook, progressDetail);
 };
 
-export const getProgressByBookId = (bookId: string): AppThunk => dispatch => {
-    const progressDetail = progressStorage.getProgressDetail(bookId);
+export const getProgressByBookId =
+    (bookId: string): AppThunk =>
+    (dispatch) => {
+        const progressDetail = progressStorage.getProgressDetail(bookId);
 
-    if (progressDetail) {
-        dispatch(progressChanged({ bookId, progress: progressDetail }));
-    }
-};
+        console.log("progressDetail", progressDetail);
+        if (progressDetail) {
+            dispatch(progressChanged({ bookId, progress: progressDetail }));
+        }
+    };
 
 /**
  * 获取上次做的题目的 progress
  */
-export const getWorkingProgress = (): AppThunk => dispatch => {
+export const getWorkingProgress = (): AppThunk => (dispatch) => {
     const bookId = progressStorage.getWorkingBook();
     if (bookId) {
         dispatch(workingBookChanged(bookId));
@@ -49,7 +52,9 @@ export const getWorkingProgress = (): AppThunk => dispatch => {
     }
 };
 
-export const resetProgress = (bookId: string): AppThunk => dispatch => {
-    dispatch(progressRemoved(bookId));
-    progressStorage.removeProgressDetail(bookId);
-};
+export const resetProgress =
+    (bookId: string): AppThunk =>
+    (dispatch) => {
+        dispatch(progressRemoved(bookId));
+        progressStorage.removeProgressDetail(bookId);
+    };

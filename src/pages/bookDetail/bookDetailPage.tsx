@@ -9,20 +9,21 @@ import { selectIsLogin } from "@/features/user/userSlice";
 import {
     useAddBookFavMutation,
     useCheckBookFavQuery,
-    useRemoveBookFavMutation
+    useRemoveBookFavMutation,
 } from "@/features/bookFav/bookFavService";
 import Taro from "@tarojs/taro";
 import { useGetBooksQuery } from "@/features/books/booksService";
 import routes from "@/routes/routes";
 import {
     useDeleteChapterDoneMutation,
-    useGetChapterDoneQuery
+    useGetChapterDoneQuery,
 } from "@/features/chapterDone/chapterDoneService";
 import { navigate } from "@/utils/navigator/navigator";
 import toast from "@/utils/toast/toast";
 import { useBookProgress } from "@/features/progress/hooks/useWorkingBook";
 import { selectHasProgress } from "@/features/progress/progressSlice";
 import { resetProgress } from "@/features/progress/progressThunks";
+import styles from "./bookDetailPage.module.scss";
 
 export default function BookDetailPage() {
     const router = useRouter();
@@ -38,12 +39,14 @@ export default function BookDetailPage() {
     }, [bookId, dispatch]);
 
     return (
-        <View>
-            <BookCardWrapper bookId={bookId} />
-            <WorkingProgress bookId={bookId} />
+        <View className="page">
+            <View className={styles.bookCard}>
+                <BookCardWrapper bookId={bookId} />
+            </View>
+            <StartPracticeButton bookId={bookId} />
             <FavButton bookId={bookId} />
-            <ResetProgressButton bookId={bookId} />
             <Content bookId={bookId} />
+            <ResetProgressButton bookId={bookId} />
         </View>
     );
 }
@@ -69,14 +72,12 @@ function FavButton({ bookId }: { bookId: string }) {
     const isLogin = useAppSelector(selectIsLogin);
 
     const { data: isFav, isLoading } = useCheckBookFavQuery(bookId, {
-        skip: !isLogin
+        skip: !isLogin,
     });
 
     const [addBookFav, { isLoading: isAdding }] = useAddBookFavMutation();
-    const [
-        removeBookFav,
-        { isLoading: isRemoving }
-    ] = useRemoveBookFavMutation();
+    const [removeBookFav, { isLoading: isRemoving }] =
+        useRemoveBookFavMutation();
 
     const disableAddFav = isLoading || isAdding || isRemoving;
 
@@ -120,7 +121,7 @@ function ResetProgressButton({ bookId }: { bookId: string }) {
     const isLogin = useAppSelector(selectIsLogin);
 
     const { data: chaptersDone } = useGetChapterDoneQuery(bookId, {
-        skip: !isLogin
+        skip: !isLogin,
     });
 
     const [removeChapterDone] = useDeleteChapterDoneMutation();
@@ -143,11 +144,11 @@ function ResetProgressButton({ bookId }: { bookId: string }) {
         Taro.showModal({
             title: "重置进度",
             content: "确定吗？",
-            success: res => {
+            success: (res) => {
                 if (res.confirm) {
                     handleConfirm();
                 }
-            }
+            },
         });
     };
 
@@ -160,26 +161,22 @@ function ResetProgressButton({ bookId }: { bookId: string }) {
     );
 }
 
-/**
- * Feature: 做题进度
- */
-function WorkingProgress({ bookId }: { bookId: string }) {
-    const {
-        isDone,
-        questionSetIndex,
-        chapterTitle,
-        sectionTitle
-    } = useBookProgress(bookId);
+function StartPracticeButton({ bookId }: { bookId: string }) {
+    const progress = useBookProgress(bookId);
+    console.log(progress);
 
-    if (isDone) return <View>做完了！</View>;
+    // const toPractice = () => {
+    //     const startingIndex = 0;
+    //     navigate(routes.practiceChapter(chapter.id, startingIndex));
+    // };
+
+    if (progress.isDone) {
+        return <ResetProgressButton bookId={bookId} />;
+    }
 
     return (
-        <View className="m-2 bg-red-100 p-2">
-            <View>{sectionTitle}</View>
-            <View>{chapterTitle}</View>
-            {questionSetIndex !== undefined && (
-                <View>第{questionSetIndex + 1}题</View>
-            )}
+        <View className={styles.startPracticeButton}>
+            <View className="btn btn-primary">开始练习</View>
         </View>
     );
 }

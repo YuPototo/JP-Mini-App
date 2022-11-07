@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
     selectBookById,
-    selectSectionAndChapterTitle
+    selectSectionAndChapterTitle,
 } from "../../books/booksSlice";
 import { useGetBookContentQuery } from "../../books/booksService";
 import { selectProgressByBook } from "../progressSlice";
@@ -9,19 +9,15 @@ import { useEffect } from "react";
 import { getProgressByBookId } from "../progressThunks";
 
 export function useWorkingBook() {
-    const bookId = useAppSelector(state => state.progress.workingBook);
+    const bookId = useAppSelector((state) => state.progress.workingBook);
 
-    const {
-        isDone,
-        questionSetIndex,
-        chapterTitle,
-        sectionTitle
-    } = useBookProgress(bookId);
+    const { isDone, questionSetIndex, chapterTitle, sectionTitle } =
+        useBookProgress(bookId);
 
     const book = useAppSelector(selectBookById(bookId));
 
     useGetBookContentQuery(bookId!, {
-        skip: bookId === undefined
+        skip: bookId === undefined,
     });
 
     return {
@@ -29,15 +25,17 @@ export function useWorkingBook() {
         isDone,
         sectionTitle,
         chapterTitle,
-        questionSetIndex
+        questionSetIndex,
     };
 }
 
 export function useBookProgress(bookId?: string) {
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         bookId && dispatch(getProgressByBookId(bookId));
     }, [bookId, dispatch]);
+
     const progress = useAppSelector(selectProgressByBook(bookId));
 
     const hasProgressDetail = progress !== undefined && progress !== 1;
@@ -57,6 +55,6 @@ export function useBookProgress(bookId?: string) {
         isDone,
         sectionTitle: result?.sectionTitle,
         chapterTitle: result?.chapterTitle,
-        questionSetIndex
+        questionSetIndex,
     };
 }
