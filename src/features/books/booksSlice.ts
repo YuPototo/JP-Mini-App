@@ -258,4 +258,21 @@ export const selectSectionByChapterId =
         }
     };
 
+export const selectFirstChapterId = (state: RootState) => {
+    const bookId = state.books.currentBookId;
+
+    if (!bookId) {
+        console.error("selectSectionByChapterId: currentBookId is null");
+        return;
+    }
+
+    const sections = selectContentByBook(bookId)(state).data;
+
+    if (!sections) {
+        return;
+    }
+
+    return sections[0].chapters[0].id;
+};
+
 export default booksSlice.reducer;

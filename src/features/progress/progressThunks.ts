@@ -35,7 +35,6 @@ export const getProgressByBookId =
     (dispatch) => {
         const progressDetail = progressStorage.getProgressDetail(bookId);
 
-        console.log("progressDetail", progressDetail);
         if (progressDetail) {
             dispatch(progressChanged({ bookId, progress: progressDetail }));
         }

@@ -55,6 +55,7 @@ export function useBookProgress(bookId?: string) {
         isDone,
         sectionTitle: result?.sectionTitle,
         chapterTitle: result?.chapterTitle,
+        chapterId,
         questionSetIndex,
     };
 }

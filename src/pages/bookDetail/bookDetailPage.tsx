@@ -1,7 +1,11 @@
 import { View, Button } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { selectBookById, bookViewed } from "@/features/books/booksSlice";
+import {
+    selectBookById,
+    bookViewed,
+    selectFirstChapterId,
+} from "@/features/books/booksSlice";
 import BookCard from "@/features/books/components/BookCard";
 import Content from "@/features/books/components/Content";
 import { useEffect } from "react";
@@ -155,7 +159,12 @@ function ResetProgressButton({ bookId }: { bookId: string }) {
     return (
         <>
             {showBtn && (
-                <Button onClick={() => showDeleteModal()}>重置进度</Button>
+                <View
+                    className="btn btn-primary--outline"
+                    onClick={() => showDeleteModal()}
+                >
+                    重置进度
+                </View>
             )}
         </>
     );
@@ -163,20 +172,42 @@ function ResetProgressButton({ bookId }: { bookId: string }) {
 
 function StartPracticeButton({ bookId }: { bookId: string }) {
     const progress = useBookProgress(bookId);
-    console.log(progress);
-
-    // const toPractice = () => {
-    //     const startingIndex = 0;
-    //     navigate(routes.practiceChapter(chapter.id, startingIndex));
-    // };
+    const firstChapterId = useAppSelector(selectFirstChapterId);
 
     if (progress.isDone) {
-        return <ResetProgressButton bookId={bookId} />;
+        return (
+            <View className={styles.finishPracticeHintWrapper}>
+                <View className={styles.finishPracticeHint}>
+                    已经完成所有练习
+                </View>
+                <ResetProgressButton bookId={bookId} />
+            </View>
+        );
     }
+
+    const toPractice = () => {
+        const startingChapterId = progress.chapterId ?? firstChapterId;
+
+        const firstQuestionSetIndex = progress.questionSetIndex ?? 0;
+
+        if (startingChapterId) {
+            navigate(
+                routes.practiceChapter(startingChapterId, firstQuestionSetIndex)
+            );
+        } else {
+            console.error("找不到 startingChapterId");
+        }
+    };
+
+    const hasProgress = progress.chapterId !== undefined;
+
+    const btnText = hasProgress ? "继续练习" : "开始练习";
 
     return (
         <View className={styles.startPracticeButton}>
-            <View className="btn btn-primary">开始练习</View>
+            <View className="btn btn-primary" onClick={toPractice}>
+                {btnText}
+            </View>
         </View>
     );
 }
