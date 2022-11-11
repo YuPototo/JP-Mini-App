@@ -93,6 +93,15 @@ export const { categoryPicked, bookViewed, cleanCategory } = booksSlice.actions;
 /* selectors */
 
 /**
+ * 返回是否已经选择了 category
+ */
+export const selectHasSelectedCategory = (state: RootState) => {
+    const selectedCategoryKeys = state.books.selectedCategoryKeys;
+    const selectedCategoryLength = selectedCategoryKeys.length;
+    return selectedCategoryLength > 0;
+};
+
+/**
  * 计算应该展开哪一个 section
  */
 export const selectContentProgress =
