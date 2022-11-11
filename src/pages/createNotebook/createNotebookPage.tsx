@@ -3,7 +3,9 @@ import { navigate } from "@/utils/navigator/navigator";
 import toast from "@/utils/toast/toast";
 import { Input, View, Text, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import clsx from "clsx";
 import { useState } from "react";
+import styles from "./createNotebookPage.module.scss";
 
 export default function createNotebookPage() {
     const [title, setTitle] = useState("");
@@ -26,21 +28,32 @@ export default function createNotebookPage() {
     const disabled = title === "" || isLoading;
 
     return (
-        <View>
-            <Text>名称</Text>
+        <View className="page">
+            <Text className={styles.heading}>创建笔记本</Text>
             <Input
+                className={styles.input}
                 value={title}
                 type="text"
                 placeholder="输入笔记本名称"
                 maxlength={10}
-                onInput={e => setTitle(e.detail.value)}
+                onInput={(e) => setTitle(e.detail.value)}
                 onConfirm={handleSubmit}
             />
 
-            <Button disabled={disabled} onClick={handleSubmit}>
+            <Button
+                className={clsx("btn btn-primary", styles.topBtn)}
+                disabled={disabled}
+                onClick={handleSubmit}
+            >
                 创建
             </Button>
-            <Button onClick={() => navigate(-1)}>返回</Button>
+
+            <Button
+                className="btn btn-secondary--outline"
+                onClick={() => navigate(-1)}
+            >
+                返回
+            </Button>
         </View>
     );
 }

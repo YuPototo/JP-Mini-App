@@ -158,3 +158,15 @@ Button {
         border: 1px solid $color-red-600;
     }
 }
+
+.btn-danger--outline {
+    border: 1px solid $color-red-600;
+    color: $color-red-600;
+    background-color: white;
+
+    &:active {
+        background-color: $color-red-600;
+        border: px solid $color-red-600;
+        color: white;
+    }
+}

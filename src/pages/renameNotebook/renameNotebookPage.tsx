@@ -1,12 +1,14 @@
 import {
     useGetNotebooksQuery,
-    useUpdateNotebookMutation
+    useUpdateNotebookMutation,
 } from "@/features/notebook/notebookService";
 import { navigate } from "@/utils/navigator/navigator";
 import toast from "@/utils/toast/toast";
-import { Button, Input, View, Text } from "@tarojs/components";
-import Taro, { useRouter } from "@tarojs/taro";
+import { Input, View } from "@tarojs/components";
+import { useRouter } from "@tarojs/taro";
 import { useState } from "react";
+import clsx from "clsx";
+import styles from "./renameNotebook.module.scss";
 
 export default function renameNotebookPage() {
     const router = useRouter();
@@ -16,7 +18,11 @@ export default function renameNotebookPage() {
 
     const [renameNotebook, { isLoading }] = useUpdateNotebookMutation();
 
+    const disableButton = title === "" || isLoading;
+
     const handleSubmit = async () => {
+        if (disableButton) return;
+
         try {
             toast.loading();
             await renameNotebook({ notebookId, title }).unwrap();
@@ -34,33 +40,39 @@ export default function renameNotebookPage() {
 
     const { data: notebooks } = useGetNotebooksQuery(undefined);
 
-    const notebook = notebooks?.find(el => el.id === notebookId);
+    const notebook = notebooks?.find((el) => el.id === notebookId);
 
     if (!notebook) {
         return <View>加载中...</View>;
     }
 
-    const disableButton = title === "" || isLoading;
-
     return (
-        <View>
-            <View>
-                <Text>笔记本：{notebook.title} </Text>
-            </View>
-            <Text>新名称</Text>
+        <View className="page">
+            <View className={styles.nameNow}>{notebook.title} </View>
             <Input
+                className={styles.input}
                 value={title}
                 type="text"
                 placeholder="输入笔记本名称"
                 maxlength={10}
-                onInput={e => setTitle(e.detail.value)}
+                onInput={(e) => setTitle(e.detail.value)}
                 onConfirm={handleSubmit}
+                autoFocus
             />
 
-            <Button disabled={disableButton} onClick={handleSubmit}>
+            <View
+                className={clsx("btn btn-primary--outline", styles.confirmBtn)}
+                onClick={handleSubmit}
+            >
                 确认改名
-            </Button>
-            <Button onClick={() => navigate(-1)}>返回</Button>
+            </View>
+
+            <View
+                className="btn btn-secondary--outline"
+                onClick={() => navigate(-1)}
+            >
+                返回
+            </View>
         </View>
     );
 }

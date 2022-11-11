@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.btnWrapper {
+    margin-top: 32rpx;
+}
+
+.hint {
+    padding-top: 32rpx;
+    color: $color-gray-700;
+    size: $text-xs;
+    margin: 32rpx 0;
+}

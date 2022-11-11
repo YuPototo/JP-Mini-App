@@ -1,18 +1,18 @@
 import routes from "@/routes/routes";
 import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useAppSelector } from "../../../store/hooks";
 import { selectIsLogin } from "../../user/userSlice";
 import { useGetNotebooksQuery } from "../notebookService";
 import { INotebook } from "../notebookTypes";
 import { useOrderNotebooks } from "../useOrderNotebooks";
+import styles from "./NotebookListInPage.module.scss";
 
 export default function NotebookListInPage() {
     const isLogin = useAppSelector(selectIsLogin);
 
     const { data, isLoading } = useGetNotebooksQuery(undefined, {
-        skip: !isLogin
+        skip: !isLogin,
     });
 
     return (
@@ -25,7 +25,7 @@ export default function NotebookListInPage() {
 
 function Notebooks({ notebooks }: { notebooks: INotebook[] }) {
     const reordered = useOrderNotebooks(notebooks);
-    const newNotebookId = useAppSelector(state => state.notebook.newNotebook);
+    const newNotebookId = useAppSelector((state) => state.notebook.newNotebook);
 
     const handleToNotebook = (notebookId: string) => {
         navigate(routes.notebookPage(notebookId));
@@ -33,8 +33,9 @@ function Notebooks({ notebooks }: { notebooks: INotebook[] }) {
 
     return (
         <View>
-            {reordered.map(notebook => (
+            {reordered.map((notebook) => (
                 <View
+                    className={styles.notebook}
                     key={notebook.id}
                     onClick={() => handleToNotebook(notebook.id)}
                 >

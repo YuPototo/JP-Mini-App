@@ -2,11 +2,11 @@ import DeleteButton from "@/features/notebook/components/NotebookDeleteButton";
 import NotebookResetButton from "@/features/notebook/components/NotebookResetButton";
 import {
     useGetNotebookContentQuery,
-    useGetNotebooksQuery
+    useGetNotebooksQuery,
 } from "@/features/notebook/notebookService";
 import {
     getNotebookProgress,
-    selectNotebokProgressIndex
+    selectNotebokProgressIndex,
 } from "@/features/notebook/notebookSlice";
 import routes from "@/routes/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -14,6 +14,7 @@ import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
+import styles from "./notebookPage.module.scss";
 
 export default function notebookPage() {
     const router = useRouter();
@@ -28,7 +29,7 @@ export default function notebookPage() {
         dispatch(getNotebookProgress(notebookId));
     }, [notebookId, dispatch]);
 
-    const notebook = notebooks?.find(el => el.id === notebookId);
+    const notebook = notebooks?.find((el) => el.id === notebookId);
     const notebookProgress = useAppSelector(selectNotebokProgressIndex);
 
     if (!notebook) {
@@ -47,12 +48,15 @@ export default function notebookPage() {
         navigate(routes.practiceNotebook(notebookId, notebookProgress));
     };
 
+    const progressInPercent = Math.floor(progress * 100) + "%";
+
     return (
-        <View>
-            <View>{notebook.title}</View>
+        <View className="page">
+            <View className={styles.heading}>{notebook.title}</View>
             {notebook.isDefault || (
-                <View>
+                <View className={styles.btnWrapper}>
                     <Button
+                        className="btn btn-secondary--outline"
                         onClick={() =>
                             navigate(routes.renameNotebook(notebookId))
                         }
@@ -64,38 +68,44 @@ export default function notebookPage() {
             )}
 
             {isEmptyNotebook && (
-                <View>
-                    <View>这个笔记本是空的</View>
+                <View className={styles.emptyNotebookWrapper}>
+                    <View className={styles.hint}>这个笔记本是空的</View>
                     <Button
-                        onClick={() =>
-                            navigate(routes.home(), { method: "switchTab" })
-                        }
+                        className="btn btn-primary--outline"
+                        onClick={() => navigate(-1)}
                     >
-                        去练习
+                        返回
                     </Button>
                 </View>
             )}
 
             {notebookDoable && (
-                <>
-                    <View>收藏了{questionSetIds.length}题</View>
+                <View className={styles.mainContent}>
+                    <View className={styles.count}>
+                        题目数量：{questionSetIds.length}
+                    </View>
 
-                    <View>复习进度：{progress}</View>
+                    <View className={styles.progress}>
+                        复习进度：{progressInPercent}
+                    </View>
+
+                    {notebookProgress > 0 && (
+                        <View className={styles.resetButton}>
+                            <NotebookResetButton notebook={notebook} />
+                        </View>
+                    )}
 
                     {progress < 1 && (
-                        <View>
-                            <Button onClick={handleStart}>
+                        <View className={styles.pracitceBtn}>
+                            <Button
+                                className="btn btn-primary"
+                                onClick={handleStart}
+                            >
                                 {notebookProgress > 0 ? "继续" : "开始"}复习
                             </Button>
                         </View>
                     )}
-
-                    {notebookProgress > 0 && (
-                        <View>
-                            <NotebookResetButton notebook={notebook} />
-                        </View>
-                    )}
-                </>
+                </View>
             )}
         </View>
     );

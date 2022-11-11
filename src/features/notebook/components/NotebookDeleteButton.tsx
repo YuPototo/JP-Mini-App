@@ -30,19 +30,21 @@ export default function NotebookDeleteButton({ notebook }: Props) {
     const openModal = () => {
         Taro.showModal({
             content: "删除笔记本会删除其中收藏的题目。确定吗？",
-            success: res => {
+            success: (res) => {
                 if (res.confirm) {
                     handleDelete();
                 }
-            }
+            },
         });
     };
 
     return (
-        <View>
-            <Button disabled={isLoading} onClick={openModal}>
-                删除
-            </Button>
-        </View>
+        <Button
+            className="btn btn-danger--outline"
+            disabled={isLoading}
+            onClick={openModal}
+        >
+            删除
+        </Button>
     );
 }

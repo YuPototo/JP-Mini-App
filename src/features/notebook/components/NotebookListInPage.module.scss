@@ -1,0 +1,11 @@
+@import "../../../styles/variables";
+
+.notebook {
+    padding: 20rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-bottom: $space_8;
+    &:active {
+        background-color: $color-green-100;
+    }
+}

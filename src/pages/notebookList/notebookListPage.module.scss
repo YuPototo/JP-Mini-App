@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+.sectionTitleWrapper {
+    font-size: $text-lg;
+    display: flex;
+    justify-content: center;
+    margin-bottom: $space_8;
+    align-items: center;
+    padding-top: 16rpx;
+}
+
+.iconWrapper {
+    margin-right: 10rpx;
+    font-size: $text-lg;
+    font-weight: bold;
+    color: $color-primary;
+}
+
+.notebookWrapper {
+    margin-top: $space_24;
+    margin-bottom: $space_24;
+}
+
+.notebook {
+    padding: 20rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-bottom: $space_8;
+    &:active {
+        background-color: $color-green-100;
+    }
+}

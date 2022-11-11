@@ -1,0 +1,39 @@
+@import "../../styles/variables";
+
+.heading {
+    color: $color-green-700;
+    font-size: $text-xl;
+    padding-top: 32rpx;
+    margin-bottom: 28rpx;
+}
+
+.btnWrapper {
+    display: flex;
+    justify-items: center;
+}
+
+.emptyNotebookWrapper {
+    margin-top: 32rpx;
+    font-size: $text-lg;
+
+    .hint {
+        margin-bottom: 32rpx;
+        font-size: $text-lg;
+    }
+}
+
+.mainContent {
+    margin-top: 32rpx;
+
+    .count {
+        margin-bottom: 20rpx;
+    }
+
+    .progress {
+        margin-bottom: 24rpx;
+    }
+
+    .resetButton {
+        margin-bottom: 20rpx;
+    }
+}

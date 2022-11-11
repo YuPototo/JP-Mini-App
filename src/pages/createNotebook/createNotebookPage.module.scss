@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.heading {
+    font-size: $text-lg;
+    display: flex;
+    justify-content: center;
+    margin-bottom: $space_8;
+    align-items: center;
+    padding-top: 16rpx;
+}
+
+.input {
+    background-color: white;
+    padding: 20rpx;
+    border-radius: 10rpx;
+    margin-bottom: 40rpx;
+}
+
+.topBtn {
+    margin-bottom: 28rpx;
+}

@@ -7,6 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 import { navigate } from "@/utils/navigator/navigator";
 import { Button, View } from "@tarojs/components";
 import styles from "./bookShelfPage.module.scss";
+import WorkingBook from "@/features/progress/WorkingBook";
 
 export default function bookShelf() {
     const isLogin = useAppSelector(selectIsLogin);
@@ -15,6 +16,9 @@ export default function bookShelf() {
 
     return (
         <View className="page">
+            <View className={styles.workingBookWrapper}>
+                <WorkingBook />
+            </View>
             <View className={styles.bookList}>
                 {data?.map((bookId) => (
                     <View
@@ -28,8 +32,9 @@ export default function bookShelf() {
 
             {data?.length === 0 && (
                 <>
-                    <View>暂无收藏的练习册</View>
+                    <View className={styles.noFavHint}>你还没有收藏练习</View>
                     <Button
+                        className="btn btn-primary"
                         onClick={() =>
                             navigate(routes.home(), { method: "switchTab" })
                         }
