@@ -21,7 +21,7 @@ const initialState: NotebookState = {
     currentNotebookProgress: 0,
     currentNotebook: null,
     questionSetIds: [],
-    questionSetIndex: 0
+    questionSetIndex: 0,
 };
 
 export const notebookSlice = createSlice({
@@ -53,16 +53,23 @@ export const notebookSlice = createSlice({
             { payload }: PayloadAction<number>
         ) => {
             state.questionSetIndex = payload;
-        }
+        },
     },
-    extraReducers: builder => {
-        builder.addMatcher(
-            notebookApi.endpoints.createNotebook.matchFulfilled,
-            (state, { payload: notebook }) => {
-                state.newNotebook = notebook.id;
-            }
-        );
-    }
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(
+                notebookApi.endpoints.createNotebook.matchFulfilled,
+                (state, { payload: notebook }) => {
+                    state.newNotebook = notebook.id;
+                }
+            )
+            .addMatcher(
+                notebookApi.endpoints.getNotebookContent.matchFulfilled,
+                (state, { payload: questionSetIds }) => {
+                    state.questionSetIds = questionSetIds;
+                }
+            );
+    },
 });
 
 export const {
@@ -70,7 +77,7 @@ export const {
     notebookProgressUpdated,
     noteBookPracticeStarted,
     questionSetIdsAdded,
-    notebookQuestionSetIndexChanged
+    notebookQuestionSetIndexChanged,
 } = notebookSlice.actions;
 
 export default notebookSlice.reducer;
@@ -94,50 +101,48 @@ export const selectNotebokProgressIndex = (state: RootState): number => {
 };
 
 /* thunks */
-export const getNotebookProgress = (
-    notebookId: string
-): AppThunk => dispatch => {
-    const questionSetId = notebookStorageService.getProgress(notebookId);
-    const payload = questionSetId ? questionSetId : 0;
-    dispatch(notebookProgressUpdated(payload as ProgressType));
-};
+export const getNotebookProgress =
+    (notebookId: string): AppThunk =>
+    (dispatch) => {
+        const questionSetId = notebookStorageService.getProgress(notebookId);
+        const payload = questionSetId ? questionSetId : 0;
+        dispatch(notebookProgressUpdated(payload as ProgressType));
+    };
 
-export const setNotebookProgress = (
-    notebookId: string,
-    progress: string | 0 | 1
-): AppThunk => dispatch => {
-    notebookStorageService.setProgress(notebookId, progress);
-    dispatch(notebookProgressUpdated(progress));
-};
+export const setNotebookProgress =
+    (notebookId: string, progress: string | 0 | 1): AppThunk =>
+    (dispatch) => {
+        notebookStorageService.setProgress(notebookId, progress);
+        dispatch(notebookProgressUpdated(progress));
+    };
 
-export const finishNotebookQuestionSet = (questionSetId: string): AppThunk => (
-    dispatch,
-    getState
-) => {
-    const state = getState();
-    const currentNotebook = state.notebook.currentNotebook;
-    if (!currentNotebook) {
-        console.error("找不到 current notebook");
-        return;
-    }
+export const finishNotebookQuestionSet =
+    (questionSetId: string): AppThunk =>
+    (dispatch, getState) => {
+        const state = getState();
+        const currentNotebook = state.notebook.currentNotebook;
+        if (!currentNotebook) {
+            console.error("找不到 current notebook");
+            return;
+        }
 
-    const questionSetIds = state.notebook.questionSetIds;
+        const questionSetIds = state.notebook.questionSetIds;
 
-    const index = questionSetIds.indexOf(questionSetId);
-    if (index === -1) {
-        console.error(
-            `在 state.notebook.questionSetIds 里找不到 questionSetId ${questionSetId}`
-        );
-        return;
-    }
+        const index = questionSetIds.indexOf(questionSetId);
+        if (index === -1) {
+            console.error(
+                `在 state.notebook.questionSetIds 里找不到 questionSetId ${questionSetId}`
+            );
+            return;
+        }
 
-    if (index === questionSetIds.length - 1) {
-        dispatch(setNotebookProgress(currentNotebook, 1));
-        return;
-    }
+        if (index === questionSetIds.length - 1) {
+            dispatch(setNotebookProgress(currentNotebook, 1));
+            return;
+        }
 
-    const nextQuestionSetId = questionSetIds[index + 1];
-    if (nextQuestionSetId) {
-        dispatch(setNotebookProgress(currentNotebook, nextQuestionSetId));
-    }
-};
+        const nextQuestionSetId = questionSetIds[index + 1];
+        if (nextQuestionSetId) {
+            dispatch(setNotebookProgress(currentNotebook, nextQuestionSetId));
+        }
+    };
