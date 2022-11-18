@@ -46,7 +46,9 @@ export default function WebAppIntro() {
                 </View>
                 <View className={styles.urlPart}>
                     <Text className={styles.urlLabel}>网址</Text>
-                    <Text className={styles.url}>riyu.love</Text>
+                    <Text className={styles.url} userSelect>
+                        riyu.love
+                    </Text>
                 </View>
 
                 <Button

@@ -6,27 +6,23 @@ import { useGetWrongRecordQuery } from "@/features/wrongRecord/wrongRecordServic
 import {
     wrongbookPracticeStarted,
     wrongRecordLoaded,
-    wrongRecordPracticeChangedBy
+    wrongRecordPracticeChangedBy,
 } from "@/features/wrongRecord/wrongRecordSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
 import { useEffect } from "react";
+import ProgressBar from "@/components/progressBar/ProgressBar";
 
 export default function PracticeWrongRecordPage() {
     const dispatch = useAppDispatch();
 
-    const {
-        questionSetId,
-        questionSetIds,
-        questionSetIndex
-    } = useInitWrongBookPractice();
+    const { questionSetId, questionSetIds, questionSetIndex } =
+        useInitWrongBookPractice();
 
     // get question set loading info
-    const {
-        isLoadingQuestionSet,
-        isFetchingQuestionSet
-    } = useGetQuestionSetLoadingInfo(questionSetId);
+    const { isLoadingQuestionSet, isFetchingQuestionSet } =
+        useGetQuestionSetLoadingInfo(questionSetId);
 
     // state 1：错误，找不到 questionSet
     if (questionSetId === undefined) {
@@ -40,6 +36,8 @@ export default function PracticeWrongRecordPage() {
 
     return (
         <View>
+            <ProgressBar pct={(questionSetIndex + 1) / questionSetIds.length} />
+
             {questionSetId !== undefined && (
                 <QuestionSet
                     questionSetId={questionSetId}
@@ -75,11 +73,11 @@ function useInitWrongBookPractice() {
     }, [data, dispatch]);
 
     const questionSetIds = useAppSelector(
-        state => state.wrongRecord.questionSetIds
+        (state) => state.wrongRecord.questionSetIds
     );
 
     const questionSetIndex = useAppSelector(
-        state => state.wrongRecord.currentQuestionSetIndex
+        (state) => state.wrongRecord.currentQuestionSetIndex
     );
 
     const questionSetId = questionSetIds[questionSetIndex];
@@ -87,6 +85,6 @@ function useInitWrongBookPractice() {
     return {
         questionSetId,
         questionSetIds,
-        questionSetIndex
+        questionSetIndex,
     };
 }

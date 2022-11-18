@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+
+.progressWrapper {
+    width: 100vw;
+    margin-left: -1 * $page-x-padding;
+    margin-top: -1 * $page-top-padding;
+    background-color: $color-gray-300;
+    height: 3px;
+}
+
+.progressDone {
+    background-color: $color-green-500;
+    height: 100%;
+}

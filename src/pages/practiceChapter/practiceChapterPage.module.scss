@@ -1,0 +1,23 @@
+@import "../../styles/variables";
+
+.page {
+    padding: $page-top-padding $page-x-padding;
+    min-height: 100vh;
+}
+
+.chapterMeta {
+    margin-top: 10rpx;
+    margin-bottom: 20rpx;
+}
+
+.chapterTitle {
+    color: $color-primary;
+    font-weight: bold;
+    margin-bottom: 10rpx;
+    letter-spacing: 4rpx;
+}
+
+.chapterDesc {
+    font-size: $text-sm;
+    color: $color-gray-500;
+}

@@ -6,7 +6,7 @@ import {
     questionSetIndexIncreased,
     initResults,
     chapterUsed,
-    questionSetIndexChanged
+    questionSetIndexChanged,
 } from "@/features/practiceChapter/practiceChapterSlice";
 import { useGetChapterQuery } from "@/features/practiceChapter/chapterSerivce";
 import QuestionSetSkeleton from "@/features/questionSet/components/QuestionSetSkeleton";
@@ -18,6 +18,8 @@ import { navigate } from "@/utils/navigator/navigator";
 import { useGetQuestionSetLoadingInfo } from "@/features/questionSet/hooks/useGetQuestionSetLoadingInfo";
 import { useChanceGuard } from "@/features/user/useChanceGuard";
 import PayWall from "@/features/user/components/PayWall";
+import ProgressBar from "@/components/progressBar/ProgressBar";
+import styles from "./practiceChapterPage.module.scss";
 
 export default function PracticeChapterPage() {
     const dispatch = useAppDispatch();
@@ -33,7 +35,7 @@ export default function PracticeChapterPage() {
         isLoading: isLoadingChapterInfo,
         isError: isQueryError,
         isSuccess: isGettingChapterInfoSuccess,
-        error
+        error,
     } = useGetChapterQuery(chapterId);
 
     const questionSets = chapterInfo?.questionSets || [];
@@ -48,10 +50,8 @@ export default function PracticeChapterPage() {
     const questionSetId = questionSets[questionSetIndex];
 
     // get question set loading info
-    const {
-        isLoadingQuestionSet,
-        isFetchingQuestionSet
-    } = useGetQuestionSetLoadingInfo(questionSetId);
+    const { isLoadingQuestionSet, isFetchingQuestionSet } =
+        useGetQuestionSetLoadingInfo(questionSetId);
 
     // 页面状态1：正在加载章节信息
     if (isLoadingChapterInfo) {
@@ -89,8 +89,10 @@ export default function PracticeChapterPage() {
     };
 
     return (
-        <View>
+        <View className={styles.page}>
             {showPayWall && <PayWall />}
+
+            <ProgressBar pct={(questionSetIndex + 1) / questionSets.length} />
 
             {showChapterInfo && (
                 <ChapterInfo
@@ -130,9 +132,9 @@ function QuestionInfoSkeleton() {
 
 function ChapterInfo({ title, desc }: { title: string; desc?: string }) {
     return (
-        <View>
-            <Text>{title}</Text>
-            {desc && <Text>{desc}</Text>}
+        <View className={styles.chapterMeta}>
+            <View className={styles.chapterTitle}>{title}</View>
+            {desc && <View className={styles.chapterDesc}>{desc}</View>}
         </View>
     );
 }
@@ -159,11 +161,11 @@ function useInitChapterPractice() {
     }, [dispatch]);
 
     const questionSetIndex = useAppSelector(
-        state => state.practiceChapter.questionSetIndex
+        (state) => state.practiceChapter.questionSetIndex
     );
 
     return {
         chapterId,
-        questionSetIndex
+        questionSetIndex,
     };
 }

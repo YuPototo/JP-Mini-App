@@ -5,7 +5,7 @@ import {
     selectIsRight,
     selectIsDone,
     newQuestionSetInitiated,
-    errorOccured
+    errorOccured,
 } from "../questionSetSlice";
 import { useEffect } from "react";
 import { PracticeMode } from "../questionSetTypes";
@@ -16,6 +16,7 @@ import AudioPlayer from "./AudioPlayer";
 import { View } from "@tarojs/components";
 import Transcription from "./Transcription";
 import FavButton from "@/features/notebook/components/FavButton";
+import styles from "./QuestionSet.module.scss";
 
 type Props = {
     questionSetId: string;
@@ -28,9 +29,9 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
         isLoading, // 第1次请求
         isFetching, // 正在请求
         isError,
-        error
+        error,
     } = useGetQuestionSetQuery(questionSetId!, {
-        skip: questionSetId === undefined
+        skip: questionSetId === undefined,
     });
 
     const { questionSet, isFav } = data || {};
@@ -57,15 +58,24 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
     }
 
     return (
-        <View style={{ backgroundColor: isFetching ? "lightBlue" : "" }}>
+        <View
+            style={{ backgroundColor: isFetching ? "lightBlue" : "" }}
+            className={styles.questionSet}
+        >
             {questionSet ? (
                 <>
-                    <Body body={questionSet.body} />
+                    <View className={styles.questionSetBody}>
+                        <Body body={questionSet.body} />
+                    </View>
+
                     <Questions questions={questionSet.questions} />
+
                     <Explanation explanation={questionSet.explanation} />
+
                     {questionSet.audio && (
                         <AudioPlayer audio={questionSet.audio} />
                     )}
+
                     {isDone && (
                         <Transcription
                             transcription={questionSet.audio?.transcription}

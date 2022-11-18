@@ -3,7 +3,7 @@ import { useGetNotebookContentQuery } from "@/features/notebook/notebookService"
 import {
     noteBookPracticeStarted,
     notebookQuestionSetIndexChanged,
-    questionSetIdsAdded
+    questionSetIdsAdded,
 } from "@/features/notebook/notebookSlice";
 import QuestionSet from "@/features/questionSet/components/QuestionSet";
 import { useGetQuestionSetLoadingInfo } from "@/features/questionSet/hooks/useGetQuestionSetLoadingInfo";
@@ -15,6 +15,7 @@ import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
+import ProgressBar from "@/components/progressBar/ProgressBar";
 
 export default function practiceNotebookPage() {
     const dispatch = useAppDispatch();
@@ -22,17 +23,12 @@ export default function practiceNotebookPage() {
     const showPayWall = useChanceGuard();
 
     // init practice notebook page
-    const {
-        questionSetId,
-        questionSetIds,
-        questionSetIndex
-    } = useInitNotebookPractice();
+    const { questionSetId, questionSetIds, questionSetIndex } =
+        useInitNotebookPractice();
 
     // get question set loading info
-    const {
-        isLoadingQuestionSet,
-        isFetchingQuestionSet
-    } = useGetQuestionSetLoadingInfo(questionSetId);
+    const { isLoadingQuestionSet, isFetchingQuestionSet } =
+        useGetQuestionSetLoadingInfo(questionSetId);
 
     if (questionSetId === undefined) {
         return (
@@ -57,6 +53,8 @@ export default function practiceNotebookPage() {
     return (
         <View>
             {showPayWall && <PayWall />}
+
+            <ProgressBar pct={(questionSetIndex + 1) / questionSetIds.length} />
 
             {questionSetId !== undefined && (
                 <QuestionSet
@@ -102,11 +100,11 @@ function useInitNotebookPractice() {
 
     // 从 store 里获取 questionSetIds，因为在做题过程中，可能会添加新的 questionSet 到 notebook 里，这时候 query 里的 questionSets 是最新的。但我不需要最新的 questionSets。
     const questionSetIds = useAppSelector(
-        state => state.notebook.questionSetIds
+        (state) => state.notebook.questionSetIds
     );
 
     const questionSetIndex = useAppSelector(
-        state => state.notebook.questionSetIndex
+        (state) => state.notebook.questionSetIndex
     );
     const questionSetId = questionSetIds[questionSetIndex];
 
@@ -114,6 +112,6 @@ function useInitNotebookPractice() {
         notebookId,
         questionSetId,
         questionSetIds,
-        questionSetIndex
+        questionSetIndex,
     };
 }
