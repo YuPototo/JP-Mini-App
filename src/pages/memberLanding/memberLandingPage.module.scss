@@ -1,0 +1,23 @@
+@import "../../styles/variables";
+
+.part {
+    padding: $space_4 0 $space_8 0;
+    background-color: #fff;
+    margin-bottom: $space_16;
+}
+
+.heading {
+    margin: $space_4 0;
+    font-size: $text-lg;
+    text-align: center;
+}
+
+.countCopy {
+    margin: 15px 0;
+    color: $color-green-600;
+    text-align: center;
+}
+
+.bottomBox {
+    height: 40rpx;
+}

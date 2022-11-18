@@ -51,6 +51,7 @@ export default function BookDetailPage() {
             <FavButton bookId={bookId} />
             <Content bookId={bookId} />
             <ResetProgressButton bookId={bookId} />
+            <View className={styles.bottomBox}></View>
         </View>
     );
 }

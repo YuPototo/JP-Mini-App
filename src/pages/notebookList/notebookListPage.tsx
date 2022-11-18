@@ -44,6 +44,8 @@ export default function notebookListPage() {
             >
                 创建笔记本
             </Button>
+
+            <View className={styles.bottomBox}></View>
         </View>
     );
 }

@@ -1,0 +1,35 @@
+@import "../../styles/variables";
+
+.topBox {
+    height: 32rpx;
+}
+
+.part {
+    width: 100%;
+    margin-bottom: 40rpx;
+    border-radius: 10rpx;
+    background-color: #fff;
+}
+
+.item {
+    padding: 20rpx;
+    border-bottom: 2rpx solid $color-gray-200;
+    line-height: 40rpx;
+    display: flex;
+    align-items: center;
+    font-size: inherit;
+}
+
+.hintIcon {
+    margin-right: $space_8;
+}
+
+.arrowRight {
+    margin-left: auto;
+}
+
+.version {
+    text-align: center;
+    color: $color-gray-700;
+    font-size: $text-sm;
+}

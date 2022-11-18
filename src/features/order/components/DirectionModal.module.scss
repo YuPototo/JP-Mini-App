@@ -1,0 +1,57 @@
+@import "../../../styles/variables";
+
+.modal {
+    width: calc(100vw - 40rpx);
+    height: 73vh;
+    border-radius: 40rpx 40rpx 0 0;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    z-index: 200;
+    padding: 40rpx;
+}
+
+.closeWrapper {
+    position: absolute;
+    top: 30rpx;
+    right: 40rpx;
+}
+
+.title {
+    text-align: center;
+}
+
+.hint {
+    margin: 10rpx 0;
+}
+
+.methodPart {
+    margin: 16rpx 0;
+}
+
+.methodTitle {
+    color: $color-green-500;
+    margin-bottom: 6rpx;
+}
+
+.methodText {
+    color: $color-gray-500;
+    margin-left: 40rpx;
+}
+
+.imageWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    width: 400rpx;
+    height: 400rpx;
+}
+
+.weixinId {
+    text-align: center;
+    color: $color-gray-300;
+    font-size: $text-sm;
+    margin-bottom: 30rpx;
+}

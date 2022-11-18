@@ -1,0 +1,49 @@
+@import "../../styles/variables";
+
+.title {
+    font-size: $text-lg;
+    text-align: center;
+    margin-bottom: 40rpx;
+}
+
+.imageWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    width: 80%;
+    height: 700rpx;
+    box-shadow: 4rpx 4rpx 6rpx $color-gray-400;
+}
+
+.feature {
+    margin: 50rpx 0 50rpx 20rpx;
+}
+
+.featureItem {
+    margin-bottom: 20rpx;
+    color: $color-gray-700;
+    display: flex;
+    gap: 20rpx;
+    align-items: center;
+}
+
+.urlPart {
+    text-align: center;
+    border-radius: 40rpx;
+    background-color: $color-gray-50;
+    margin: 40rpx 0;
+}
+
+.urlLabel {
+    font-size: 70rpx;
+    color: $color-gray-400;
+    margin-right: 40rpx;
+}
+
+.url {
+    font-size: 50px;
+    font-weight: bold;
+    color: $color-green-700;
+}

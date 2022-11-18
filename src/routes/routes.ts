@@ -15,7 +15,9 @@ export const pageNames = {
     practiceNotebook: "/pages/practiceNotebook/practiceNotebookPage",
     wrongNotebook: "/pages/wrongNotebook/wrongNotebookPage",
     practiceWrongRecord: "/pages/practiceWrongRecord/practiceWrongRecordPage",
-    memberLanding: "/pages/memberLanding/memberLandingPage"
+    memberLanding: "/pages/memberLanding/memberLandingPage",
+    webAppIntro: "/pages/webAppIntro/webAppIntro",
+    pdfShare: "/pages/pdfShare/pdfShare",
 };
 
 export const pageList = [
@@ -35,7 +37,9 @@ export const pageList = [
     removeFirstCharacter(pageNames.practiceNotebook),
     removeFirstCharacter(pageNames.wrongNotebook),
     removeFirstCharacter(pageNames.practiceWrongRecord),
-    removeFirstCharacter(pageNames.memberLanding)
+    removeFirstCharacter(pageNames.memberLanding),
+    removeFirstCharacter(pageNames.webAppIntro),
+    removeFirstCharacter(pageNames.pdfShare),
 ];
 
 const routes = {
@@ -61,7 +65,9 @@ const routes = {
         `${pageNames.practiceNotebook}?notebookId=${notebookId}&startingIndex=${startingIndex}`,
     wrongNotebook: () => pageNames.wrongNotebook,
     practiceWrongRecord: () => pageNames.practiceWrongRecord,
-    memberLanding: () => pageNames.memberLanding
+    memberLanding: () => pageNames.memberLanding,
+    webAppIntro: () => pageNames.webAppIntro,
+    pdfShare: () => pageNames.pdfShare,
 };
 
 export default routes;

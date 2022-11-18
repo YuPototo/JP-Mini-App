@@ -1,0 +1,34 @@
+@import "../../styles/variables";
+
+.topTitle {
+    text-align: center;
+}
+
+.part {
+    margin: 20rpx 0;
+}
+
+.label {
+    margin-right: 20rpx;
+}
+
+.content {
+    color: $color-gray-500;
+}
+
+.contactPart {
+    margin-top: 60rpx;
+}
+.contactCopy {
+    margin-bottom: 20rpx;
+}
+
+.imageWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    width: 400rpx;
+    margin: 0 auto;
+}

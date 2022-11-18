@@ -1,0 +1,49 @@
+@import "../../../styles/variables";
+
+.wrapper {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20rpx 60rpx;
+}
+
+.card {
+    background-color: $color-green-50;
+    border-radius: 10rpx;
+    display: flex;
+    padding: 20rpx;
+    border: 2rpx solid $color-green-100;
+}
+
+.topCard {
+    margin-bottom: 30rpx;
+}
+
+.leftCard {
+    align-self: flex-start;
+}
+.rightCard {
+    align-self: flex-end;
+    justify-content: flex-end;
+}
+
+.imageWrapper {
+    margin: 0 $space-8;
+    border-radius: 50%;
+    width: 100rpx;
+    height: 100rpx;
+    overflow: hidden;
+}
+
+.image {
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.userName {
+    margin-bottom: $space_4;
+    font-weight: bold;
+}
+.quote {
+    font-size: $text-sm;
+}

@@ -13,6 +13,7 @@ import notebookReducer from "../features/notebook/notebookSlice";
 import wrongRecordReducer from "../features/wrongRecord/wrongRecordSlice";
 import progressReducer from "../features/progress/progressSlice";
 import orderReducer from "../features/order/orderSlice";
+import parameterReducer from "../features/parameter/parameterSlice";
 
 const rootReducer = combineReducers({
     [splitApi.reducerPath]: splitApi.reducer,
@@ -23,19 +24,20 @@ const rootReducer = combineReducers({
     notebook: notebookReducer,
     wrongRecord: wrongRecordReducer,
     progress: progressReducer,
-    order: orderReducer
+    order: orderReducer,
+    parameter: parameterReducer,
 });
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
+    middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .prepend(listenerMiddleware.middleware)
             .concat(
                 splitApi.middleware,
                 authRejectionMiddleware,
                 queryErrorMiddleware
-            )
+            ),
 });
 
 export type AppDispatch = typeof store.dispatch;

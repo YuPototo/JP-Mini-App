@@ -1,0 +1,55 @@
+@import "../../../styles/variables";
+
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.infoPart {
+    width: 28%;
+    height: auto;
+    text-align: center;
+}
+
+.icon {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.iconWrapper {
+    width: 8vw;
+    height: 8vw;
+    padding: 20rpx;
+    border-radius: 50%;
+    margin: 10rpx auto;
+}
+
+.iconPurple {
+    background-color: #9083be;
+}
+
+.iconRed {
+    background-color: #e2836e;
+}
+
+.iconGreen {
+    background-color: #7dc042;
+}
+
+.msgList {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    font-size: $text-sm;
+}
+
+.msgItem {
+    margin-bottom: 4rpx;
+    color: $color-gray-500;
+
+    &Strong {
+        font-weight: bold;
+    }
+}
