@@ -66,10 +66,12 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
                         <Body body={questionSet.body} />
                     </View>
 
-                    <Questions
-                        questions={questionSet.questions}
-                        isDone={isDone}
-                    />
+                    <View style={{ marginTop: "32rpx", marginBottom: "60rpx" }}>
+                        <Questions
+                            questions={questionSet.questions}
+                            isDone={isDone}
+                        />
+                    </View>
 
                     {isDone && (
                         <Explanation explanation={questionSet.explanation} />

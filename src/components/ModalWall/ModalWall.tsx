@@ -1,4 +1,5 @@
 import { View } from "@tarojs/components";
+import IconFont from "../iconfont";
 
 import styles from "./ModalWall.module.scss";
 
@@ -16,11 +17,14 @@ export default function ModalWall({ onModalClosed, children }: Props) {
     return (
         <View className={styles.mask} onClick={onModalClosed}>
             <View
-                onClick={e => {
+                onClick={(e) => {
                     e.stopPropagation();
                 }}
                 className={styles.modal}
             >
+                <View className={styles.closeWrapper} onClick={onModalClosed}>
+                    <IconFont name="guanbi" size={32} color={"#6b7280"} />
+                </View>
                 {children}
             </View>
         </View>

@@ -5,20 +5,21 @@ import {
     booksApi,
     NextInfoResult,
     NextInfoResultType,
-    selectNextInfo
+    selectNextInfo,
 } from "@/features/books/booksService";
 import { useEffect } from "react";
 import ResultBall from "@/features/practiceChapter/ResultBall";
 import routes from "@/routes/routes";
 import { navigate } from "@/utils/navigator/navigator";
+import styles from "./chapterResult.module.scss";
 
 export default function chapterResult() {
     const router = useRouter();
 
     const { chapterId } = router.params as { chapterId: string };
 
-    const results = useAppSelector(state => state.practiceChapter.results);
-    const bookId = useAppSelector(state => state.books.currentBookId);
+    const results = useAppSelector((state) => state.practiceChapter.results);
+    const bookId = useAppSelector((state) => state.books.currentBookId);
 
     const nextInfo = useAppSelector(selectNextInfo(bookId, chapterId));
 
@@ -27,18 +28,22 @@ export default function chapterResult() {
     }
 
     return (
-        <View>
-            <Text>做题结果</Text>
-            {results.map((result, index) => (
-                <View
-                    key={index}
-                    onClick={() =>
-                        navigate(routes.practiceReview(result.questionSetId))
-                    }
-                >
-                    <ResultBall questionSetResult={result} index={index} />
-                </View>
-            ))}
+        <View className="page">
+            <View className={styles.title}>点击题号，进入对应题目</View>
+            <View className={styles.ballWrapper}>
+                {results.map((result, index) => (
+                    <View
+                        key={index}
+                        onClick={() =>
+                            navigate(
+                                routes.practiceReview(result.questionSetId)
+                            )
+                        }
+                    >
+                        <ResultBall questionSetResult={result} index={index} />
+                    </View>
+                ))}
+            </View>
 
             {bookId && <NextInfo nextInfo={nextInfo} bookId={bookId} />}
         </View>
@@ -47,7 +52,7 @@ export default function chapterResult() {
 
 function NextInfo({
     nextInfo,
-    bookId
+    bookId,
 }: {
     nextInfo: NextInfoResult;
     bookId: string;
@@ -62,11 +67,16 @@ function NextInfo({
 
     const toNextChapter = (chapterId: string) =>
         navigate(routes.practiceChapter(chapterId, 0), {
-            method: "redirectTo"
+            method: "redirectTo",
         });
 
     const ToBookDetailButton = (
-        <Button onClick={() => navigate(-1)}>返回目录</Button>
+        <Button
+            className="btn btn-secondary--outline"
+            onClick={() => navigate(-1)}
+        >
+            返回目录
+        </Button>
     );
 
     if (nextInfo.resultType === NextInfoResultType.NoContent) {
@@ -86,7 +96,7 @@ function NextInfo({
     if (nextInfo.resultType === NextInfoResultType.NoNext) {
         return (
             <View>
-                <View>恭喜你，完成了所有练习</View>
+                <View className={styles.nextHint}>恭喜你，完成了所有练习</View>
                 {ToBookDetailButton}
             </View>
         );
@@ -95,10 +105,20 @@ function NextInfo({
     if (nextInfo.resultType === NextInfoResultType.SameSection) {
         return (
             <View>
-                <Text>下一节：{nextInfo.nextChapter.title}</Text>
-                <Button onClick={() => toNextChapter(nextInfo.nextChapter.id)}>
+                <View className={styles.nextHint}>
+                    <Text>下一节： </Text>
+
+                    <Text className={styles.nextInfo}>
+                        {nextInfo.nextChapter.title}
+                    </Text>
+                </View>
+                <Button
+                    className="btn btn-primary"
+                    onClick={() => toNextChapter(nextInfo.nextChapter.id)}
+                >
                     继续做题
                 </Button>
+                <View className={styles.gap}></View>
                 {ToBookDetailButton}
             </View>
         );
@@ -107,13 +127,20 @@ function NextInfo({
     if (nextInfo.resultType === NextInfoResultType.NextSection) {
         return (
             <View>
-                <Text>
-                    下一节： {nextInfo.nextSection.title} -
-                    {nextInfo.nextChapter.title}
-                </Text>
-                <Button onClick={() => toNextChapter(nextInfo.nextChapter.id)}>
+                <View className={styles.nextHint}>
+                    <Text>下一节： </Text>
+                    <Text className={styles.nextInfo}>
+                        {nextInfo.nextSection.title} -
+                        {nextInfo.nextChapter.title}
+                    </Text>
+                </View>
+                <Button
+                    className="btn btn-primary"
+                    onClick={() => toNextChapter(nextInfo.nextChapter.id)}
+                >
                     继续做题
                 </Button>
+                <View className={styles.gap}></View>
                 {ToBookDetailButton}
             </View>
         );

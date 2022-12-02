@@ -42,14 +42,18 @@ function Question({
 }) {
     return (
         <View>
-            <Body body={question.body} />
+            <View style={{ marginBottom: "50rpx" }}>
+                <Body body={question.body} />
+            </View>
             <Options
                 options={question.options}
                 questionIndex={questionIndex}
                 answer={question.answer}
                 isDone={isDone}
             />
-            {isDone && <Explanation explanation={question.explanation} />}
+            <View style={{ marginTop: "60rpx" }}>
+                {isDone && <Explanation explanation={question.explanation} />}
+            </View>
         </View>
     );
 }

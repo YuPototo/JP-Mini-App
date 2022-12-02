@@ -24,3 +24,11 @@
     z-index: 1001;
     border-radius: 16rpx 16rpx 0 0;
 }
+
+.closeWrapper {
+    position: absolute;
+    top: 10rpx;
+    right: 10rpx;
+    padding: 16rpx;
+    z-index: 1002;
+}

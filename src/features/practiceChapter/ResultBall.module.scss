@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.ball {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: $color-gray-300;
+
+    font-size: $text-lg;
+    color: $color-gray-900;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-right {
+        background-color: $color-green-300;
+
+        &:active {
+            background-color: $color-green-400;
+        }
+    }
+
+    &-wrong {
+        background-color: $color-red-300;
+
+        &:active {
+            background-color: $color-red-400;
+        }
+    }
+}

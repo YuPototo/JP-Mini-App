@@ -1,0 +1,28 @@
+@import "../../styles/variables";
+
+.ballWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30rpx;
+
+    justify-content: center;
+
+    margin-bottom: 40rpx;
+}
+
+.title {
+    padding-top: 26rpx;
+    margin-bottom: 26rpx;
+}
+
+.nextHint {
+    margin-bottom: 32rpx;
+}
+
+.nextInfo {
+    color: $color-green-600;
+}
+
+.gap {
+    height: 32rpx;
+}
