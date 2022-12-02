@@ -4,6 +4,7 @@ export const pageNames = {
     rendererExample: "/pages/rendererExample/rendererExamplePage",
     practiceChapter: "/pages/practiceChapter/practiceChapterPage",
     practiceReview: "/pages/practiceReview/practiceReviewPage",
+    practiceShare: "/pages/practiceShare/practiceSharePage",
     chapterResult: "/pages/chapterResult/chapterResultPage",
     play: "/pages/play/playPage",
     mine: "/pages/mine/minePage",
@@ -26,6 +27,7 @@ export const pageList = [
     removeFirstCharacter(pageNames.rendererExample),
     removeFirstCharacter(pageNames.practiceChapter),
     removeFirstCharacter(pageNames.practiceReview),
+    removeFirstCharacter(pageNames.practiceShare),
     removeFirstCharacter(pageNames.chapterResult),
     removeFirstCharacter(pageNames.play),
     removeFirstCharacter(pageNames.mine),
@@ -51,6 +53,8 @@ const routes = {
         `${pageNames.chapterResult}?chapterId=${chapterId}`,
     practiceReview: (questionSetId: string) =>
         `${pageNames.practiceReview}?questionSetId=${questionSetId}`,
+    practiceShare: (questionSetId: string) =>
+        `${pageNames.practiceShare}?questionSetId=${questionSetId}`,
     rendererExample: () => pageNames.rendererExample,
     play: () => pageNames.play,
     mine: () => pageNames.mine,
