@@ -1,0 +1,37 @@
+@import "../../../styles/variables";
+
+.wrapper {
+    position: fixed;
+    bottom: $bottom-operation-bar-height;
+    background-color: #fff;
+    z-index: 20;
+    padding-bottom: 30rpx;
+}
+
+.btnWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40rpx;
+}
+
+.on {
+    color: $color-green-500;
+}
+
+.off {
+    color: $color-gray-400;
+}
+
+.changeSecBtn {
+    padding: 6rpx;
+    width: 40rpx;
+    height: 40rpx;
+    border: 2rpx solid$color-green-500;
+    border-radius: 50%;
+    font-size: 26rpx;
+    color: $color-green-500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
