@@ -19,3 +19,17 @@
 .bottomBox {
     height: 40rpx;
 }
+
+.btnGroup {
+    display: flex;
+    justify-content: space-between;
+
+    &Left {
+        width: 45%;
+    }
+
+    &Right {
+        width: 45%;
+        margin: 0;
+    }
+}

@@ -1,4 +1,4 @@
-import { View } from "@tarojs/components";
+import { Button, View } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -28,6 +28,7 @@ import { useBookProgress } from "@/features/progress/hooks/useWorkingBook";
 import { selectHasProgress } from "@/features/progress/progressSlice";
 import { resetProgress } from "@/features/progress/progressThunks";
 import styles from "./bookDetailPage.module.scss";
+import clsx from "clsx";
 
 export default function BookDetailPage() {
     const router = useRouter();
@@ -48,7 +49,20 @@ export default function BookDetailPage() {
                 <BookCardWrapper bookId={bookId} />
             </View>
             <StartPracticeButton bookId={bookId} />
-            <FavButton bookId={bookId} />
+
+            <View className={styles.btnGroup}>
+                <FavButton bookId={bookId} />
+                <Button
+                    className={clsx(
+                        "btn btn-primary--outline",
+                        styles.btnGroupRight
+                    )}
+                    open-type="share"
+                >
+                    分享
+                </Button>
+            </View>
+
             <Content bookId={bookId} />
             <ResetProgressButton bookId={bookId} />
             <View className={styles.bottomBox}></View>
@@ -110,14 +124,12 @@ function FavButton({ bookId }: { bookId: string }) {
     };
 
     return (
-        <View>
-            <View
-                className="btn btn-secondary--outline"
-                onClick={toggleBookFav}
-            >
-                {isFav ? "取消收藏" : "收藏"}
-                {isUpdating && "中..."}
-            </View>
+        <View
+            className={clsx("btn btn-secondary--outline", styles.btnGroupLeft)}
+            onClick={toggleBookFav}
+        >
+            {isFav ? "取消收藏" : "收藏"}
+            {isUpdating && "中..."}
         </View>
     );
 }

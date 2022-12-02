@@ -20,6 +20,7 @@ import { useChanceGuard } from "@/features/user/useChanceGuard";
 import PayWall from "@/features/user/components/PayWall";
 import ProgressBar from "@/components/progressBar/ProgressBar";
 import styles from "./practiceChapterPage.module.scss";
+import useShareQuestionSet from "@/features/questionSet/hooks/useShareQuestionSet";
 
 export default function PracticeChapterPage() {
     const dispatch = useAppDispatch();
@@ -48,6 +49,8 @@ export default function PracticeChapterPage() {
     }, [dispatch, chapterId, isGettingChapterInfoSuccess, questionSets.length]);
 
     const questionSetId = questionSets[questionSetIndex];
+
+    useShareQuestionSet(questionSetId);
 
     // get question set loading info
     const { isLoadingQuestionSet, isFetchingQuestionSet } =
