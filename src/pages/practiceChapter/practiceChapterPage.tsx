@@ -56,25 +56,31 @@ export default function PracticeChapterPage() {
     // 页面状态1：正在加载章节信息
     if (isLoadingChapterInfo) {
         return (
-            <>
+            <View className={styles.page}>
                 <QuestionInfoSkeleton />
                 <QuestionSetSkeleton />
-            </>
+            </View>
         );
     }
 
     // 页面状态2：加载 chapter 信息失败
     if (isQueryError) {
-        return <Text>获取 chapter 信息出错：{JSON.stringify(error)}</Text>;
+        return (
+            <View className={styles.page}>
+                <Text>获取 chapter 信息出错：{JSON.stringify(error)}</Text>;
+            </View>
+        );
     }
 
     // 页面状态3：无法从 chapter.questionSetIds 里获取 index 对应的 questionSetId
     if (questionSetId === undefined) {
         return (
-            <Text>
-                出错了：chapter.questionSetIds 里找不到第{questionSetIndex}个
-                element
-            </Text>
+            <View className={styles.page}>
+                <Text>
+                    出错了：chapter.questionSetIds 里找不到第{questionSetIndex}
+                    个 element
+                </Text>
+            </View>
         );
     }
 
@@ -113,6 +119,7 @@ export default function PracticeChapterPage() {
                     index={questionSetIndex}
                     questionSetCount={questionSets.length}
                     disabled={disableBtnArea}
+                    nextQuestionSetId={questionSets[questionSetIndex + 1]}
                     onToLast={() => dispatch(questionSetIndexIncreased(-1))}
                     onToNext={() => dispatch(questionSetIndexIncreased(1))}
                     onFinish={handleFinishChapter}
@@ -125,7 +132,10 @@ export default function PracticeChapterPage() {
 function QuestionInfoSkeleton() {
     return (
         <View>
-            <Text>Question Info Skeleton: todo</Text>
+            <View
+                style={{ width: "15%" }}
+                className="skeleton skeleton-text"
+            ></View>
         </View>
     );
 }

@@ -7,20 +7,20 @@ interface GetQuestionSetRes {
 }
 
 export const questionSetApi = splitApi.injectEndpoints({
-    endpoints: build => ({
+    endpoints: (build) => ({
         getQuestionSet: build.query<GetQuestionSetRes, string>({
-            query: questionSetId => `/questionSets/${questionSetId}`
-        })
-    })
+            query: (questionSetId) => `/questionSets/${questionSetId}`,
+        }),
+    }),
 });
 
-export const { useGetQuestionSetQuery } = questionSetApi;
+export const { useGetQuestionSetQuery, usePrefetch } = questionSetApi;
 
 export const updateQuestionSetFav = (questionSetId: string, isFav: boolean) =>
     questionSetApi.util.updateQueryData(
         "getQuestionSet",
         questionSetId,
-        state => {
+        (state) => {
             state.isFav = isFav;
         }
     );
