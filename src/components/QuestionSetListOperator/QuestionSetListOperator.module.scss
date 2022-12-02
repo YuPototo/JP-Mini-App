@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.btnArea {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    height: $bottom-operation-bar-height;
+    background-color: $color-gray-100;
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 5px;
+}
+
+.btn {
+    width: 30%;
+}
+
+.hide {
+    visibility: hidden;
+}

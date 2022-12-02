@@ -2,7 +2,6 @@ import { useGetQuestionSetQuery } from "../questionSetService";
 import QuestionSetSkeleton from "./QuestionSetSkeleton";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-    selectIsRight,
     selectIsDone,
     newQuestionSetInitiated,
     errorOccured,
@@ -48,7 +47,6 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
     }, [isError, dispatch]);
 
     const isDone = useAppSelector(selectIsDone);
-    const isRight = useAppSelector(selectIsRight);
 
     // 仅在第一次加载时显示 skeleton
     if (isLoading) return <QuestionSetSkeleton />;
@@ -68,9 +66,14 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
                         <Body body={questionSet.body} />
                     </View>
 
-                    <Questions questions={questionSet.questions} />
+                    <Questions
+                        questions={questionSet.questions}
+                        isDone={isDone}
+                    />
 
-                    <Explanation explanation={questionSet.explanation} />
+                    {isDone && (
+                        <Explanation explanation={questionSet.explanation} />
+                    )}
 
                     {questionSet.audio && (
                         <AudioPlayer audio={questionSet.audio} />
@@ -82,10 +85,12 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
                         />
                     )}
 
-                    <FavButton isFav={isFav} questionSetId={questionSetId} />
-
-                    {isDone &&
-                        (isRight ? <View>正确</View> : <View>错误</View>)}
+                    {isDone && (
+                        <FavButton
+                            isFav={isFav}
+                            questionSetId={questionSetId}
+                        />
+                    )}
                 </>
             ) : (
                 <View>

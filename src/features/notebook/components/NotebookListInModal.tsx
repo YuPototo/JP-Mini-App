@@ -1,15 +1,17 @@
 import { updateQuestionSetFav } from "@/features/questionSet/questionSetService";
 import toast from "@/utils/toast/toast";
 import { View } from "@tarojs/components";
+import clsx from "clsx";
 import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
     useGetNotebooksQuery,
-    useSaveQuestionSetMutation
+    useSaveQuestionSetMutation,
 } from "../notebookService";
 import { INotebook } from "../notebookTypes";
 import { useOrderNotebooks } from "../useOrderNotebooks";
+import styles from "./NotebookListInModal.module.scss";
 
 interface Props {
     questionSetId: string;
@@ -18,7 +20,7 @@ interface Props {
 
 export default function NotebookListInModal({
     questionSetId,
-    onQuestionSetSaved
+    onQuestionSetSaved,
 }: Props) {
     const { data, isLoading } = useGetNotebooksQuery(undefined);
 
@@ -39,7 +41,7 @@ export default function NotebookListInModal({
 function Notebooks({
     notebooks,
     questionSetId,
-    onQuestionSetSaved
+    onQuestionSetSaved,
 }: {
     notebooks: INotebook[];
     questionSetId: string;
@@ -47,7 +49,7 @@ function Notebooks({
 }) {
     const [notebookSaving, setNotebookSaving] = useState("");
     const reordered = useOrderNotebooks(notebooks);
-    const newNotebookId = useAppSelector(state => state.notebook.newNotebook);
+    const newNotebookId = useAppSelector((state) => state.notebook.newNotebook);
 
     const dispatch = useAppDispatch();
 
@@ -70,15 +72,18 @@ function Notebooks({
         }
     };
     return (
-        <View>
-            {reordered.map(notebook => (
+        <View className={styles.notebooks}>
+            {reordered.map((notebook) => (
                 <View
-                    style={{ padding: "20px" }}
+                    className={clsx(styles.notebook, {
+                        [`${styles["notebook-new"]}`]:
+                            newNotebookId === notebook.id,
+                    })}
                     key={notebook.id}
                     onClick={() => handleSavQuestionSet(notebook.id)}
                 >
-                    {notebook.title}{" "}
-                    {newNotebookId === notebook.id ? "  最新" : ""}
+                    {notebook.title}
+
                     {isLoading && notebookSaving === notebook.id && (
                         <>{" 保存中... "}</>
                     )}

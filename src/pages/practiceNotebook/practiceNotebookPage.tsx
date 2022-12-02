@@ -16,6 +16,7 @@ import { View } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 import ProgressBar from "@/components/progressBar/ProgressBar";
+import styles from "./practiceNotebookPage.module.scss";
 
 export default function practiceNotebookPage() {
     const dispatch = useAppDispatch();
@@ -51,7 +52,7 @@ export default function practiceNotebookPage() {
     };
 
     return (
-        <View>
+        <View className={styles.page}>
             {showPayWall && <PayWall />}
 
             <ProgressBar pct={(questionSetIndex + 1) / questionSetIds.length} />

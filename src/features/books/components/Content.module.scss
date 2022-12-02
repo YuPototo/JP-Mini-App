@@ -45,3 +45,9 @@
 .nextChapter {
     background-color: $color-green-50;
 }
+
+.iconGroup {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+}

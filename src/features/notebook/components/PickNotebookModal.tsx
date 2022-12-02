@@ -3,6 +3,7 @@ import ModalWall from "@/components/ModalWall/ModalWall";
 import routes from "@/routes/routes";
 import NotebookListInModal from "./NotebookListInModal";
 import { navigate } from "@/utils/navigator/navigator";
+import styles from "./PickNotebookModal.module.scss";
 
 type Props = {
     questionSetId: string;
@@ -11,16 +12,19 @@ type Props = {
 
 export default function PickNotebookModal({
     questionSetId,
-    onModalClosed
+    onModalClosed,
 }: Props) {
     return (
         <ModalWall onModalClosed={onModalClosed}>
-            <View>选择笔记本</View>
+            <View className={styles.hint}>选择笔记本</View>
             <NotebookListInModal
                 questionSetId={questionSetId}
                 onQuestionSetSaved={onModalClosed}
             />
-            <Button onClick={() => navigate(routes.createNotebook())}>
+            <Button
+                className="btn btn-primary--outline"
+                onClick={() => navigate(routes.createNotebook())}
+            >
                 创建笔记本
             </Button>
         </ModalWall>

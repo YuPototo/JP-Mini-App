@@ -1,11 +1,13 @@
+import IconFont from "@/components/iconfont";
 import { updateQuestionSetFav } from "@/features/questionSet/questionSetService";
 import toast from "@/utils/toast/toast";
-import { Button } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { useState } from "react";
 
 import { useAppDispatch } from "../../../store/hooks";
 import { useDeleteQuestionSetMutation } from "../notebookService";
 import PickNotebookModal from "./PickNotebookModal";
+import styles from "./FavButton.module.scss";
 
 interface Props {
     questionSetId: string;
@@ -30,7 +32,7 @@ export default function FavButton({ isFav, questionSetId }: Props) {
     };
 
     return (
-        <>
+        <View style={{ marginTop: "30rpx" }}>
             {showModal && (
                 <PickNotebookModal
                     onModalClosed={() => setShowModal(false)}
@@ -38,12 +40,20 @@ export default function FavButton({ isFav, questionSetId }: Props) {
                 />
             )}
             {isFav ? (
-                <Button onClick={handleUnsaveQuestionSet}>
-                    取消收藏{isLoading ? "..." : ""}
-                </Button>
+                <View
+                    className={styles.btnWrapper}
+                    onClick={handleUnsaveQuestionSet}
+                >
+                    <IconFont name="star-fill" size={60} color={"#ffd700"} />
+                </View>
             ) : (
-                <Button onClick={() => setShowModal(true)}>收藏</Button>
+                <View
+                    className={styles.btnWrapper}
+                    onClick={() => setShowModal(true)}
+                >
+                    <IconFont name="star" size={60} color={"#ffd700"} />
+                </View>
             )}
-        </>
+        </View>
     );
 }

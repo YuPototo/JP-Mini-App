@@ -1,7 +1,9 @@
 import { selectIsDone } from "@/features/questionSet/questionSetSlice";
 import { showAnswer } from "@/features/questionSet/questionSetThunks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { Button, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
+import clsx from "clsx";
+import styles from "./QuestionSetListOperator.module.scss";
 
 /**
  * 操作一列 questionSet 的组件
@@ -22,35 +24,57 @@ export default function QuestionSetListOperator({
     disabled,
     onToLast,
     onToNext,
-    onFinish
+    onFinish,
 }: Props) {
     const dispatch = useAppDispatch();
     const isDone = useAppSelector(selectIsDone);
 
     const isQuestionSetError = useAppSelector(
-        state => state.questionSet.isError
+        (state) => state.questionSet.isError
     );
 
     const hasNext = index < questionSetCount - 1;
     const hasPreviousQuestionSet = index > 0;
 
     const handleContinue = () => {
+        if (disabled) return;
         hasNext ? onToNext() : onFinish();
     };
 
+    const handleToLast = () => {
+        if (disabled) return;
+        if (!hasPreviousQuestionSet) return;
+        onToLast();
+    };
+
     return (
-        <View>
-            <Button disabled={disabled} onClick={onToLast}>
+        <View className={clsx("full-width", styles.btnArea)}>
+            <View
+                className={clsx("btn btn-primary--outline", styles.btn, {
+                    [`${styles.hide}`]: showNextBtn(isDone, isQuestionSetError),
+                })}
+                onClick={handleToLast}
+            >
                 上一题
-            </Button>
+            </View>
 
-            <Button disabled={disabled} onClick={() => dispatch(showAnswer())}>
+            <View
+                className={clsx("btn btn-primary--outline", styles.btn, {
+                    [`${styles.hide}`]: isDone,
+                })}
+                onClick={() => dispatch(showAnswer())}
+            >
                 答案
-            </Button>
+            </View>
 
-            <Button disabled={disabled} onClick={handleContinue}>
+            <View
+                className={clsx("btn btn-primary", styles.btn, {
+                    [`${styles.hide}`]: !isDone,
+                })}
+                onClick={handleContinue}
+            >
                 {hasNext ? "下一题" : "完成"}
-            </Button>
+            </View>
         </View>
     );
 }

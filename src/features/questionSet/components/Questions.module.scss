@@ -1,0 +1,9 @@
+@import "../../../styles/variables";
+
+.divider {
+    width: 200rpx;
+    background-color: $color-green-100;
+    height: 10rpx;
+    margin: 60rpx auto 48rpx auto;
+    border-radius: 10rpx;
+}

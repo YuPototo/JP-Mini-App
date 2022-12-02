@@ -13,6 +13,7 @@ import { navigate } from "@/utils/navigator/navigator";
 import { View } from "@tarojs/components";
 import { useEffect } from "react";
 import ProgressBar from "@/components/progressBar/ProgressBar";
+import styles from "./practiceWrongRecordPage.module.scss";
 
 export default function PracticeWrongRecordPage() {
     const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ export default function PracticeWrongRecordPage() {
     }
 
     return (
-        <View>
+        <View className={styles.page}>
             <ProgressBar pct={(questionSetIndex + 1) / questionSetIds.length} />
 
             {questionSetId !== undefined && (

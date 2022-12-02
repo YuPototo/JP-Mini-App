@@ -1,0 +1,6 @@
+@import "../../styles/variables";
+
+.page {
+    padding: $page-top-padding $page-x-padding;
+    min-height: 100vh;
+}

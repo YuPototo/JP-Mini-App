@@ -45,7 +45,7 @@
 }
 
 .jp-paragraph {
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
 
 .jp-filler {
@@ -59,6 +59,7 @@
 
 .jp-underline {
     text-decoration: underline;
+    display: inline-block; // 这个属性能够保证星星题有换行
 }
 
 /* css rule for common css */

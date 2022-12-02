@@ -12,15 +12,15 @@
 .modal {
     position: fixed;
     bottom: 0;
-    background-color: azure;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    padding-left: 16px;
-    padding-right: 16px;
+    background-color: white;
+    padding-top: 50rpx;
+    padding-bottom: 50rpx;
+    padding-left: 32rpx;
+    padding-right: 32rpx;
     min-height: 50vh;
     max-height: 80vh;
     overflow: auto;
-    width: calc(100% - 32px); // 需要减掉 padding
+    width: calc(100% - 64rpx); // 需要减掉 padding
     z-index: 1001;
-    border-radius: 50px;
+    border-radius: 16rpx 16rpx 0 0;
 }

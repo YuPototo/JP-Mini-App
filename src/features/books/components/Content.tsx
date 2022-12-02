@@ -129,10 +129,14 @@ function Chapter({ chapter, isDone, isNext }: ChapterProps) {
             onClick={toPractice}
         >
             <Text>{chapter.title}</Text>
-            {isDone && <IconFont name="check" size={30} color={"#059669"} />}
-            {isNext && (
-                <IconFont name="map-marker" size={28} color={"#059669"} />
-            )}
+            <View className={styles.iconGroup}>
+                {isNext && (
+                    <IconFont name="map-marker" size={28} color={"#059669"} />
+                )}
+                {isDone && (
+                    <IconFont name="check" size={30} color={"#059669"} />
+                )}
+            </View>
         </View>
     );
 }
