@@ -1,7 +1,7 @@
 module.exports = {
     env: {
-        NODE_ENV: '"development"',
-        BACKEND_API: '"https://api.riyu.love/api/v1"'
+        NODE_ENV: "production",
+        BACKEND_API: "https://api.riyu.love/api/v1",
     },
     defineConstants: {},
     mini: {},
@@ -32,5 +32,5 @@ module.exports = {
         //       postProcess: (context) => ({ ...context, outputPath: path.join(staticDir, 'index.html') })
         //     }))
         // }
-    }
+    },
 };
