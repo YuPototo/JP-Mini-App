@@ -1,7 +1,7 @@
 module.exports = {
     env: {
-        NODE_ENV: "production",
-        BACKEND_API: "https://api.riyu.love/api/v1",
+        NODE_ENV: '"production"',
+        BACKEND_API: '"https://api.riyu.love/api/v1"',
     },
     defineConstants: {},
     mini: {},
