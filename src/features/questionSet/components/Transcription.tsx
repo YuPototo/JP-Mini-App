@@ -1,4 +1,4 @@
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 
 export default function Transcription({
     transcription,
@@ -6,5 +6,9 @@ export default function Transcription({
     transcription?: string;
 }) {
     if (!transcription) return <></>;
-    return <View style={{ whiteSpace: "pre-line" }}>{transcription}</View>;
+    return (
+        <View style={{ whiteSpace: "pre-line" }}>
+            <Text userSelect={true}>{transcription}</Text>
+        </View>
+    );
 }

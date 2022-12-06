@@ -42,14 +42,22 @@
     */
     white-space: pre-wrap;
     word-break: break-word;
+    user-select: text;
+    -webkit-user-select: text;
+
+    // 非第1个段落，才有 margin bottom
+    // 否则 option 会出现多余的 margin bottom（有的 option 只有1个段落）
+    .jp-paragraph:not(:first-child) {
+        margin-bottom: 0.5em;
+    }
 }
 
 .jp-paragraph {
-    margin-bottom: 0.5em;
+    line-height: 1.5em;
 }
 
 .jp-filler {
-    padding: 0 30px;
+    padding: 0 50px;
     border-bottom: 1px solid #555;
 }
 
