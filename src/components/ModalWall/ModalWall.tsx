@@ -10,10 +10,15 @@ import styles from "./ModalWall.module.scss";
 
 type Props = {
     onModalClosed: () => void;
+    showCloseBttuon?: boolean;
     children: React.ReactNode;
 };
 
-export default function ModalWall({ onModalClosed, children }: Props) {
+export default function ModalWall({
+    onModalClosed,
+    children,
+    showCloseBttuon = true,
+}: Props) {
     return (
         <View className={styles.mask} onClick={onModalClosed}>
             <View
@@ -22,9 +27,14 @@ export default function ModalWall({ onModalClosed, children }: Props) {
                 }}
                 className={styles.modal}
             >
-                <View className={styles.closeWrapper} onClick={onModalClosed}>
-                    <IconFont name="guanbi" size={32} color={"#6b7280"} />
-                </View>
+                {showCloseBttuon && (
+                    <View
+                        className={styles.closeWrapper}
+                        onClick={onModalClosed}
+                    >
+                        <IconFont name="guanbi" size={32} color={"#6b7280"} />
+                    </View>
+                )}
                 {children}
             </View>
         </View>
