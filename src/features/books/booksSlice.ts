@@ -225,7 +225,6 @@ export const selectSectionAndChapterTitle =
         const section = sections.find((section) => section.id === sectionId);
 
         if (!section) {
-            console.error("selectSectionTitle: 找不到 section");
             return;
         }
 

@@ -17,6 +17,7 @@ import { useRouter } from "@tarojs/taro";
 import { useEffect } from "react";
 import ProgressBar from "@/components/progressBar/ProgressBar";
 import styles from "./practiceNotebookPage.module.scss";
+import useShareQuestionSet from "@/features/questionSet/hooks/useShareQuestionSet";
 
 export default function practiceNotebookPage() {
     const dispatch = useAppDispatch();
@@ -30,6 +31,8 @@ export default function practiceNotebookPage() {
     // get question set loading info
     const { isLoadingQuestionSet, isFetchingQuestionSet } =
         useGetQuestionSetLoadingInfo(questionSetId);
+
+    useShareQuestionSet(questionSetId);
 
     if (questionSetId === undefined) {
         return (
@@ -61,6 +64,9 @@ export default function practiceNotebookPage() {
                 <QuestionSet
                     questionSetId={questionSetId}
                     practiceMode={PracticeMode.Notebook}
+                    progress={`${questionSetIndex + 1}/${
+                        questionSetIds.length
+                    }`}
                 />
             )}
 

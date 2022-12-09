@@ -11,7 +11,7 @@ interface ParameterSliceState {
 
 const initialState: ParameterSliceState = {
     isAuditMode: true,
-    version: "5.0.2",
+    version: "5.1.0",
     platform: "ios", // default ios
 };
 

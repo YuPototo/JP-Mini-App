@@ -6,15 +6,27 @@ import { cleanCategory, selectBooksByCategory } from "../booksSlice";
 import routes from "@/routes/routes";
 import { navigate } from "@/utils/navigator/navigator";
 import styles from "./BookList.module.scss";
+import BookCardSkeleton from "./BookCardSkeleton";
 
 export default function BookList() {
-    useGetBooksQuery();
+    const { isLoading } = useGetBooksQuery();
     const dispatch = useAppDispatch();
     const books = useAppSelector(selectBooksByCategory);
 
     const handleRepick = () => {
         dispatch(cleanCategory());
     };
+
+    if (isLoading) {
+        return (
+            <View className={styles.bookList}>
+                <BookCardSkeleton />
+                <BookCardSkeleton />
+                <BookCardSkeleton />
+                <BookCardSkeleton />
+            </View>
+        );
+    }
 
     return (
         <View className={styles.bookList}>

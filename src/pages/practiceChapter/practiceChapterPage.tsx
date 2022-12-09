@@ -114,6 +114,7 @@ export default function PracticeChapterPage() {
                 <QuestionSet
                     questionSetId={questionSetId}
                     practiceMode={PracticeMode.Chapter}
+                    progress={`${questionSetIndex + 1}/${questionSets.length}`}
                 />
             )}
 

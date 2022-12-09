@@ -7,24 +7,21 @@ import type { ICategory } from "../booksTypes";
 import { extractQueyError } from "@/store/utils/errorHandling";
 import styles from "./CategoryNav.module.scss";
 
-
 export default function CategoryNav() {
     const { isLoading, error } = useGetCategoriyesQuery();
 
     const topCategories = useAppSelector((state) => state.books.categories);
 
     return (
-        <View className={clsx(styles.categoryNav, 'full-width')}>
+        <View className={clsx(styles.categoryNav, "full-width")}>
             {isLoading ? (
-                <View className="">加载中...</View>
+                <CategoryLoader />
             ) : (
                 <CategoryList categories={topCategories} categoryLevel={0} />
             )}
 
             {error && (
-                <Text>
-                    {`获取内容分类出错：${extractQueyError(error)}`}
-                </Text>
+                <Text>{`获取内容分类出错：${extractQueyError(error)}`}</Text>
             )}
         </View>
     );
@@ -54,7 +51,8 @@ function CategoryList({ categories, categoryLevel }: CategoryListProps) {
                 {categories.map((category) => (
                     <View
                         className={clsx(
-                            selectedCategoryKey === category.key && styles.categoryItemSelected,
+                            selectedCategoryKey === category.key &&
+                                styles.categoryItemSelected,
                             styles.categoryItem
                         )}
                         key={category.key}
@@ -74,5 +72,20 @@ function CategoryList({ categories, categoryLevel }: CategoryListProps) {
                 )}
             </View>
         </>
+    );
+}
+
+function CategoryLoader() {
+    return (
+        <View className={styles.itemList}>
+            <View
+                style={{ width: "25%" }}
+                className="skeleton skeleton-text"
+            ></View>
+            <View
+                style={{ width: "25%" }}
+                className="skeleton skeleton-text"
+            ></View>
+        </View>
     );
 }

@@ -13,14 +13,6 @@ export default function Index() {
             <CategoryNav />
             {hideWorkingBook || <WorkingBook />}
             <BookList />
-
-            {/* <Button onClick={() => navigate(routes.rendererExample())}>
-                To Rich Text renderer
-            </Button>
-
-            <Button onClick={() => navigate(routes.play())}>
-                To Play Page
-            </Button> */}
         </View>
     );
 }

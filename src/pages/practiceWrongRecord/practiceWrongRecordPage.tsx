@@ -14,6 +14,7 @@ import { View } from "@tarojs/components";
 import { useEffect } from "react";
 import ProgressBar from "@/components/progressBar/ProgressBar";
 import styles from "./practiceWrongRecordPage.module.scss";
+import useShareQuestionSet from "@/features/questionSet/hooks/useShareQuestionSet";
 
 export default function PracticeWrongRecordPage() {
     const dispatch = useAppDispatch();
@@ -24,6 +25,8 @@ export default function PracticeWrongRecordPage() {
     // get question set loading info
     const { isLoadingQuestionSet, isFetchingQuestionSet } =
         useGetQuestionSetLoadingInfo(questionSetId);
+
+    useShareQuestionSet(questionSetId);
 
     // state 1：错误，找不到 questionSet
     if (questionSetId === undefined) {
@@ -43,6 +46,9 @@ export default function PracticeWrongRecordPage() {
                 <QuestionSet
                     questionSetId={questionSetId}
                     practiceMode={PracticeMode.WrongRecord}
+                    progress={`${questionSetIndex + 1}/${
+                        questionSetIds.length
+                    }`}
                 />
             )}
 

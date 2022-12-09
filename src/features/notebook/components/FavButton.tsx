@@ -32,7 +32,7 @@ export default function FavButton({ isFav, questionSetId }: Props) {
     };
 
     return (
-        <View style={{ marginTop: "30rpx" }}>
+        <View>
             {showModal && (
                 <PickNotebookModal
                     onModalClosed={() => setShowModal(false)}

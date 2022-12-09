@@ -12,17 +12,23 @@ import Body from "./Body";
 import Questions from "./Questions";
 import Explanation from "./Explanation";
 import AudioPlayer from "./AudioPlayer";
-import { View } from "@tarojs/components";
+import { Button, View } from "@tarojs/components";
 import Transcription from "./Transcription";
 import FavButton from "@/features/notebook/components/FavButton";
 import styles from "./QuestionSet.module.scss";
+import IconFont from "@/components/iconfont";
 
 type Props = {
     questionSetId: string;
     practiceMode: PracticeMode;
+    progress?: string;
 };
 
-export default function QuestionSet({ questionSetId, practiceMode }: Props) {
+export default function QuestionSet({
+    questionSetId,
+    practiceMode,
+    progress,
+}: Props) {
     const {
         data,
         isLoading, // 第1次请求
@@ -88,10 +94,31 @@ export default function QuestionSet({ questionSetId, practiceMode }: Props) {
                     )}
 
                     {isDone && (
-                        <FavButton
-                            isFav={isFav}
-                            questionSetId={questionSetId}
-                        />
+                        <View className={styles.bottomMenu}>
+                            <View
+                                style={{
+                                    visibility: progress ? "visible" : "hidden",
+                                }}
+                                className={styles.progress}
+                            >
+                                {progress}
+                            </View>
+
+                            <Button openType="share">
+                                <IconFont
+                                    name="share"
+                                    size={36}
+                                    color={"#059669"}
+                                />
+                            </Button>
+
+                            <View className={styles.favButtonWrapper}>
+                                <FavButton
+                                    isFav={isFav}
+                                    questionSetId={questionSetId}
+                                />
+                            </View>
+                        </View>
                     )}
                 </>
             ) : (

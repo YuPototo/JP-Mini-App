@@ -7,3 +7,14 @@
 .questionSetBody {
     margin-bottom: 60rpx;
 }
+
+.bottomMenu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .progress {
+        font-size: $text-sm;
+        color: $color-green-500;
+    }
+}

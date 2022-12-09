@@ -21,7 +21,9 @@ export default function PickNotebookModal({
                 questionSetId={questionSetId}
                 onQuestionSetSaved={onModalClosed}
             />
+
             <Button
+                style={{ marginTop: "60rpx" }}
                 className="btn btn-primary--outline"
                 onClick={() => navigate(routes.createNotebook())}
             >

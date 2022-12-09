@@ -29,6 +29,7 @@ export default function GoodsList() {
             handleCreateOrder(goodId);
         }
     };
+
     const handleCreateOrder = async (goodId: string) => {
         try {
             toast.loading();
@@ -71,7 +72,7 @@ export default function GoodsList() {
                         key={good.id}
                         onClick={() => handleClickGood(good.id)}
                     >
-                        {good.name}
+                        {`${good.name} ${good.price / 100}元`}
                     </View>
                 );
             })}

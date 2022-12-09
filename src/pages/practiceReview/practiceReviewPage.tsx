@@ -7,6 +7,7 @@ import { showAnswer } from "@/features/questionSet/questionSetThunks";
 import styles from "./practiceReviewPage.module.scss";
 import clsx from "clsx";
 import { selectIsDone } from "@/features/questionSet/questionSetSlice";
+import useShareQuestionSet from "@/features/questionSet/hooks/useShareQuestionSet";
 
 type Props = {};
 
@@ -16,6 +17,7 @@ export default function practiceReview({}: Props) {
     const isDone = useAppSelector(selectIsDone);
 
     const { questionSetId } = router.params as { questionSetId: string };
+    useShareQuestionSet(questionSetId);
 
     return (
         <View className={styles.page}>
